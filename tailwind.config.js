@@ -8,7 +8,7 @@ export default {
         'primary-light': '#6F51C2',
       },
       fontFamily: {
-        sans: ['Roboto', 'sans-serif'], //default font
+        sans: ['Anek Devanagari', 'sans-serif'], //default font
         abhaya: ['Abhaya Libre', 'serif'],
       },
       animation: {

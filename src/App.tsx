@@ -1,22 +1,29 @@
-import { useState } from 'react';
+import { AppLayout } from '@layouts/AppLayout';
+import { AppPage } from '@pages/app-page';
+import { BDOPage } from '@pages/bdo-page';
+import { EmployeesPage } from '@pages/employees-page';
+import { ErrorPage } from '@pages/error-page';
+import { ProjectsPage } from '@pages/projects-page';
+import { VehiclesPage } from '@pages/vehicles-page';
+import { Routes, Route, Outlet } from 'react-router-dom';
+
+function Root() {
+  return <Outlet />;
+}
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div />
-      <h1>Vite + React</h1>s
-      <div className="card">
-        <button type="button" onClick={() => setCount((prev) => prev + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <Routes>
+      <Route path="/" element={<Root />} />
+      <Route path="/app" element={<AppLayout />}>
+        <Route index element={<AppPage />} />
+        <Route path="vehicles" element={<VehiclesPage />} />
+        <Route path="employees" element={<EmployeesPage />} />
+        <Route path="bdo" element={<BDOPage />} />
+        <Route path="projects" element={<ProjectsPage />} />
+      </Route>
+      <Route path="*" element={<ErrorPage />} />
+    </Routes>
   );
 }
 

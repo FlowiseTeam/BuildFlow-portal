@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loading-cell {
+  flex-basis: 50%;
+  padding: 1.5em;
+}
+
+.loading-fade,
+.loading-fade:before,
+.loading-fade:after {
+  animation-duration: 1500ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.loading-fade {
+  margin: 0 auto 1.5em auto;
+  position: relative;
+  width: 3em;
+  height: 3em;
+}
+.loading-fade:before,
+.loading-fade:after {
+  background: #822faf;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  transform-origin: 50% 100%;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.loading-fade:before,
+.loading-fade:after {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 0 100%);
+  top: 50%;
+  left: 50%;
+  width: 70.71%;
+  height: 70.71%;
+  transform-origin: 0 0;
+}
+.loading-fade:before {
+  animation-name: leapFrogA;
+}
+.loading-fade:after {
+  animation-name: leapFrogB;
+  background: #47126b;
+}
+@keyframes leapFrogA {
+  from {
+    transform: rotateZ(-135deg) rotateY(0deg) rotateX(0deg);
+    z-index: 0;
+  }
+  12.5% {
+    transform: rotateZ(-135deg) rotateY(-180deg) rotateX(0deg);
+    z-index: 1;
+  }
+  25%,
+  50% {
+    transform: rotateZ(-135deg) rotateY(-180deg) rotateX(-180deg);
+    z-index: 0;
+  }
+  62.5% {
+    transform: rotateZ(-135deg) rotateY(0deg) rotateX(-180deg);
+    z-index: 1;
+  }
+  75%,
+  to {
+    transform: rotateZ(-135deg) rotateY(0deg) rotateX(-360deg);
+    z-index: 0;
+  }
+}
+@keyframes leapFrogB {
+  from,
+  25% {
+    transform: rotateZ(-45deg) rotateY(0deg) rotateX(0deg);
+    z-index: 0;
+  }
+  37.5% {
+    transform: rotateZ(-45deg) rotateY(-180deg) rotateX(0deg);
+    z-index: 1;
+  }
+  50%,
+  75% {
+    transform: rotateZ(-45deg) rotateY(-180deg) rotateX(-180deg);
+    z-index: 0;
+  }
+  87.5% {
+    transform: rotateZ(-45deg) rotateY(0deg) rotateX(-180deg);
+    z-index: 1;
+  }
+  to {
+    transform: rotateZ(-45deg) rotateY(0deg) rotateX(-360deg);
+    z-index: 0;
+  }
+}

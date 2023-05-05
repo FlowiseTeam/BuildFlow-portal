@@ -1,0 +1,46 @@
+{
+  "company": {
+    "name": "Daf-mal",
+    "projects": 3,
+    "employees": 34,
+    "notAssignedEmployees": 5
+  },
+  "projects": [
+    {
+      "id": "adwqgad",
+      "title": "Naleczkowska",
+      "status": "in-progress",
+      "startDate": "01.01.01",
+      "endDate": "03.03.03",
+      "tasks": 4,
+      "address": "Kaliska 2, Raszków"
+    },
+    {
+      "id": "adwqgad21",
+      "title": "Raszkow",
+      "status": "in-progress",
+      "startDate": "01.01.01",
+      "endDate": "03.03.03",
+      "tasks": 4,
+      "address": "Kaliska 2, Raszków"
+    },
+    {
+      "id": "adwqgadad",
+      "title": "Wroclawska",
+      "status": "in-progress",
+      "startDate": "01.01.01",
+      "endDate": "03.03.03",
+      "tasks": 4,
+      "address": "Kaliska 2, Raszków"
+    },
+    {
+      "id": "adwqgad123",
+      "title": "Piotrkowska",
+      "status": "closed",
+      "startDate": "01.01.01",
+      "endDate": "03.03.03",
+      "tasks": 4,
+      "address": "Kaliska 2, Raszków"
+    }
+  ]
+}

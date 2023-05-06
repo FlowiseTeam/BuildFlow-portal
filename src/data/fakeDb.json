@@ -12,7 +12,7 @@
       "status": "in-progress",
       "startDate": "01.01.01",
       "endDate": "03.03.03",
-      "tasks": 4,
+      "tasks": 1,
       "address": "Kaliska 2, Raszków"
     },
     {
@@ -20,8 +20,8 @@
       "title": "Raszkow",
       "status": "in-progress",
       "startDate": "01.01.01",
-      "endDate": "03.03.03",
-      "tasks": 4,
+      "endDate": "04.03.04",
+      "tasks": 2,
       "address": "Kaliska 2, Raszków"
     },
     {
@@ -29,7 +29,7 @@
       "title": "Wroclawska",
       "status": "in-progress",
       "startDate": "01.01.01",
-      "endDate": "03.03.03",
+      "endDate": "06.03.05",
       "tasks": 4,
       "address": "Kaliska 2, Raszków"
     },
@@ -38,8 +38,8 @@
       "title": "Piotrkowska",
       "status": "closed",
       "startDate": "01.01.01",
-      "endDate": "03.03.03",
-      "tasks": 4,
+      "endDate": "05.03.01",
+      "tasks": 3,
       "address": "Kaliska 2, Raszków"
     }
   ]

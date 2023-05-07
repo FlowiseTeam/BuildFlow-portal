@@ -8,39 +8,79 @@
   "projects": [
     {
       "id": "adwqgad",
-      "title": "Naleczkowska",
+      "name": "Naleczkowska",
       "status": "in-progress",
       "startDate": "01.01.01",
       "endDate": "03.03.03",
       "tasks": 1,
-      "address": "Kaliska 2, Raszków"
+      "address": {
+        "street": "Kaliska 3",
+        "city": "Raszków",
+        "zipCode": "62-028"
+      },
+      "client": "Piotr Kowalski"
     },
     {
       "id": "adwqgad21",
-      "title": "Raszkow",
+      "name": "Raszkow",
       "status": "in-progress",
       "startDate": "01.01.01",
       "endDate": "04.03.04",
       "tasks": 2,
-      "address": "Kaliska 2, Raszków"
+      "address": {
+        "street": "Kaliska 3",
+        "city": "Raszków",
+        "zipCode": "62-028"
+      },
+      "client": "Piotr Strzegorzonek"
     },
     {
       "id": "adwqgadad",
-      "title": "Wroclawska",
+      "name": "Wroclawska",
       "status": "in-progress",
       "startDate": "01.01.01",
       "endDate": "06.03.05",
       "tasks": 4,
-      "address": "Kaliska 2, Raszków"
+      "address": {
+        "street": "Kaliska 3",
+        "city": "Raszków",
+        "zipCode": "62-028"
+      },
+      "client": "Janusz Wojtyła"
     },
     {
       "id": "adwqgad123",
-      "title": "Piotrkowska",
+      "name": "Piotrkowska",
       "status": "closed",
       "startDate": "01.01.01",
       "endDate": "05.03.01",
       "tasks": 3,
-      "address": "Kaliska 2, Raszków"
+      "address": {
+        "street": "Kaliska 3",
+        "city": "Raszków",
+        "zipCode": "62-028"
+      },
+      "client": "Anna Naniby"
+    },
+    {
+      "id": {
+        "$oid": "0.19022629879284336we123"
+      },
+      "name": "jakastam",
+      "address": {
+        "street": "3iqjq3jjiqwd",
+        "city": "qwhdhwqhiqwhqi",
+        "zipCode": "qfwqwdhidqwih"
+      },
+      "start_date": "qwdhidhiqwqhid",
+      "end_date": "qdwhqdwhiqdwhi",
+      "status": "qhwdhqwhidqw",
+      "client": "qwhqwdihqdwqwd",
+      "_id": {
+        "$oid": "0.7645486170184337we123"
+      },
+      "created_at": "2023-05-07T14:41:11.916Z",
+      "updated_at": "2023-05-07T14:41:11.916Z"
     }
   ]
 }

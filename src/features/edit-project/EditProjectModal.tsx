@@ -1,5 +1,5 @@
 import { Modal } from '@components/modal/Modal';
-import { Project } from '@data/types';
+import { Project } from '@services/api-types';
 
 export function EditProjectModal({
   activeProject,
@@ -9,7 +9,7 @@ export function EditProjectModal({
   setActiveProjectId: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
   return (
-    <Modal title={activeProject?.title} show={!!activeProject} onClose={() => setActiveProjectId(null)}>
+    <Modal title={activeProject?.name} show={!!activeProject} onClose={() => setActiveProjectId(null)}>
       <div>xd</div>
     </Modal>
   );

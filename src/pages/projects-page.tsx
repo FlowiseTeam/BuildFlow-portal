@@ -7,6 +7,8 @@ import { Table } from '@components/table/Table';
 import { Button } from '@components/button/Button';
 import { EditProjectModal } from '@features/edit-project/EditProjectModal';
 import { Project } from '@services/api-types';
+import { ListBulletIcon } from '@heroicons/react/24/outline';
+import { DashboardIcon } from '@components/icons/DashboardIcon';
 
 const columns = [
   { title: 'Nazwa', key: 'name', sortable: true },
@@ -18,9 +20,12 @@ const columns = [
 
 export function ProjectsPage() {
   const { data } = useQuery<Project[]>('projects', getProjects, { suspense: true });
+  const [view, setView] = useState<'list' | 'grid'>('list');
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
   const activeProject = data?.find((project) => project.id.$oid === activeProjectId);
+
+  const toggleView = () => setView(view === 'list' ? 'grid' : 'list');
 
   if (!data) {
     return <div>Something went wrong</div>;
@@ -47,7 +52,23 @@ export function ProjectsPage() {
           <button>szukaj</button>
           <Button onClick={() => setIsAddProjectModalOpen(true)}>dodaj projekt</Button>
         </div>
-        <div className="ml-auto">lista / kafelki</div>
+        <div className="my-4 ml-auto flex items-center gap-4">
+          {view === 'list' ? (
+            <>
+              <p>lista</p>
+              <Button className="rounded px-1 py-1" onClick={toggleView}>
+                <ListBulletIcon className="h-6" />
+              </Button>
+            </>
+          ) : (
+            <>
+              <p>kafelki</p>
+              <Button className="rounded px-1 py-1" onClick={toggleView}>
+                <DashboardIcon className="h-6" />
+              </Button>
+            </>
+          )}
+        </div>
         <div className="w-0 min-w-full">
           <Table
             columns={columns}

@@ -6,15 +6,17 @@ export function Modal({
   title,
   children,
   show,
+  className = '',
 }: {
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
   show: boolean;
+  className?: string;
 }) {
   return (
     <Transition appear show={show} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
+      <Dialog as="div" className={`relative z-10 ${className}`} onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -38,7 +40,7 @@ export function Modal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-2xl  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 {title && (
                   <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-primary">
                     {title}

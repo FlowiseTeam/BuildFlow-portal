@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"json-server --watch ./src/data/fakeDb.json\" \"vite\"",
+    "dev-fakejson": "concurrently \"json-server --watch ./src/data/fakeDb.json\" \"vite\"",
+    "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -39,6 +40,7 @@
     "concurrently": "^8.0.1",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.8",
     "prop-types": "^15.8.1",
     "storybook": "^7.0.9",
     "tailwindcss": "^3.3.2",

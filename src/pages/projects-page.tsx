@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Modal } from '@components/modal/Modal';
 import { AddProject } from '@features/add-project/AddProject';
 import { Table } from '@components/table/Table';
+import { Button } from '@components/button/Button';
 
 const columns = [
   { title: 'Nazwa', key: 'title', sortable: true },
@@ -35,13 +36,13 @@ export function ProjectsPage() {
         <div>xd</div>
       </Modal>
       <AddProject show={isAddProjectModalOpen} onClose={() => setIsAddProjectModalOpen(false)} />
-      <div className="flex flex-col mt-8">
+      <div className="mt-8 flex flex-col">
         <div className="flex justify-between">
           <button>szukaj</button>
-          <button onClick={() => setIsAddProjectModalOpen(true)}>dodaj projekt</button>
+          <Button onClick={() => setIsAddProjectModalOpen(true)}>dodaj projekt</Button>
         </div>
         <div className="ml-auto">lista / kafelki</div>
-        <div>
+        <div className="w-0 min-w-full">
           <Table columns={columns} data={data} defaultSort={{ direction: 'asc', key: 'endDate' }} onEdit={handleEdit} />
         </div>
       </div>

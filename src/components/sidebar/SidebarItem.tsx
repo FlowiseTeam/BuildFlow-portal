@@ -11,7 +11,10 @@ export function SidebarItem({ to, name, icon }: { to: To; name: string; icon?: R
 
   return (
     <Link to={to} onClick={close}>
-      <li className={`${variant} rounded-full font-semibold py-2 px-6 text-center my-2`}>{name}</li>
+      <li className={`${variant} my-2 flex items-center rounded-full px-6 py-2 font-semibold`}>
+        <div className={`mr-4 h-4 w-4 ${isActive ? 'text-primary' : 'text-gray-300'}`}>{icon && icon}</div>
+        {name}
+      </li>
     </Link>
   );
 }

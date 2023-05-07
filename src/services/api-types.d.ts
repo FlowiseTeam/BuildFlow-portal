@@ -1,14 +1,28 @@
+interface CompanyInfo {
+  name: string;
+  projects: number;
+  employees: number;
+  notAssignedEmployees: number;
+}
+
+interface Company {
+  company: CompanyInfo;
+  projects: Project[];
+}
+
 export interface Project {
-  city: string | null;
-  client: string | null;
-  created_at: string | null;
-  end_date: string | null;
+  client: string;
+  created_at: string;
+  end_date: string;
   id: { $oid: string };
-  name: string | null;
-  start_date: string | null;
-  status: string | null;
-  street: string | null;
-  updated_at: string | null;
-  zipcode: string | null;
+  name: string;
+  start_date: string;
+  status: 'in-progress' | 'closed';
+  address: {
+    street: string;
+    city: string;
+    zipCode: string;
+  };
+  updated_at: string;
   _id: { $oid: string };
 }

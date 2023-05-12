@@ -16,20 +16,25 @@ interface AddProjectInputs {
   client: string;
 }
 
-export function AddProjectModal({ show, onClose }: { show: boolean; onClose: () => void }) {
-  const { mutate } = useMutation(createProject);
+export function AddProjectModal({
+  show,
+  onClose,
+  onSuccess,
+}: {
+  show: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
+}) {
+  const { mutateAsync } = useMutation(createProject);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<AddProjectInputs>();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     const projectObj: Project = {
-      id: {
-        $oid: Math.random() + 'we123',
-      },
       name: data.name,
       address: {
         street: data.street,
@@ -40,13 +45,15 @@ export function AddProjectModal({ show, onClose }: { show: boolean; onClose: () 
       end_date: data.end_date,
       status: data.status as any,
       client: data.client,
-      _id: {
-        $oid: Math.random() + 'we123',
-      },
+      id: new Date().getTime(),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      tasks: 0,
     };
-    mutate(projectObj);
+    await projectObj;
+    onSuccess();
+
+    console.log(projectObj);
   });
 
   return (

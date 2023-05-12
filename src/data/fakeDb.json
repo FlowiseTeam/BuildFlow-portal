@@ -7,78 +7,66 @@
   },
   "projects": [
     {
-      "id": "adwqgad",
+      "id": 1,
       "name": "Naleczkowska",
       "status": "in-progress",
-      "startDate": "01.01.01",
-      "endDate": "03.03.03",
+      "start_date": "01.01.01",
+      "end_date": "03.03.03",
       "tasks": 1,
       "address": {
         "street": "Kaliska 3",
         "city": "Raszków",
         "zipCode": "62-028"
       },
-      "client": "Piotr Kowalski"
+      "client": "Piotr Kowalski",
+      "created_at": "2023-05-07T14:41:11.916Z",
+      "updated_at": "2023-05-07T14:41:11.916Z"
     },
     {
-      "id": "adwqgad21",
+      "id": 2,
       "name": "Raszkow",
       "status": "in-progress",
-      "startDate": "01.01.01",
-      "endDate": "04.03.04",
+      "start_date": "01.01.01",
+      "end_date": "04.03.04",
       "tasks": 2,
       "address": {
         "street": "Kaliska 3",
         "city": "Raszków",
         "zipCode": "62-028"
       },
-      "client": "Piotr Strzegorzonek"
+      "client": "Piotr Strzegorzonek",
+      "created_at": "2023-05-07T14:41:11.916Z",
+      "updated_at": "2023-05-07T14:41:11.916Z"
     },
     {
-      "id": "adwqgadad",
+      "id": 3,
       "name": "Wroclawska",
       "status": "in-progress",
-      "startDate": "01.01.01",
-      "endDate": "06.03.05",
+      "start_date": "01.01.01",
+      "end_date": "06.03.05",
       "tasks": 4,
       "address": {
         "street": "Kaliska 3",
         "city": "Raszków",
         "zipCode": "62-028"
       },
-      "client": "Janusz Wojtyła"
+      "client": "Janusz Wojtyła",
+      "created_at": "2023-05-07T14:41:11.916Z",
+      "updated_at": "2023-05-07T14:41:11.916Z"
     },
     {
-      "id": "adwqgad123",
+      "id": 4,
       "name": "Piotrkowska",
       "status": "closed",
-      "startDate": "01.01.01",
-      "endDate": "05.03.01",
+      "start_date": "01.01.01",
+      "end_date": "05.03.01",
       "tasks": 3,
       "address": {
         "street": "Kaliska 3",
         "city": "Raszków",
         "zipCode": "62-028"
       },
-      "client": "Anna Naniby"
-    },
-    {
-      "id": {
-        "$oid": "0.19022629879284336we123"
-      },
-      "name": "jakastam",
-      "address": {
-        "street": "3iqjq3jjiqwd",
-        "city": "qwhdhwqhiqwhqi",
-        "zipCode": "qfwqwdhidqwih"
-      },
-      "start_date": "qwdhidhiqwqhid",
-      "end_date": "qdwhqdwhiqdwhi",
-      "status": "qhwdhqwhidqw",
-      "client": "qwhqwdihqdwqwd",
-      "_id": {
-        "$oid": "0.7645486170184337we123"
-      },
+      "client": "Anna Naniby",
       "created_at": "2023-05-07T14:41:11.916Z",
       "updated_at": "2023-05-07T14:41:11.916Z"
     }

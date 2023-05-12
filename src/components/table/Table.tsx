@@ -9,7 +9,7 @@ export type TableColumn = {
   center?: boolean;
 };
 
-export type Data = Array<Record<string, any> & { id: string }>;
+export type Data = Array<Record<string, any> & { id: number }>;
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -17,7 +17,7 @@ type TableProps = {
   columns: TableColumn[];
   data: Data;
   defaultSort?: { key: string; direction: SortDirection };
-  onEdit: (id: string) => void;
+  onEdit: (id: number) => void;
 };
 
 export function Table({ columns, data, defaultSort, onEdit }: TableProps) {

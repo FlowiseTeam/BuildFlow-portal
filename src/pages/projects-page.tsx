@@ -6,24 +6,24 @@ import { AddProjectModal } from '@features/add-project/AddProjectModal';
 import { Table } from '@components/table/Table';
 import { Button } from '@components/button/Button';
 import { EditProjectModal } from '@features/edit-project/EditProjectModal';
-import { Project } from '@services/api-types';
 import { ListBulletIcon } from '@heroicons/react/24/outline';
 import { DashboardIcon } from '@components/icons/DashboardIcon';
 
 const columns = [
   { title: 'Nazwa', key: 'name', sortable: true },
   { title: 'Adres', key: 'address', sortable: false },
-  { title: 'Termin rozp.', key: 'startDate', sortable: true, sortbyOrder: 'desc', center: true },
-  { title: 'Termin ukoń.', key: 'endDate', sortable: true, center: true },
-  { title: 'Ilość prac', key: 'tasks', sortable: true, center: true },
+  { title: 'Termin rozp.', key: 'start_date', sortable: true, sortbyOrder: 'desc', center: true },
+  { title: 'Termin ukoń.', key: 'end_date', sortable: true, center: true },
+  { title: 'Ilość prac', key: 'workers', sortable: true, center: true },
 ];
 
 export function ProjectsPage() {
-  const { data } = useQuery<Project[]>('projects', getProjects, { suspense: true });
+  const { data, refetch } = useQuery('projects', getProjects, { suspense: true });
+  if (!data) throw Error('Something went wrong');
   const [view, setView] = useState<'list' | 'grid'>('list');
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
+  const [activeProjectId, setActiveProjectId] = useState<number | null>(null);
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
-  const activeProject = data?.find((project) => project.id.$oid === activeProjectId);
+  const activeProject = data.project.find((project) => project._id === activeProjectId);
 
   const toggleView = () => setView(view === 'list' ? 'grid' : 'list');
 
@@ -31,22 +31,30 @@ export function ProjectsPage() {
     return <div>Something went wrong</div>;
   }
 
-  const handleEdit = (projectId: string) => {
+  const handleEdit = (projectId: number) => {
     setActiveProjectId(projectId);
   };
 
-  const flatData = data.map((project) => ({
-    ...project,
-    id: project.id.$oid,
-    address: `${project.address.street}, ${project.address.city}`,
-  }));
+  const onSuccessfulAdd = () => {
+    refetch();
+    setIsAddProjectModalOpen(false);
+  };
 
-  console.log(flatData);
+  const tableData = data.project.map((project) => ({
+    ...project,
+    id: project._id,
+    address: `${project.city}, ${project.street}`,
+    workers: project.workers.length,
+  }));
 
   return (
     <Page title="Projekty">
       <EditProjectModal activeProject={activeProject} setActiveProjectId={setActiveProjectId} />
-      <AddProjectModal show={isAddProjectModalOpen} onClose={() => setIsAddProjectModalOpen(false)} />
+      <AddProjectModal
+        show={isAddProjectModalOpen}
+        onClose={() => setIsAddProjectModalOpen(false)}
+        onSuccess={onSuccessfulAdd}
+      />
       <div className="mt-8 flex flex-col">
         <div className="flex justify-between">
           <button>szukaj</button>
@@ -72,7 +80,7 @@ export function ProjectsPage() {
         <div className="w-0 min-w-full">
           <Table
             columns={columns}
-            data={flatData}
+            data={tableData}
             defaultSort={{ direction: 'asc', key: 'endDate' }}
             onEdit={handleEdit}
           />

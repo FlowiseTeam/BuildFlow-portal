@@ -1,10 +1,8 @@
 import { Page } from '@layouts/Page';
-import { getCompany } from '@services/api';
 import { getWelcomingText } from '@utils/utils';
-import { useQuery } from 'react-query';
 
 export function AppPage() {
-  const { data } = useQuery('company', getCompany, { suspense: true });
+  const data = { name: 'Hardcoded name' };
   return (
     <Page title={data.name}>
       <Dashboard />

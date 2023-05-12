@@ -6,11 +6,11 @@ export function EditProjectModal({
   setActiveProjectId,
 }: {
   activeProject?: Project;
-  setActiveProjectId: React.Dispatch<React.SetStateAction<string | null>>;
+  setActiveProjectId: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
   return (
     <Modal title={activeProject?.name} show={!!activeProject} onClose={() => setActiveProjectId(null)}>
-      <div>xd</div>
+      <div></div>
     </Modal>
   );
 }

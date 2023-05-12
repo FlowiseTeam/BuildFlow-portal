@@ -18,6 +18,8 @@ export function ProjectsPage() {
     return <div>Something went wrong</div>;
   }
 
+  console.log(data);
+
   const toggleView = () => setView(view === 'list' ? 'tiles' : 'list');
 
   const onSuccessfulAdd = () => {
@@ -55,7 +57,7 @@ export function ProjectsPage() {
           )}
         </div>
         <div className="w-0 min-w-full">
-          <ProjectsTable projects={data.project} />
+          <ProjectsTable projects={data.projects} />
         </div>
       </div>
     </Page>

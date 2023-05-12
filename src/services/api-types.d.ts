@@ -11,7 +11,7 @@ interface Company {
 }
 
 export interface ProjectsQuery {
-  project: Project[];
+  projects: Project[];
   project_count: number;
 }
 

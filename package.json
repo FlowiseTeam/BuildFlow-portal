@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev-fakejson": "concurrently \"json-server --watch ./src/data/fakeDb.json\" \"vite\"",
+    "dev-fakejson": "concurrently \"json-server --watch --port 3001 ./src/data/fakeDb.json\" \"vite\"",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",

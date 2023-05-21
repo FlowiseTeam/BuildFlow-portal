@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 export function AppLayout() {
   return (
     <SidebarProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <Header />
         <main className="flex flex-grow">
           <Sidebar />

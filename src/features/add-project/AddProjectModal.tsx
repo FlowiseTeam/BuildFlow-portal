@@ -1,7 +1,7 @@
 import { Button } from '@components/button/Button';
 import { Modal } from '@components/modal/Modal';
 import { createProject } from '@services/api';
-import { Project } from '@services/api-types';
+import { FormProject } from '@services/api-types';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 
@@ -25,7 +25,7 @@ export function AddProjectModal({
   onClose: () => void;
   onSuccess: () => void;
 }) {
-  const { mutateAsync } = useMutation(createProject);
+  const { mutateAsync } = useMutation((project: FormProject) => createProject(project));
   const {
     register,
     handleSubmit,
@@ -33,32 +33,28 @@ export function AddProjectModal({
   } = useForm<AddProjectInputs>();
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-    const projectObj: Project = {
+    const projectObj: FormProject = {
       name: data.name,
-      address: {
-        street: data.street,
-        city: data.city,
-        zipCode: data.zipcode,
-      },
+      street: data.street,
+      city: data.city,
+      zipcode: data.zipcode,
       start_date: data.start_date,
       end_date: data.end_date,
       status: data.status as any,
       client: data.client,
-      id: new Date().getTime(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      tasks: 0,
+      workers: [],
     };
-    await projectObj;
-    onSuccess();
 
-    console.log(projectObj);
+    try {
+      const res = await mutateAsync(projectObj);
+      console.log(res);
+      onSuccess();
+    } catch (error) {}
   });
 
   return (
     <Modal show={show} onClose={onClose} title="Dodaj projekt">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="grid auto-rows-fr grid-cols-3 gap-x-2">
           <div className="col-start-1 col-end-4 flex flex-col">
             <label className="text-gray-600" htmlFor="name">
@@ -77,7 +73,7 @@ export function AddProjectModal({
               Ulica i numer
             </label>
             <input
-              {...register('street', { required: true, minLength: 6 })}
+              {...register('street', { required: true, minLength: 3 })}
               type="text"
               id="street"
               className="w-full rounded-lg border-2 p-1 pl-2"
@@ -88,7 +84,7 @@ export function AddProjectModal({
               Miejscowość
             </label>
             <input
-              {...register('city', { required: true, minLength: 6 })}
+              {...register('city', { required: true, minLength: 3 })}
               type="text"
               id="city"
               className="w-full rounded-lg border-2 p-1 pl-2"
@@ -99,8 +95,9 @@ export function AddProjectModal({
               Kod pocztowy
             </label>
             <input
-              {...register('zipcode', { required: true, minLength: 6 })}
+              {...register('zipcode', { required: true, pattern: /^[0-9]{2}-[0-9]{3}$/i })}
               type="text"
+              maxLength={6}
               id="zipcode"
               className="w-full rounded-lg border-2 p-1 pl-2"
             />
@@ -110,8 +107,8 @@ export function AddProjectModal({
               Data rozpoczęcia
             </label>
             <input
-              {...register('start_date', { required: true, minLength: 6 })}
-              type="text"
+              {...register('start_date', { required: true })}
+              type="date"
               id="start_date"
               className="w-full rounded-lg border-2 p-1 pl-2"
             />
@@ -121,8 +118,8 @@ export function AddProjectModal({
               Data zakończenia
             </label>
             <input
-              {...register('end_date', { required: true, minLength: 6 })}
-              type="text"
+              {...register('end_date', { required: true })}
+              type="date"
               id="end_date"
               className="w-full rounded-lg border-2 p-1 pl-2"
             />

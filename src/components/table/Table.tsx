@@ -1,26 +1,35 @@
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useTable } from './useTable';
+import { Cell } from './Cell';
 
 export type TableColumn = {
   key: string;
   title: string;
   sortable?: boolean;
+  sortbyOrder?: 'desc' | 'asc';
   center?: boolean;
+  isEditable?: boolean;
+  type: 'select' | 'input';
+  options?: string[];
 };
 
-export type Data = Array<Record<string, any> & { id: number }>;
+export interface CellProps {
+  id: number;
+  [key: string]: any;
+}
 
 export type SortDirection = 'asc' | 'desc';
 
 type TableProps = {
   columns: TableColumn[];
-  data: Data;
+  data: CellProps[];
   defaultSort?: { key: string; direction: SortDirection };
   onEdit: (id: number) => void;
+  onRowClick: (id: number) => void;
 };
 
-export function Table({ columns, data, defaultSort, onEdit }: TableProps) {
+export function Table({ columns, data, defaultSort, onEdit, onRowClick }: TableProps) {
   const { handleSort, sortColumn, sortDirection, sortedData } = useTable(columns, data, defaultSort);
 
   return (
@@ -47,16 +56,24 @@ export function Table({ columns, data, defaultSort, onEdit }: TableProps) {
                 </div>
               </th>
             ))}
-            <th className="rounded-r">Edytuj</th>
+            <th className="rounded-r opacity-0">Edytuj</th>
           </tr>
         </thead>
         <tbody className="text-gray-700 [&>*:nth-child(2n-1)]:bg-neutral-200/75">
           {sortedData.map((row) => (
-            <tr className="px-6 py-4" key={row.id}>
+            <tr
+              className="px-6 py-4 hover:cursor-pointer hover:!bg-black/10"
+              key={row.id}
+              onClick={() => onRowClick(row.id)}
+            >
               {columns.map((column) => (
-                <td key={column.key} className={`px-6 py-4 ${column.center ? 'text-center' : ''}`}>
-                  {row[column.key]}
-                </td>
+                <Cell
+                  key={column.key}
+                  centered={column.center}
+                  text={row[column.key]}
+                  type={column.type}
+                  onEdit={() => onEdit(row.id)}
+                />
               ))}
               <td className=" py-4">
                 <button onClick={() => onEdit(row.id)}>

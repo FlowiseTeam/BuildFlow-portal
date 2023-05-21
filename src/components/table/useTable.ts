@@ -1,7 +1,11 @@
 import { useState, useMemo } from 'react';
-import { Data, SortDirection, TableColumn } from './Table';
+import { CellProps, SortDirection, TableColumn } from './Table';
 
-export function useTable(columns: TableColumn[], data: Data, defaultSort?: { key: string; direction: SortDirection }) {
+export function useTable(
+  columns: TableColumn[],
+  data: CellProps[],
+  defaultSort?: { key: string; direction: SortDirection },
+) {
   const initialSortColumn = columns.find((column) => column.key === defaultSort?.key) || null;
   const [sortColumn, setSortColumn] = useState<TableColumn | null>(initialSortColumn);
   const [sortDirection, setSortDirection] = useState<SortDirection>(defaultSort?.direction || 'asc');

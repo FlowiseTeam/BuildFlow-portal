@@ -15,6 +15,10 @@ export interface ProjectsQuery {
   project_count: number;
 }
 
+export interface ProjectQuery {
+  projects: Project;
+}
+
 export interface Project {
   client: string;
   created_at: string;
@@ -23,10 +27,11 @@ export interface Project {
   start_date: string;
   status: 'in-progress' | 'closed';
   street: string;
-  zipCode: string;
+  zipcode: string;
   city: string;
   workers: any[];
   updated_at: string;
   _id: number;
-  tasks: number;
 }
+
+export type FormProject = Omit<Project, 'created_at' | 'updated_at' | '_id'>;

@@ -10,15 +10,9 @@ import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
 
 export function ProjectsPage() {
   const { data, refetch } = useQuery('projects', getProjects, { suspense: true });
+  if (!data) throw Error('Something went wrong');
   const [view, setView] = useState<'list' | 'tiles'>('list');
-  // if (!data) throw Error('Something went wrong');
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
-
-  if (!data) {
-    return <div>Something went wrong</div>;
-  }
-
-  console.log(data);
 
   const toggleView = () => setView(view === 'list' ? 'tiles' : 'list');
 

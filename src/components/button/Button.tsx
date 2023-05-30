@@ -1,5 +1,6 @@
 export const variants = {
-  primary: 'bg-primary-light hover:bg-primary text-white',
+  primary:
+    'bg-primary-light !disabled:hover:bg-primary text-white disabled:cursor-not-allowed disabled:bg-primary-light/80 ',
   neutral: 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300 hover:text-neutral-800',
   danger: 'bg-red-500 hover:bg-red-700 text-white',
   success: 'bg-green-500 hover:bg-green-700 text-white',
@@ -20,7 +21,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export function Button({ children, variant = 'neutral', size = 'sm', className, ...rest }: ButtonProps) {
   return (
-    <button className={`rounded-full font-abhaya   ${variants[variant]} ${sizes[size]} ${className}`} {...rest}>
+    <button className={`rounded-full font-abhaya ${variants[variant]} ${sizes[size]} ${className}`} {...rest}>
       {children}
     </button>
   );

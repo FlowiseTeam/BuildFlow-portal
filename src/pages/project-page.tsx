@@ -8,8 +8,8 @@ import { getProject, updateProject } from '@services/api';
 import { FormProject, Project } from '@services/api-types';
 import { useMutation, useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { queryClient } from '../main';
 import { ProjectHeader } from '@features/projectHeader/ProjectHeader';
+
 export function ProjectPage() {
   const id = useParams<{ id: string }>().id;
   if (!id) {
@@ -24,17 +24,15 @@ export function ProjectPage() {
     throw new Error('Something went wrong');
   }
 
-  const { mutateAsync } = useMutation(['project', id], (project: Project) => updateProject(project), {
-    onSuccess: (_, updatedProject: Project) => {
-      queryClient.setQueryData(['project', id], updatedProject);
-    },
-  });
+  const { mutateAsync } = useMutation(['project', id], (project: Project) => updateProject(project));
 
   async function onUpdate(formData: FormProject) {
     const updatedProject = { ...project, ...formData } as Project;
     try {
       await mutateAsync(updatedProject);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (

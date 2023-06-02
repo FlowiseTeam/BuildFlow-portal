@@ -41,7 +41,7 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick }: TableP
               <th
                 key={column.key}
                 scope="col"
-                className="cursor-pointer px-6 py-3  first:rounded   "
+                className="cursor-pointer px-6 py-3  first:rounded-tl   "
                 onClick={() => handleSort(column)}
               >
                 <div className="flex items-baseline justify-center">
@@ -56,7 +56,7 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick }: TableP
                 </div>
               </th>
             ))}
-            <th className="rounded-r opacity-0">Edytuj</th>
+            <th className="rounded-tr opacity-0">Edytuj</th>
           </tr>
         </thead>
         <tbody className="text-gray-700 [&>*:nth-child(2n-1)]:bg-neutral-200/75">

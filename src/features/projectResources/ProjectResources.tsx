@@ -15,7 +15,7 @@ export function ProjectResources({
             <Tab
               key={cat}
               className={({ selected }) =>
-                ` rounded-lg rounded-b-none px-2 py-2 text-sm font-medium leading-5 ${selected ? 'bg-white' : ''}`
+                ` rounded-[16px] rounded-b-none px-2 py-2 text-sm font-medium leading-5 ${selected ? 'bg-white' : ''}`
               }
             >
               {cat}

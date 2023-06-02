@@ -1,11 +1,10 @@
-import { Button } from '@components/button/Button';
-import { Modal } from '@components/modal/Modal';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { deleteProject } from '@services/api';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { queryClient } from '../../main';
+import { DeleteModal } from '@src/components/deleteModal/DeleteModal';
 
 export function ProjectHeader({ title, projectId }: { title: string; projectId: number }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -22,19 +21,9 @@ export function ProjectHeader({ title, projectId }: { title: string; projectId: 
       <h2 className="col font-roboto text-4xl">{title}</h2>
       <div>
         <TrashIcon onClick={() => setIsDeleteModalOpen(true)} className="h-6 hover:cursor-pointer hover:text-red-700" />
-        <Modal
-          dialogClassName="max-w-xs"
-          show={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
+        <DeleteModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen}
           title="Czy chcesz usunąć projekt?"
-        >
-          <div className="flex flex-col gap-4">
-            <Button>Anuluj</Button>
-            <Button variant="danger" onClick={() => mutateAsync()}>
-              Tak
-            </Button>
-          </div>
-        </Modal>
+          onSuccess={() => mutateAsync()}/>
       </div>
     </div>
   );

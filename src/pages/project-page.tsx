@@ -39,15 +39,15 @@ export function ProjectPage() {
     <Page header={<ProjectHeader title={project.name} projectId={project._id} />}>
       <div className="mb-16 mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         <DetailCard className="p-2 md:col-span-3 lg:col-span-3">
-          <ProjectForm project={project} onSuccess={onUpdate} />
+          <ProjectForm project={project} handleFormSubmit={onUpdate} />
         </DetailCard>
-        <DetailCard className="md:col-start-3 md:row-start-3 xl:col-start-auto xl:row-start-auto">
+        <DetailCard className="row-span-2 md:col-start-3 md:row-start-3 xl:col-start-auto xl:row-start-auto">
           <ProjectChat />
         </DetailCard>
         <DetailCard className="min-h-[6rem] sm:col-span-2 lg:col-span-3 xl:col-span-2">
           <ProjectResources categories={{ Pracownicy: project.workers, Pojazdy: [] }} />
         </DetailCard>
-        <DetailCard className="sm:col-span-2">
+        <DetailCard className="sm:col-span-1">
           <FallbackMap />
         </DetailCard>
       </div>

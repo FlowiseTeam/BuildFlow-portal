@@ -35,3 +35,23 @@ export interface Project {
 }
 
 export type FormProject = Omit<Project, 'created_at' | 'updated_at' | '_id'>;
+
+export interface Employee {
+  _id: number;
+  assigned_project: string;
+  created_at: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  qualifications: null;
+  updated_at: string;
+  role: string;
+  status: string;
+}
+
+export type PostEmployee = Omit<Employee, '_id' | 'created_at' | 'updated_at'>;
+
+export interface EmployeesQuery {
+  employees: Employee[];
+  employee_count: number;
+}

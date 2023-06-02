@@ -21,7 +21,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export function Button({ children, variant = 'neutral', size = 'sm', className, ...rest }: ButtonProps) {
   return (
-    <button className={`rounded-full font-abhaya ${variants[variant]} ${sizes[size]} ${className}`} {...rest}>
+    <button className={`rounded-full ${variants[variant]} ${sizes[size]} ${className}`} {...rest}>
       {children}
     </button>
   );

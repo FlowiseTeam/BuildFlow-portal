@@ -7,6 +7,7 @@ import { ProjectPage } from '@pages/project-page';
 import { ProjectsPage } from '@pages/projects-page';
 import { VehiclesPage } from '@pages/vehicles-page';
 import { Routes, Route, Outlet } from 'react-router-dom';
+import { EmployeePage } from './pages/employee-page';
 
 function Root() {
   return <Outlet />;
@@ -19,7 +20,10 @@ function App() {
       <Route path="/app" element={<AppLayout />}>
         <Route index element={<AppPage />} />
         <Route path="vehicles" element={<VehiclesPage />} />
-        <Route path="employees" element={<EmployeesPage />} />
+        <Route path="employees">
+          <Route index element={<EmployeesPage />} />
+          <Route path=":id" element={<EmployeePage />} />
+        </Route>
         <Route path="bdo" element={<BDOPage />} />
         <Route path="projects">
           <Route index element={<ProjectsPage />} />

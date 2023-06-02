@@ -19,11 +19,11 @@ const statuses = ['W trakcie', 'Zakończony'];
 
 export function ProjectForm({
   onClose,
-  onSuccess,
+  handleFormSubmit,
   project,
 }: {
   onClose?: () => void;
-  onSuccess: (data: FormProject) => Promise<void>;
+  handleFormSubmit: (data: FormProject) => Promise<void>;
   project?: Project;
 }) {
   const {
@@ -46,12 +46,12 @@ export function ProjectForm({
       client: data.client,
       workers: [],
     };
-    await onSuccess(project);
+    await handleFormSubmit(project);
   });
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="grid auto-rows-fr gap-x-2 md:grid-cols-3">
+      <div className="grid auto-rows-fr gap-x-2 p-4 md:grid-cols-3">
         <div className="md:col-span-3">
           <Input
             register={register}
@@ -119,7 +119,7 @@ export function ProjectForm({
           defaultValue={statuses[0]}
           name="status"
           render={({ field: { onChange } }) => (
-            <StatusInput onChange={onChange} values={statuses} defaultValue={statuses[0]} />
+            <StatusInput id="status" onChange={onChange} values={statuses} defaultValue={statuses[0]} />
           )}
         ></Controller>
         <Input

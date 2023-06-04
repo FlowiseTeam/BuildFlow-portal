@@ -25,7 +25,7 @@ type TableProps = {
   columns: TableColumn[];
   data: CellProps[];
   defaultSort?: { key: string; direction: SortDirection };
-  onEdit: (id: number) => void;
+  onEdit?: (id: number) => void;
   onRowClick: (id: number) => void;
 };
 
@@ -72,11 +72,11 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick }: TableP
                   centered={column.center}
                   text={row[column.key]}
                   type={column.type}
-                  onEdit={() => onEdit(row.id)}
+                  onEdit={onEdit ? () => onEdit(row.id) : undefined}
                 />
               ))}
               <td className=" py-4">
-                <button onClick={() => onEdit(row.id)}>
+                <button onClick={onEdit ? () => onEdit(row.id) : undefined}>
                   <PencilIcon className="h-4" />
                 </button>
               </td>

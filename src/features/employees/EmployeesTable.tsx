@@ -1,6 +1,6 @@
 import { Table, TableColumn } from '@components/table/Table';
 import { Employee } from '@services/api-types';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const columns = [
@@ -13,12 +13,12 @@ const columns = [
 ] satisfies TableColumn[];
 
 export function EmployeesTable({ employees }: { employees: Employee[] }) {
-  const [activeEmployeeId, setActiveEmployeeId] = useState<number | null>(null);
+  // const [activeEmployeeId, setActiveEmployeeId] = useState<number | null>(null);
 
-  const activeProject = employees.find((employee) => employee._id === activeEmployeeId);
-  const handleEdit = (employeeId: number) => {
-    setActiveEmployeeId(employeeId);
-  };
+  // const activeProject = employees.find((employee) => employee._id === activeEmployeeId);
+  // const handleEdit = (employeeId: number) => {
+  //   setActiveEmployeeId(employeeId);
+  // };
   const navigate = useNavigate();
 
   const tableData = useMemo(
@@ -42,7 +42,7 @@ export function EmployeesTable({ employees }: { employees: Employee[] }) {
         columns={columns}
         data={tableData}
         defaultSort={{ direction: 'asc', key: 'endDate' }}
-        onEdit={handleEdit}
+        // onEdit={handleEdit}
       />
     </>
   );

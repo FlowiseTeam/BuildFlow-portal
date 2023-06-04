@@ -15,5 +15,5 @@ export function EditEmployee({ employee }: { employee: Employee }) {
     }
   }
 
-  return <EmployeeForm employee={employee} onSuccess={onUpdate} />;
+  return <EmployeeForm employee={employee} handleFormSubmit={onUpdate} />;
 }

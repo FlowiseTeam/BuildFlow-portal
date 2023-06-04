@@ -7,7 +7,7 @@ export function Header() {
   const { toggle } = useSidebarContext();
 
   return (
-    <header className="sticky top-0 flex w-full items-center justify-between px-4 py-2 bg-white">
+    <header className="sticky top-0 z-10 flex w-full items-center justify-between bg-white px-4 py-2">
       <button className="lg:hidden">
         <Bars3Icon className="h-6 w-6" onClick={toggle} />
       </button>

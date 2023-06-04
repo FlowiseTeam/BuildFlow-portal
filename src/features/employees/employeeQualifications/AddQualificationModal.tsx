@@ -16,7 +16,7 @@ export function AddQualificationModal({
 }) {
   const { register, formState, handleSubmit, reset } = useForm<QualificationInputs>();
 
-  const onSubmit = (data: QualificationInputs) => {
+  const onSubmit = () => {
     setIsOpen(false);
     reset();
   };
@@ -32,7 +32,9 @@ export function AddQualificationModal({
           labelText="Uprawnienie"
           error={formState.errors.qualification}
         />
-        <Button disabled={!formState.isValid}>Dodaj</Button>
+        <div className="text-right">
+          <Button disabled={!formState.isValid}>Dodaj</Button>
+        </div>
       </form>
     </Modal>
   );

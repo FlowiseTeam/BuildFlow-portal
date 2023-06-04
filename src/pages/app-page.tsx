@@ -1,20 +1,25 @@
 import { Page } from '@layouts/Page';
-import { getWelcomingText } from '@utils/utils';
+import { CalendarEvents } from '@src/features/calendar/calenderEvents/CalendarEvents';
+import { DashboardHeader } from '@src/features/dashboard/DashboardHeader';
 
 export function AppPage() {
   const data = { name: 'Hardcoded name' };
   return (
-    <Page title={data.name}>
+    <Page header={<DashboardHeader companyName={data.name} />}>
       <Dashboard />
     </Page>
   );
 }
 
 export function Dashboard() {
-  const welcomeText = getWelcomingText();
   return (
-    <div className="grid grid-cols-4 grid-rows-5  gap-4">
-      <p className=" col-start-1 col-end-5 row-start-1 row-end-2">{welcomeText}</p>
+    <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="bg-pink-200 sm:col-span-2 xl:col-span-3">summary</div>
+      <div className="bg-pink-200 xl:col-span-3">messages</div>
+      <div className=" xl:col-start-4 xl:row-span-3 xl:row-start-1">
+        <CalendarEvents />
+      </div>
+      <div className="bg-pink-200 sm:col-span-2 xl:col-span-3">vehicles</div>
     </div>
   );
 }

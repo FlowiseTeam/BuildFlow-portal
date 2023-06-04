@@ -4,7 +4,17 @@ import { DeleteModal } from '@src/components/deleteModal/DeleteModal';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export function DetailsPageHeader({ title, onDelete, backLink }: { title: string; onDelete:() => void; backLink:string}) {
+export function DetailsPageHeader({
+  title,
+  onDelete,
+  deleteModalTitle,
+  backLink,
+}: {
+  title: string;
+  onDelete: () => void;
+  backLink: string;
+  deleteModalTitle: string;
+}) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
@@ -12,7 +22,7 @@ export function DetailsPageHeader({ title, onDelete, backLink }: { title: string
       <Link to={backLink}>
         <div className="flex items-center">
           <ChevronLeftIcon className=" h-10" />
-          <h2 className="col font-roboto  whitespace-nowrap text-4xl">{title}</h2>
+          <h2 className="col font-roboto text-4xl">{title}</h2>
         </div>
       </Link>
       <div>
@@ -20,9 +30,12 @@ export function DetailsPageHeader({ title, onDelete, backLink }: { title: string
           Edytuj
         </Button>
         <Button onClick={() => setIsDeleteModalOpen(true)}>Usuń</Button>
-        <DeleteModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen}
-          title="Czy chcesz usunąć pracownika?"
-          onSuccess={onDelete}/>
+        <DeleteModal
+          isDeleteModalOpen={isDeleteModalOpen}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+          title={deleteModalTitle}
+          onSuccess={onDelete}
+        />
       </div>
     </div>
   );

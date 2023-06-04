@@ -1,4 +1,5 @@
 export const variants = {
+  light: 'text-neutral-700 hover:bg-neutral-300 hover:text-neutral-800',
   primary:
     'bg-primary-light !disabled:hover:bg-primary text-white disabled:cursor-not-allowed disabled:bg-primary-light/80 ',
   neutral: 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300 hover:text-neutral-800',
@@ -8,6 +9,7 @@ export const variants = {
 };
 
 export const sizes = {
+  custom: '',
   xs: 'py-1 px-3 text-xs',
   sm: 'py-[5px] px-4',
   md: 'py-2 px-5 text-md',

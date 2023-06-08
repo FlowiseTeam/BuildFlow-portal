@@ -17,7 +17,7 @@ export function EmployeeQualifications({ qualifications }: { qualifications: str
         </header>
         <ul className="p-4">
           {Array.isArray(qualifications) && qualifications.map((qualification) => <li>{qualification}</li>)}
-          {!qualifications && <li className="text-gray-500">Brak uprawnień</li>}
+          {!qualifications && <li className="text-gray-500">Brak uprawnień.</li>}
           {typeof qualifications === 'string' && <li>{qualifications}</li>}
         </ul>
       </div>

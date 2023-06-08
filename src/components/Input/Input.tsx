@@ -19,6 +19,7 @@ export function Input<T extends FieldValues = FieldValues>({
   error,
   id,
   type,
+  disabled,
   ...rest
 }: InputProps<T>) {
   const hookFormProps = register ? { ...register(name, validationSchema) } : {};
@@ -28,10 +29,11 @@ export function Input<T extends FieldValues = FieldValues>({
         {labelText}
       </label>
       <input
-        className="h-9 rounded-lg border-2 p-1 pl-2"
+        className={`h-9 rounded-lg border-2 p-1 pl-2 ${disabled ? 'cursor-not-allowed text-gray-600' : ''}`}
         {...hookFormProps}
         type={type}
         id={id}
+        disabled={disabled}
         defaultValue={defaultValue}
         {...rest}
       />

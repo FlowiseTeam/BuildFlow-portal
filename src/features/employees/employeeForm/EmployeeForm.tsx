@@ -12,10 +12,12 @@ export function EmployeeForm({
   onClose,
   handleFormSubmit,
   employee,
+  disabled = false,
 }: {
   onClose?: () => void;
   handleFormSubmit: (data: EmployeeFormInputs) => Promise<void>;
   employee?: Employee;
+  disabled?: boolean;
 }) {
   const {
     register,
@@ -41,6 +43,7 @@ export function EmployeeForm({
           labelText="Imię"
           name="first_name"
           error={errors.first_name}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -51,6 +54,7 @@ export function EmployeeForm({
           labelText="Nazwisko"
           name="last_name"
           error={errors.last_name}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -61,6 +65,7 @@ export function EmployeeForm({
           labelText="E-mail"
           name="email"
           error={errors.email}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -71,6 +76,7 @@ export function EmployeeForm({
           labelText="Rola"
           name="role"
           error={errors.role}
+          disabled={disabled}
         />
 
         <Controller
@@ -78,7 +84,13 @@ export function EmployeeForm({
           defaultValue={statuses[0]}
           name="status"
           render={({ field: { onChange } }) => (
-            <StatusInput onChange={onChange} id="status" values={statuses} defaultValue={statuses[0]} />
+            <StatusInput
+              onChange={onChange}
+              disabled={disabled}
+              id="status"
+              values={statuses}
+              defaultValue={statuses[0]}
+            />
           )}
         ></Controller>
       </div>

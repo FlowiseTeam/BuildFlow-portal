@@ -3,7 +3,7 @@ import { Employee } from '@services/api-types';
 import { useMutation } from 'react-query';
 import { EmployeeForm, EmployeeFormInputs } from '../employeeForm/EmployeeForm';
 
-export function EditEmployee({ employee }: { employee: Employee }) {
+export function EditEmployee({ employee, isEdited }: { employee: Employee; isEdited: boolean }) {
   const { mutateAsync } = useMutation(['employee', employee._id], (Employee: Employee) => updateEmployee(Employee));
 
   async function onUpdate(formData: EmployeeFormInputs) {
@@ -15,5 +15,5 @@ export function EditEmployee({ employee }: { employee: Employee }) {
     }
   }
 
-  return <EmployeeForm employee={employee} handleFormSubmit={onUpdate} />;
+  return <EmployeeForm employee={employee} handleFormSubmit={onUpdate} disabled={!isEdited} />;
 }

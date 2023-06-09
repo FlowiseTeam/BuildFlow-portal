@@ -8,15 +8,18 @@ interface QualificationInputs {
 }
 
 export function AddQualificationModal({
+  onAdd,
   show,
   setIsOpen,
 }: {
+  onAdd: (qualification: string) => void;
   show: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { register, formState, handleSubmit, reset } = useForm<QualificationInputs>();
 
-  const onSubmit = () => {
+  const onSubmit = (data: QualificationInputs) => {
+    onAdd(data.qualification);
     setIsOpen(false);
     reset();
   };

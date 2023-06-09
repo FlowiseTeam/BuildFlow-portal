@@ -10,12 +10,14 @@ export function DetailsPageHeader({
   deleteModalTitle,
   backLink,
   toggleEdit,
+  isEdited,
 }: {
   title: string;
   onDelete: () => void;
   backLink: string;
   deleteModalTitle: string;
   toggleEdit: () => void;
+  isEdited?: boolean;
 }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -29,7 +31,7 @@ export function DetailsPageHeader({
       </Link>
       <div>
         <Button onClick={toggleEdit} variant="primary" className="mr-4">
-          Edytuj
+          {isEdited ? 'Anuluj' : 'Edytuj'}
         </Button>
         <Button onClick={() => setIsDeleteModalOpen(true)}>Usuń</Button>
         <DeleteModal

@@ -15,7 +15,6 @@ export function Input<T extends FieldValues = FieldValues>({
   className,
   register,
   labelText,
-  defaultValue,
   error,
   id,
   type,
@@ -34,7 +33,6 @@ export function Input<T extends FieldValues = FieldValues>({
         type={type}
         id={id}
         disabled={disabled}
-        defaultValue={defaultValue}
         {...rest}
       />
       <div className="h-6">

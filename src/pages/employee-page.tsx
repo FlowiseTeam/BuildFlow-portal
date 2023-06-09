@@ -15,7 +15,6 @@ export function EmployeePage() {
   }
 
   const [isEdited, setIsEdited] = useState(false);
-
   const toggleIsEdited = () => setIsEdited((prev) => !prev);
 
   const { employee, onDelete } = useEmployeeQuery(Number(id));
@@ -29,6 +28,7 @@ export function EmployeePage() {
           onDelete={onDelete}
           deleteModalTitle="Czy chcesz usunać pracownika?"
           toggleEdit={toggleIsEdited}
+          isEdited={isEdited}
         />
       }
     >
@@ -37,7 +37,7 @@ export function EmployeePage() {
           <EditEmployee isEdited={isEdited} employee={employee} />
         </DetailCard>
         <DetailCard>
-          <EmployeeQualifications qualifications={employee.qualifications} />
+          <EmployeeQualifications employee={employee} isEdited={isEdited} />
         </DetailCard>
       </div>
     </Page>

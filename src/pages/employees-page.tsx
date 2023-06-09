@@ -5,9 +5,17 @@ import { useState } from 'react';
 import { Button } from '@components/button/Button';
 import { EmployeesTable } from '@features/employees/EmployeesTable';
 import { AddEmployeeModal } from '@features/employees/addEmployeeModal/AddEmployeeModal';
+import { queryClient } from '@src/main';
 
 export function EmployeesPage() {
-  const { data, refetch } = useQuery('employees', getEmployees, { suspense: true });
+  const { data, refetch } = useQuery('employees', getEmployees, {
+    suspense: true,
+    onSuccess: (queryData) => {
+      queryData.employees.forEach((employee) => {
+        queryClient.setQueryData(['employee', employee._id], employee);
+      });
+    },
+  });
   if (!data) throw Error('Something went wrong');
 
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
@@ -27,7 +35,9 @@ export function EmployeesPage() {
       <div className="mt-8 flex flex-col">
         <div className="flex justify-between">
           <button>Szukaj</button>
-          <Button onClick={() => setIsAddEmployeeModalOpen(true)}>Dodaj pracownika</Button>
+          <Button variant="primary" onClick={() => setIsAddEmployeeModalOpen(true)}>
+            Dodaj pracownika
+          </Button>
         </div>
         <div className="mt-8 w-0 min-w-full">
           <EmployeesTable employees={data.employees} />

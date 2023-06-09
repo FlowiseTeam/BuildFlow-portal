@@ -25,11 +25,12 @@ type TableProps = {
   columns: TableColumn[];
   data: CellProps[];
   defaultSort?: { key: string; direction: SortDirection };
+  editable?: boolean;
   onEdit?: (id: number) => void;
   onRowClick: (id: number) => void;
 };
 
-export function Table({ columns, data, defaultSort, onEdit, onRowClick }: TableProps) {
+export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable = true }: TableProps) {
   const { handleSort, sortColumn, sortDirection, sortedData } = useTable(columns, data, defaultSort);
 
   return (
@@ -56,7 +57,7 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick }: TableP
                 </div>
               </th>
             ))}
-            <th className="rounded-tr opacity-0">Edytuj</th>
+            {editable && <th className="rounded-tr opacity-0">Edytuj</th>}
           </tr>
         </thead>
         <tbody className="text-gray-700 [&>*:nth-child(2n-1)]:bg-neutral-200/75">
@@ -75,11 +76,13 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick }: TableP
                   onEdit={onEdit ? () => onEdit(row.id) : undefined}
                 />
               ))}
-              <td className=" py-4">
-                <button onClick={onEdit ? () => onEdit(row.id) : undefined}>
-                  <PencilIcon className="h-4" />
-                </button>
-              </td>
+              {editable && (
+                <td className=" py-4">
+                  <button onClick={onEdit ? () => onEdit(row.id) : undefined}>
+                    <PencilIcon className="h-4" />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

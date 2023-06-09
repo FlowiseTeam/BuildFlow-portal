@@ -2,7 +2,10 @@ import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
 import { StatusInput } from '@components/statusInput/StatusInput';
 import { Employee } from '@services/api-types';
+import { ListboxInput } from '@src/components/listboxInput/ListboxInput';
+import { getProjects } from '@src/services/api';
 import { Controller, useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
 
 export type EmployeeFormInputs = Omit<Employee, '_id' | 'updated_at' | 'created_at' | 'qualifications'>;
 
@@ -12,17 +15,19 @@ export function EmployeeForm({
   onClose,
   handleFormSubmit,
   employee,
+  disabled = false,
 }: {
   onClose?: () => void;
   handleFormSubmit: (data: EmployeeFormInputs) => Promise<void>;
   employee?: Employee;
+  disabled?: boolean;
 }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
     control,
-  } = useForm<EmployeeFormInputs>();
+  } = useForm<EmployeeFormInputs>({ defaultValues: employee });
 
   const onSubmit = handleSubmit(async (data) => {
     if (!isValid) return;
@@ -41,6 +46,7 @@ export function EmployeeForm({
           labelText="Imię"
           name="first_name"
           error={errors.first_name}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -51,16 +57,7 @@ export function EmployeeForm({
           labelText="Nazwisko"
           name="last_name"
           error={errors.last_name}
-        />
-        <Input
-          register={register}
-          validationSchema={{ required: true }}
-          id="email"
-          type="email"
-          defaultValue={employee?.email}
-          labelText="E-mail"
-          name="email"
-          error={errors.email}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -71,14 +68,21 @@ export function EmployeeForm({
           labelText="Rola"
           name="role"
           error={errors.role}
+          disabled={disabled}
         />
-
         <Controller
           control={control}
           defaultValue={statuses[0]}
           name="status"
           render={({ field: { onChange } }) => (
-            <StatusInput onChange={onChange} id="status" values={statuses} defaultValue={statuses[0]} />
+            <ListboxInput
+              labelText="Status"
+              onChange={onChange}
+              disabled={disabled}
+              id="status"
+              values={statuses}
+              defaultValue={employee?.status || statuses[0]}
+            />
           )}
         ></Controller>
       </div>

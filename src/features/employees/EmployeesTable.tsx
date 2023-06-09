@@ -13,12 +13,6 @@ const columns = [
 ] satisfies TableColumn[];
 
 export function EmployeesTable({ employees }: { employees: Employee[] }) {
-  // const [activeEmployeeId, setActiveEmployeeId] = useState<number | null>(null);
-
-  // const activeProject = employees.find((employee) => employee._id === activeEmployeeId);
-  // const handleEdit = (employeeId: number) => {
-  //   setActiveEmployeeId(employeeId);
-  // };
   const navigate = useNavigate();
 
   const tableData = useMemo(
@@ -36,13 +30,12 @@ export function EmployeesTable({ employees }: { employees: Employee[] }) {
 
   return (
     <>
-      {/* <EditEmployeeModal activeEmployee={activeEmployee} setActiveEmployeeId={setActiveEmployeeId} /> */}
       <Table
         onRowClick={handleRowClick}
         columns={columns}
         data={tableData}
         defaultSort={{ direction: 'asc', key: 'endDate' }}
-        // onEdit={handleEdit}
+        editable={false}
       />
     </>
   );

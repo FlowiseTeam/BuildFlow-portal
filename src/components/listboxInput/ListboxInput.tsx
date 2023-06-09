@@ -1,14 +1,16 @@
 import { Listbox } from '@headlessui/react';
 
-export function StatusInput({
+export function ListboxInput({
   onChange,
   values,
+  labelText,
   id,
   defaultValue,
   disabled = false,
 }: {
   onChange: (...event: any[]) => void;
   values: readonly string[];
+  labelText: string;
   id: string;
   defaultValue: string;
   disabled?: boolean;
@@ -17,7 +19,7 @@ export function StatusInput({
     <Listbox disabled={disabled} onChange={onChange} defaultValue={defaultValue}>
       <div className="relative flex flex-col">
         <label className="text-xs text-gray-600" htmlFor={id}>
-          Status
+          {labelText}
         </label>
         <Listbox.Button
           role="input"

@@ -40,10 +40,9 @@ export interface Employee {
   _id: number;
   assigned_project: string;
   created_at: string;
-  email: string;
   first_name: string;
   last_name: string;
-  qualifications: null;
+  qualifications: null | string[];
   updated_at: string;
   role: string;
   status: string;

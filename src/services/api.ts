@@ -26,7 +26,7 @@ export const getCompany = async () => (await projectsAxiosApi.get('/company')).d
 export const getEmployees = async (): Promise<EmployeesQuery> => (await axiosApi.get('/employees')).data;
 
 export const getEmployee = async (employeeId: number): Promise<Employee> =>
-  (await axiosApi.get(`/employees/${employeeId}`)).data.employees;
+  (await axiosApi.get(`/employees/${employeeId}`)).data.employee;
 
 export const updateEmployee = async (employee: any) =>
   (await axiosApi.put(`/employees/${employee._id}`, employee)).data;

@@ -1,11 +1,21 @@
 import axios from 'axios';
-import { Employee, EmployeesQuery, FormProject, Project, ProjectQuery, ProjectsQuery } from './api-types';
+import {
+  CommentsQuery,
+  Employee,
+  EmployeesQuery,
+  FormProject,
+  Project,
+  ProjectQuery,
+  ProjectsQuery,
+} from './api-types';
 import { EmployeeFormInputs } from '@features/employees/employeeForm/EmployeeForm';
 const API_URL = import.meta.env.MODE === 'production' ? '' : 'http://localhost:3001/api';
 
 const PROJECTS_API_URL = import.meta.env.MODE === 'production' ? '' : 'http://localhost:3000/api';
 
 const axiosApi = axios.create({ baseURL: API_URL });
+
+const imagesApi = axios.create({ baseURL: 'http://localhost:3000' });
 
 const projectsAxiosApi = axios.create({ baseURL: PROJECTS_API_URL });
 
@@ -34,3 +44,16 @@ export const updateEmployee = async (employee: any) =>
 export const createEmployee = async (employee: EmployeeFormInputs) => await axiosApi.post('/employees', employee);
 
 export const deleteEmployee = async (employeeId: number) => await axiosApi.delete(`employees/${employeeId}`);
+
+export const getProjectComments = async (projectId: number): Promise<CommentsQuery> =>
+  (await projectsAxiosApi.get(`/projects/${projectId}/comments`)).data;
+
+export const getImage = () => async (url: string) => await imagesApi.get(url);
+
+export const createComment = async (projectId: number, commentData: FormData) =>
+  axios({
+    method: 'post',
+    url: `${PROJECTS_API_URL}/projects/${projectId}/comments`,
+    data: commentData,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });

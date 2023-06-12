@@ -54,3 +54,18 @@ export interface EmployeesQuery {
   employees: Employee[];
   employee_count: number;
 }
+
+export interface Comment {
+  created_at: string;
+  images: { url: string }[];
+  message: string;
+  project_id: number;
+  status: string;
+  updated_at: string;
+  _id: number;
+}
+
+export interface CommentsQuery {
+  comments: Comment[];
+  comments_count: number;
+}

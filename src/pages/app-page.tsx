@@ -3,33 +3,50 @@ import { DetailCard } from '@src/components/detailCard/DetailCard';
 import { CalendarEvents } from '@src/features/calendar/calenderEvents/CalendarEvents';
 import { DashboardHeader } from '@src/features/dashboard/DashboardHeader';
 import { DashboardSummary } from '@src/features/dashboard/summary/DashboardSummary';
-import { ChatMessage, Message } from '@src/features/projectChat/ChatMessage';
+import { ChatComment } from '@src/features/projectChat/ChatComment';
 import { VehiclesTable } from '@src/features/vehicles/VehiclesTable';
+import { Comment } from '@src/services/api-types';
 
-const messages: Message[] = [
+const messages: Comment[] = [
   {
-    checked: true,
-    date: new Date(),
-    id: 1,
-    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat repellendus enim quidem, rerum ipsa excepturi!',
+    created_at: '',
+    _id: 1,
+    message:
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat repellendus enim quidem, rerum ipsa excepturi!',
+    images: [],
+    status: '',
+    updated_at: '',
+    project_id: 1,
   },
   {
-    checked: true,
-    date: new Date(),
-    id: 2,
-    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat repellendus enim quidem, rerum ipsa excepturi!',
+    created_at: '',
+    _id: 2,
+    message:
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat repellendus enim quidem, rerum ipsa excepturi!',
+    images: [],
+    status: '',
+    updated_at: '',
+    project_id: 1,
   },
   {
-    checked: true,
-    date: new Date(),
-    id: 3,
-    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat repellendus enim quidem, rerum ipsa excepturi!',
+    created_at: '',
+    _id: 3,
+    message:
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat repellendus enim quidem, rerum ipsa excepturi!',
+    images: [],
+    status: '',
+    updated_at: '',
+    project_id: 1,
   },
   {
-    checked: true,
-    date: new Date(),
-    id: 4,
-    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat repellendus enim quidem, rerum ipsa excepturi!',
+    created_at: '',
+    _id: 4,
+    message:
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat repellendus enim quidem, rerum ipsa excepturi!',
+    images: [],
+    status: '',
+    updated_at: '',
+    project_id: 1,
   },
 ];
 
@@ -51,8 +68,8 @@ export function Dashboard() {
       <div className="xl:col-span-3">
         <div className="grid gap-6 xl:grid-cols-2">
           {messages.map((msg) => (
-            <DetailCard key={msg.id} className="basis-full p-4">
-              <ChatMessage message={msg} />
+            <DetailCard key={msg._id} className="basis-full p-4">
+              <ChatComment message={msg} />
             </DetailCard>
           ))}
         </div>

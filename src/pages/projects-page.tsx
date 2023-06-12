@@ -7,9 +7,17 @@ import { Button } from '@components/button/Button';
 import { ListBulletIcon } from '@heroicons/react/24/outline';
 import { DashboardIcon } from '@components/icons/DashboardIcon';
 import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
+import { queryClient } from '@src/main';
 
 export function ProjectsPage() {
-  const { data, refetch } = useQuery('projects', getProjects, { suspense: true });
+  const { data, refetch } = useQuery('projects', getProjects, {
+    suspense: true,
+    onSuccess: (queryData) => {
+      queryData.projects.forEach((project) => {
+        queryClient.setQueryData(['project', project._id], project);
+      });
+    },
+  });
   if (!data) throw Error('Something went wrong');
   const [view, setView] = useState<'list' | 'tiles'>('list');
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);

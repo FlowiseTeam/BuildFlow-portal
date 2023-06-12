@@ -12,7 +12,7 @@ export function Sidebar() {
 
   return (
     <>
-      <div onClick={toggle} className={isOpen ? 'fixed inset-0 bg-black bg-opacity-25 lg:hidden' : ''} />
+      <div onClick={toggle} className={isOpen ? 'fixed inset-0 z-10 bg-black bg-opacity-25 lg:hidden' : ''} />
       <aside
         className={`fixed top-0 z-10 transition-transform lg:top-auto ${
           isOpen ? '' : '-translate-x-56 lg:-translate-x-0'

@@ -3,6 +3,7 @@ import { Comment } from '@src/services/api-types';
 export function ChatComment({
   message,
   openImageGallery,
+  variant = 'default',
 }: {
   message: Comment;
   openImageGallery: (
@@ -11,11 +12,13 @@ export function ChatComment({
     }[],
     selectedIndex: number,
   ) => void;
+  variant?: 'default' | 'dashboard';
 }) {
   return (
     <div className="peer:border-b-2 mt-2 pb-2 text-sm">
       <div className="mb-1 flex justify-between text-xs text-gray-500">
         <span>{new Date(message.created_at).toLocaleDateString('pl')}</span>
+        {variant === 'dashboard' && <span>{message.project_id}</span>}
       </div>
       <div>
         <div className="mb-1 flex w-full">

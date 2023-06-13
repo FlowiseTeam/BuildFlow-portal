@@ -9,7 +9,7 @@ const columns = [
   { type: 'input', title: 'Adres', key: 'address', sortable: false },
   { type: 'input', title: 'Termin rozp.', key: 'start_date', sortable: true, sortbyOrder: 'desc', center: true },
   { type: 'input', title: 'Termin ukoń.', key: 'end_date', sortable: true, center: true },
-  { type: 'input', title: 'Ilość prac', key: 'workers', sortable: true, center: true },
+  { type: 'input', title: 'Ilość prac', key: 'employees', sortable: true, center: true },
   {
     title: 'Status',
     key: 'status',

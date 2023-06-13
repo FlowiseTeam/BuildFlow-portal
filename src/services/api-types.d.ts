@@ -52,7 +52,7 @@ export type PostEmployee = Omit<Employee, '_id' | 'created_at' | 'updated_at'>;
 
 export interface EmployeesQuery {
   employees: Employee[];
-  employee_count: number;
+  employees_count: number;
 }
 
 export interface Comment {

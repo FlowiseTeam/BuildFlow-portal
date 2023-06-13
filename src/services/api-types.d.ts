@@ -29,7 +29,7 @@ export interface Project {
   street: string;
   zipcode: string;
   city: string;
-  workers: any[];
+  employees: string[];
   updated_at: string;
   _id: number;
 }

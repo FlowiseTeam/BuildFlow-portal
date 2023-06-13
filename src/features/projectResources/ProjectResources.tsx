@@ -27,7 +27,7 @@ export function ProjectResources({
             <Tab.Panel key={key}>
               {value.length === 0 && <p className="p-4 text-sm text-gray-400">Brak zasobów.</p>}
               {value.map((i) => (
-                <p key={String(i)}>i</p>
+                <p key={String(i)}>id {i}</p>
               ))}
             </Tab.Panel>
           ))}

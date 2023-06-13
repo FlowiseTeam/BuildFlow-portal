@@ -8,7 +8,7 @@ import { ChatCommentFallback } from './ChatCommentFallback';
 import { ProjectChatForm } from './ProjectChatForm';
 
 export function ProjectChat({ projectId }: { projectId: number }) {
-  const { data } = useQuery(['project-messages', projectId], () => getProjectComments(projectId));
+  const { data, isError } = useQuery(['project-messages', projectId], () => getProjectComments(projectId));
   const commentsDivRef = useRef<HTMLDivElement>(null);
   const { close, currentIndex, images, isOpen, open, setCurrentIndex } = useImageGallery();
 
@@ -25,7 +25,7 @@ export function ProjectChat({ projectId }: { projectId: number }) {
       )}
       <div className="relative flex h-full min-h-0 flex-col justify-between overflow-auto p-2 pt-4">
         <div className="h-min overflow-y-auto" ref={commentsDivRef}>
-          {!data && <ChatCommentFallback />}
+          {!isError && !data && <ChatCommentFallback />}
           {data?.comments.map((message) => (
             <ChatComment key={message._id} message={message} openImageGallery={open} />
           ))}

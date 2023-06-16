@@ -34,7 +34,7 @@ export function ProjectsTable({ projects }: { projects: Project[] }) {
         ...project,
         id: project._id,
         address: `${project.city}, ${project.street}`,
-        workers: project.workers.length,
+        employees: project.employees.length,
       })),
     [projects],
   );

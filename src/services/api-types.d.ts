@@ -29,7 +29,7 @@ export interface Project {
   street: string;
   zipcode: string;
   city: string;
-  workers: any[];
+  employees: number[];
   updated_at: string;
   _id: number;
 }
@@ -38,7 +38,7 @@ export type FormProject = Omit<Project, 'created_at' | 'updated_at' | '_id'>;
 
 export interface Employee {
   _id: number;
-  assigned_project: string;
+  assigned_project: number[];
   created_at: string;
   first_name: string;
   last_name: string;

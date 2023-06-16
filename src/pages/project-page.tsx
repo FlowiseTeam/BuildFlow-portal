@@ -41,7 +41,7 @@ export function ProjectPage() {
           <ProjectChat projectId={project._id} />
         </DetailCard>
         <DetailCard className="min-h-[14rem] sm:col-span-2  xl:col-span-2">
-          <ProjectResources categories={{ Pracownicy: project.employees, Pojazdy: [] }} />
+          <ProjectResources project={project} isEdited={isEdited} onUpdate={onUpdate} />
         </DetailCard>
         <DetailCard className="sm:col-span-2 md:col-span-1">
           <FallbackMap />

@@ -15,7 +15,7 @@ export function useProjectQuery(id: number) {
     throw new Error('Something went wrong');
   }
 
-  const { mutateAsync: onUpdate } = useMutation(['project', id], (formData: FormProject) => {
+  const { mutateAsync: onUpdate } = useMutation(['project', id], (formData: Partial<FormProject>) => {
     const updatedProject = { ...project, ...formData } as Project;
     return updateProject(updatedProject);
   });

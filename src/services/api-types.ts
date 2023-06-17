@@ -19,13 +19,17 @@ export interface ProjectQuery {
   projects: Project;
 }
 
+export const projectStatuses = ['W trakcie', 'Zakończony'] as const;
+
+export type ProjectStatus = (typeof projectStatuses)[number];
+
 export interface Project {
   client: string;
   created_at: string;
   end_date: string;
   name: string;
   start_date: string;
-  status: 'in-progress' | 'closed';
+  status: ProjectStatus;
   street: string;
   zipcode: string;
   city: string;

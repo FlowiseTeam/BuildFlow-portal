@@ -15,14 +15,23 @@ export function useProjectQuery(id: number) {
     throw new Error('Something went wrong');
   }
 
-  const { mutateAsync: onUpdate } = useMutation(['project', id], (formData: Partial<FormProject>) => {
-    const updatedProject = { ...project, ...formData } as Project;
-    return updateProject(updatedProject);
-  });
+  const { mutateAsync: onUpdate } = useMutation(
+    ['project', id],
+    (formData: Partial<FormProject>) => {
+      const updatedProject = { ...project, ...formData } as Project;
+      return updateProject(updatedProject);
+    },
+    {
+      onSuccess: (_, project) => {
+        queryClient.setQueryData(['project', id], project);
+      },
+    },
+  );
 
   const { mutateAsync: onDelete } = useMutation(['project', id], () => deleteProject(Number(id)), {
     onSuccess: () => {
       queryClient.resetQueries(['project', id]);
+      queryClient.resetQueries(['project-messages', id]);
       navigate('/app/projects');
     },
   });

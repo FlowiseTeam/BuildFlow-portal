@@ -21,7 +21,13 @@ export function ProjectResources({
   onUpdate: UseMutateAsyncFunction<any, unknown, Partial<FormProject>, unknown>;
 }) {
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
-  const { data, isLoading } = useQuery('employees', () => getEmployees());
+  const { data, isLoading } = useQuery('employees', () => getEmployees(), {
+    onSuccess: (queryData) => {
+      queryData.employees.forEach((employee) => {
+        queryClient.setQueryData(['employee', employee._id], employee);
+      });
+    },
+  });
   const projectEmployees = data?.employees.filter((e) => project.employees.includes(e._id)) || [];
 
   const handleDeleteEmployee = async (employeeId: number) => {
@@ -32,13 +38,13 @@ export function ProjectResources({
 
   return (
     <>
-      {isAddEmployeeModalOpen && (
-        <AddEmployeeToProjectModal
-          project={project}
-          allEmployees={data?.employees || []}
-          onClose={() => setIsAddEmployeeModalOpen(false)}
-        />
-      )}
+      <AddEmployeeToProjectModal
+        show={isAddEmployeeModalOpen}
+        project={project}
+        allEmployees={data?.employees || []}
+        onClose={() => setIsAddEmployeeModalOpen(false)}
+      />
+
       <div className={`${className}`}>
         <Tab.Group>
           <Tab.List className="flex  justify-between bg-stone-200/75 p-1 pb-0">

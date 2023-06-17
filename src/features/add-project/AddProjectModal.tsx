@@ -2,6 +2,7 @@ import { Modal } from '@components/modal/Modal';
 import { ProjectForm } from '@features/projectForm/ProjectForm';
 import { createProject } from '@services/api';
 import { FormProject } from '@services/api-types';
+import { queryClient } from '@src/main';
 import { useMutation } from 'react-query';
 
 export function AddProjectModal({
@@ -17,6 +18,7 @@ export function AddProjectModal({
 
   const handleAdd = async (projectForm: FormProject) => {
     await mutateAsync(projectForm);
+    queryClient.refetchQueries('projects');
     onSuccess();
   };
 

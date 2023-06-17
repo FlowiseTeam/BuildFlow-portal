@@ -5,18 +5,21 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const columns = [
-  { type: 'input', title: 'Nazwa', key: 'name', sortable: true },
-  { type: 'input', title: 'Adres', key: 'address', sortable: false },
-  { type: 'input', title: 'Termin rozp.', key: 'start_date', sortable: true, sortbyOrder: 'desc', center: true },
-  { type: 'input', title: 'Termin ukoń.', key: 'end_date', sortable: true, center: true },
-  { type: 'input', title: 'Ilość prac', key: 'employees', sortable: true, center: true },
+  { type: 'text', title: 'Nazwa', key: 'name', sortable: true },
+  { type: 'text', title: 'Adres', key: 'address', sortable: false },
+  { type: 'date', title: 'Termin rozp.', key: 'start_date', sortable: true, sortbyOrder: 'desc', center: true },
+  { type: 'date', title: 'Termin ukoń.', key: 'end_date', sortable: true, center: true },
+  { type: 'number', title: 'Ilość pracowników', key: 'employees', sortable: true, center: true },
   {
+    type: 'select',
     title: 'Status',
     key: 'status',
     sortable: true,
     center: true,
-    type: 'select',
-    options: ['W trakcie', 'Zakończone'],
+    options: [
+      { value: 'W trakcie', className: 'bg-yellow-300 hover:bg-yellow-400' },
+      { value: 'Zakończony', className: 'bg-green-400 hover:bg-green-500' },
+    ],
   },
 ] satisfies TableColumn[];
 
@@ -45,7 +48,7 @@ export function ProjectsTable({ projects }: { projects: Project[] }) {
 
   return (
     <>
-      <EditProjectModal activeProject={activeProject} setActiveProjectId={setActiveProjectId} />
+      <EditProjectModal onClose={() => setActiveProjectId(null)} activeProject={activeProject} />
       <Table
         onRowClick={handleRowClick}
         columns={columns}

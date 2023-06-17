@@ -1,7 +1,7 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
 import { StatusInput } from '@components/statusInput/StatusInput';
-import { FormProject, Project } from '@services/api-types';
+import { FormProject, Project, projectStatuses } from '@services/api-types';
 import { Controller, useForm } from 'react-hook-form';
 
 interface AddProjectInputs {
@@ -14,8 +14,6 @@ interface AddProjectInputs {
   status: string;
   client: string;
 }
-
-const statuses = ['W trakcie', 'Zakończony'];
 
 export function ProjectForm({
   onClose,
@@ -35,18 +33,18 @@ export function ProjectForm({
 
   const onSubmit = handleSubmit(async (data) => {
     if (!isValid) return;
-    const project: FormProject = {
+    const proj: FormProject = {
       name: data.name,
       street: data.street,
       city: data.city,
       zipcode: data.zipcode,
-      start_date: data.start_date,
-      end_date: data.end_date,
+      start_date: new Date(data.start_date).toISOString(),
+      end_date: new Date(data.end_date).toISOString(),
       status: data.status as any,
       client: data.client,
-      workers: [],
+      employees: project?.employees || [],
     };
-    await handleFormSubmit(project);
+    await handleFormSubmit(proj);
   });
 
   return (
@@ -99,7 +97,7 @@ export function ProjectForm({
           validationSchema={{ required: true }}
           id="start_date"
           type="date"
-          defaultValue={project?.start_date}
+          defaultValue={project?.start_date && project.start_date.substring(0, 10)}
           labelText="Data rozpoczęcia"
           name="start_date"
           error={errors.start_date}
@@ -109,17 +107,17 @@ export function ProjectForm({
           validationSchema={{ required: true }}
           id="end_date"
           type="date"
-          defaultValue={project?.end_date}
+          defaultValue={project?.end_date && project.end_date.substring(0, 10)}
           labelText="Data zakończenia"
           name="end_date"
           error={errors.end_date}
         />
         <Controller
           control={control}
-          defaultValue={statuses[0]}
+          defaultValue={projectStatuses[0]}
           name="status"
           render={({ field: { onChange } }) => (
-            <StatusInput id="status" onChange={onChange} values={statuses} defaultValue={statuses[0]} />
+            <StatusInput id="status" onChange={onChange} values={projectStatuses} defaultValue={projectStatuses[0]} />
           )}
         ></Controller>
         <Input
@@ -135,12 +133,13 @@ export function ProjectForm({
       </div>
       <div className="flex justify-end gap-3">
         {onClose && <Button onClick={onClose}>Powrót</Button>}
-        {project ? (
+        {project && (
           <Button disabled={!isDirty} type="submit" variant="primary">
             Aktualizuj
           </Button>
-        ) : (
-          <Button type="submit" variant="primary">
+        )}
+        {!project && (
+          <Button disabled={!isDirty} type="submit" variant="primary">
             Dodaj
           </Button>
         )}

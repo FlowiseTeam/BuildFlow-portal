@@ -14,10 +14,12 @@ export function AddEmployeeToProjectModal({
   project,
   allEmployees,
   onClose,
+  show,
 }: {
   project: Project;
   allEmployees: Employee[];
   onClose: () => void;
+  show: boolean;
 }) {
   const [selectedEmployees, setSelectedEmployees] = useState<{ name: string; id: number; wasSelected: boolean }[]>([]);
   const [query, setQuery] = useState('');
@@ -36,7 +38,7 @@ export function AddEmployeeToProjectModal({
           id: employee._id,
           wasSelected: project.employees.includes(employee._id),
         })),
-    [],
+    [allEmployees],
   );
 
   const filteredEmployees =
@@ -56,7 +58,7 @@ export function AddEmployeeToProjectModal({
   };
 
   return (
-    <Modal className="max-w-sm" onClose={onClose} show={true} title="Dodaj pracowników">
+    <Modal className="max-w-sm" onClose={onClose} show={show} title="Dodaj pracowników">
       <Combobox value={selectedEmployees} onChange={setSelectedEmployees} multiple>
         <div>
           <p className="text-sm font-semibold">Wcześniej przypisani:</p>

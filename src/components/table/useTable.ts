@@ -26,8 +26,29 @@ export function useTable(
     if (!sortColumn) {
       return data;
     }
+
+    const dataType = sortColumn.type;
     const sortFactor = sortDirection === 'asc' ? 1 : -1;
-    return [...data].sort((a, b) => (a[sortColumn.key] > b[sortColumn.key] ? sortFactor : -sortFactor));
+
+    switch (dataType) {
+      case 'select':
+      case 'text': {
+        return [...data].sort((a, b) =>
+          a[sortColumn.key].toLowerCase() > b[sortColumn.key].toLowerCase() ? sortFactor : -sortFactor,
+        );
+      }
+      case 'number': {
+        return [...data].sort((a, b) => (a[sortColumn.key] > b[sortColumn.key] ? sortFactor : -sortFactor));
+      }
+      case 'date': {
+        return [...data].sort((a, b) =>
+          new Date(a[sortColumn.key]).getTime() - new Date(b[sortColumn.key]).getTime() > 0 ? sortFactor : -sortFactor,
+        );
+      }
+      default: {
+        return [...data].sort();
+      }
+    }
   }, [data, sortColumn, sortDirection]);
 
   return { handleSort, sortedData, sortColumn, sortDirection };

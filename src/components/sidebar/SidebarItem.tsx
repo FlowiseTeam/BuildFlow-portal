@@ -10,11 +10,15 @@ export function SidebarItem({ to, name, icon }: { to: To; name: string; icon?: R
     : 'text-neutral-700 hover:bg-gray-100 hover:text-primary';
 
   return (
-    <Link to={to} onClick={close}>
-      <li className={`${variant} my-2 flex items-center rounded-full px-6 py-2 font-semibold`}>
+    <li>
+      <Link
+        to={to}
+        onClick={close}
+        className={`${variant} my-2 flex items-center rounded-full px-6 py-2 font-semibold`}
+      >
         <div className={`mr-4 h-4 w-4 ${isActive ? 'text-primary' : 'text-gray-300'}`}>{icon && icon}</div>
         {name}
-      </li>
-    </Link>
+      </Link>
+    </li>
   );
 }

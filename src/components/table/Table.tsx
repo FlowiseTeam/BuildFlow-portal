@@ -82,18 +82,7 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable
               ))}
               {editable && (
                 <td className=" py-4">
-                  <Button
-                    variant="light"
-                    className="rounded-lg px-[6px]"
-                    onClick={
-                      onEdit
-                        ? (e) => {
-                            e.stopPropagation();
-                            onEdit(row.id);
-                          }
-                        : undefined
-                    }
-                  >
+                  <Button aria-label="edytuj" variant="light" className="rounded-lg px-[6px]">
                     <PencilIcon className="h-4 w-4" />
                   </Button>
                 </td>

@@ -28,7 +28,7 @@ export function ListboxInput({
         >
           {({ value }) => value}
         </Listbox.Button>
-        <Listbox.Options className="absolute mt-14 w-full space-y-1 rounded-lg border-2 bg-white p-1">
+        <Listbox.Options className="absolute z-[5] mt-14 w-full space-y-1 rounded-lg border-2 bg-white p-1">
           {values.map((val) => (
             <Listbox.Option
               className="rounded py-1 text-center hover:cursor-pointer hover:bg-neutral-200"

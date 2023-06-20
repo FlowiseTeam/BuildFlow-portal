@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": ".",
   "scripts": {
     "dev-fakejson": "concurrently \"json-server --watch --port 3001 ./src/data/fakeDb.json\" \"vite\"",
     "dev": "vite",

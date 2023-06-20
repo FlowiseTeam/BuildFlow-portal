@@ -9,9 +9,10 @@ import {
   ProjectsQuery,
 } from './api-types';
 import { EmployeeFormInputs } from '@features/employees/employeeForm/EmployeeForm';
-const API_URL = import.meta.env.MODE === 'production' ? '' : 'http://localhost:3001/api';
+const API_URL = import.meta.env.MODE === 'production' ? 'http://localhost:3001/api' : 'http://localhost:3001/api';
 
-const PROJECTS_API_URL = import.meta.env.MODE === 'production' ? '' : 'http://localhost:3000/api';
+const PROJECTS_API_URL =
+  import.meta.env.MODE === 'production' ? 'http://localhost:3000/api' : 'http://localhost:3000/api';
 
 const axiosApi = axios.create({ baseURL: API_URL });
 

@@ -18,6 +18,7 @@ const columns = [
     center: true,
     options: [
       { value: 'W trakcie', className: 'bg-yellow-300 hover:bg-yellow-400' },
+      { value: 'Zawieszony', className: 'bg-red-400 hover:bg-red-500' },
       { value: 'Zakończony', className: 'bg-green-400 hover:bg-green-500' },
     ],
   },

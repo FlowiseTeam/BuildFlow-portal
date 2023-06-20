@@ -7,7 +7,12 @@ export function EditProjectModal({ activeProject, onClose }: { activeProject?: P
   return (
     <Modal title="Edytuj projekt" maxW="max-w-[30rem]" show={!!activeProject} onClose={onClose}>
       <div className="mx-auto max-w-[16rem]">
-        <StatusInput id="status" onChange={() => {}} values={projectStatuses} defaultValue={projectStatuses[0]} />
+        <StatusInput
+          id="status"
+          onChange={() => {}}
+          values={projectStatuses}
+          defaultValue={activeProject?.status || projectStatuses[0]}
+        />
       </div>
       <div className="mt-8 w-full text-right">
         <Button onClick={onClose} className="mr-6">

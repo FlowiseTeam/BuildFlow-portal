@@ -14,7 +14,7 @@ export function Header() {
       <h1 className="ml-4 mt-4 font-abhaya text-4xl font-bold text-primary">Buildflow</h1>
       <Menu as="div" className="relative md:self-start">
         <div>
-          <Menu.Button className="">
+          <Menu.Button className="" aria-label="logowanie">
             <UserCircleIcon className="inline-block h-6 w-6" />
             <ChevronDownIcon className="inline-block h-6 w-6 text-primary" />
           </Menu.Button>

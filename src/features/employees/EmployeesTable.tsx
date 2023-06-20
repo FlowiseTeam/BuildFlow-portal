@@ -17,6 +17,7 @@ const columns = [
     options: [
       { value: 'Przypisany', className: 'bg-green-400 hover:bg-green-500' },
       { value: 'Nieprzypisany', className: 'bg-orange-400 hover:bg-orange-500' },
+      { value: 'Urlop', className: 'bg-yellow-300 hover:bg-yellow-400' },
     ],
   },
 ] satisfies TableColumn[];

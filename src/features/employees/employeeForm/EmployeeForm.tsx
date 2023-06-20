@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 export type EmployeeFormInputs = Omit<Employee, '_id' | 'updated_at' | 'created_at' | 'qualifications'>;
 
-const statuses = ['Przypisany', 'Nieprzypisany'] as const;
+const statuses = ['Przypisany', 'Nieprzypisany', 'Urlop'] as const;
 
 export function EmployeeForm({
   onClose,

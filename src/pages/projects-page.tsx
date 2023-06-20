@@ -36,8 +36,12 @@ export function ProjectsPage() {
         onSuccess={onSuccessfulAdd}
       />
       <div className="mt-8 flex flex-col">
-        <div className="flex justify-between">
-          <button>szukaj</button>
+        <div className="flex justify-between items-end">
+          <input
+            name="filter"
+            placeholder="Wyszukaj"
+            className="rounded-full shadow-lg px-2 text-xs py-1 outline-gray-400 outline-[1px]"
+          />
           <Button variant="primary" onClick={() => setIsAddProjectModalOpen(true)}>
             dodaj projekt
           </Button>

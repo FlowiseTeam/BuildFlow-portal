@@ -14,7 +14,7 @@ export function SummaryCard({
   return (
     <div className="flex h-full items-center p-5">
       <div className="shrink-0">
-        <img src={imgSrc} />
+        <img src={imgSrc} alt="" />
       </div>
       <div className="ml-4 mt-2 flex h-full flex-col justify-start self-start">
         <p className="font-abhaya text-gray-500">{name}</p>

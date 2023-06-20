@@ -19,10 +19,12 @@ export function ProjectForm({
   onClose,
   handleFormSubmit,
   project,
+  disabled = false,
 }: {
   onClose?: () => void;
   handleFormSubmit: (data: FormProject) => Promise<void>;
   project?: Project;
+  disabled?: boolean;
 }) {
   const {
     register,
@@ -60,6 +62,7 @@ export function ProjectForm({
             labelText="Nazwa"
             name="name"
             error={errors.name}
+            disabled={disabled}
           />
         </div>
         <Input
@@ -71,6 +74,7 @@ export function ProjectForm({
           labelText="Ulica i numer"
           name="street"
           error={errors.street}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -81,6 +85,7 @@ export function ProjectForm({
           labelText="Miejscowość"
           name="city"
           error={errors.city}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -91,6 +96,7 @@ export function ProjectForm({
           labelText="Kod pocztowy"
           name="zipcode"
           error={errors.zipcode}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -101,6 +107,7 @@ export function ProjectForm({
           labelText="Data rozpoczęcia"
           name="start_date"
           error={errors.start_date}
+          disabled={disabled}
         />
         <Input
           register={register}
@@ -111,13 +118,20 @@ export function ProjectForm({
           labelText="Data zakończenia"
           name="end_date"
           error={errors.end_date}
+          disabled={disabled}
         />
         <Controller
           control={control}
           defaultValue={projectStatuses[0]}
           name="status"
           render={({ field: { onChange } }) => (
-            <StatusInput id="status" onChange={onChange} values={projectStatuses} defaultValue={projectStatuses[0]} />
+            <StatusInput
+              id="status"
+              disabled={disabled}
+              onChange={onChange}
+              values={projectStatuses}
+              defaultValue={projectStatuses[0]}
+            />
           )}
         ></Controller>
         <Input
@@ -129,6 +143,7 @@ export function ProjectForm({
           labelText="Klient"
           name="client"
           error={errors.client}
+          disabled={disabled}
         />
       </div>
       <div className="flex justify-end gap-3">

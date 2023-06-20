@@ -17,7 +17,9 @@ export function Dashboard() {
         <CalendarEvents />
       </DetailCard>
       <div className=" sm:col-span-2 xl:col-span-3">
-        <VehiclesTable />
+        <DetailCard className="overflow-hidden">
+          <VehiclesTable />
+        </DetailCard>
       </div>
     </div>
   );

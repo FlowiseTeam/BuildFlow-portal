@@ -7,7 +7,7 @@ export interface ProjectQuery {
   projects: Project;
 }
 
-export const projectStatuses = ['W trakcie', 'Zakończony'] as const;
+export const projectStatuses = ['W trakcie', 'Zawieszony','Zakończony'] as const;
 
 export type ProjectStatus = (typeof projectStatuses)[number];
 

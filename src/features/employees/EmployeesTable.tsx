@@ -4,16 +4,24 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const columns = [
-  { type: 'input', title: 'Imię', key: 'first_name', sortable: true },
-  { type: 'input', title: 'Nazwisko', key: 'last_name', sortable: true },
-  { type: 'input', title: 'Rola', key: 'role', sortable: true },
-  // { type: 'input', title: 'Projekt', key: 'assigned_project', sortable: true },
-
-  { type: 'input', title: 'Status', key: 'status', sortable: true },
+  { type: 'text', title: 'Imię', key: 'first_name', sortable: true },
+  { type: 'text', title: 'Nazwisko', key: 'last_name', sortable: true },
+  { type: 'text', title: 'Rola', key: 'role', sortable: true },
+  { type: 'text-array', title: 'Projekty', key: 'assigned_project' },
+  {
+    type: 'select',
+    title: 'Status',
+    key: 'status',
+    sortable: true,
+    center: true,
+    options: [
+      { value: 'Przypisany', className: 'bg-green-400 hover:bg-green-500' },
+      { value: 'Nieprzypisany', className: 'bg-orange-400 hover:bg-orange-500' },
+    ],
+  },
 ] satisfies TableColumn[];
 
 export function EmployeesTable({ employees }: { employees: Employee[] }) {
-  console.log(employees);
   const navigate = useNavigate();
 
   const tableData = useMemo(
@@ -21,6 +29,7 @@ export function EmployeesTable({ employees }: { employees: Employee[] }) {
       employees.map((employee) => ({
         ...employee,
         id: employee._id,
+        assigned_project: employee.assigned_project?.map((project) => project.project_name),
       })),
     [employees],
   );

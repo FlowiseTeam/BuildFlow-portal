@@ -1,15 +1,3 @@
-interface CompanyInfo {
-  name: string;
-  projects: number;
-  employees: number;
-  notAssignedEmployees: number;
-}
-
-interface Company {
-  company: CompanyInfo;
-  projects: Project[];
-}
-
 export interface ProjectsQuery {
   projects: Project[];
   project_count: number;
@@ -19,13 +7,17 @@ export interface ProjectQuery {
   projects: Project;
 }
 
+export const projectStatuses = ['W trakcie', 'Zakończony'] as const;
+
+export type ProjectStatus = (typeof projectStatuses)[number];
+
 export interface Project {
   client: string;
   created_at: string;
   end_date: string;
   name: string;
   start_date: string;
-  status: 'in-progress' | 'closed';
+  status: ProjectStatus;
   street: string;
   zipcode: string;
   city: string;
@@ -38,7 +30,13 @@ export type FormProject = Omit<Project, 'created_at' | 'updated_at' | '_id'>;
 
 export interface Employee {
   _id: number;
-  assigned_project: number[];
+  assigned_project: {
+    created_at: string;
+    employee_id: number;
+    project_id: number;
+    project_name: string;
+    updated_at: string;
+  }[];
   created_at: string;
   first_name: string;
   last_name: string;

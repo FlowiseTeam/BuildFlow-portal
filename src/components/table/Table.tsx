@@ -2,6 +2,9 @@ import { ArrowUpIcon } from '@heroicons/react/20/solid';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useTable } from './useTable';
 import { Cell } from './Cell';
+import { Button } from '../button/Button';
+
+export type ColumnType = 'select' | 'text' | 'date' | 'number' | 'text-array';
 
 export type TableColumn = {
   key: string;
@@ -10,8 +13,8 @@ export type TableColumn = {
   sortbyOrder?: 'desc' | 'asc';
   center?: boolean;
   isEditable?: boolean;
-  type: 'select' | 'input';
-  options?: string[];
+  type: ColumnType;
+  options?: { value: string; className?: string }[];
 };
 
 export interface CellProps {
@@ -34,7 +37,7 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable
   const { handleSort, sortColumn, sortDirection, sortedData } = useTable(columns, data, defaultSort);
 
   return (
-    <div className="overflow-x-scroll">
+    <div className="overflow-x-auto">
       <table className="font-roboto w-full text-left text-sm dark:text-gray-400">
         <thead className="text-xs uppercase  dark:bg-gray-700 dark:text-gray-400">
           <tr className="bg-gray-100">
@@ -69,18 +72,30 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable
             >
               {columns.map((column) => (
                 <Cell
+                  options={column.options}
                   key={column.key}
                   centered={column.center}
-                  text={row[column.key]}
+                  value={row[column.key]}
                   type={column.type}
                   onEdit={onEdit ? () => onEdit(row.id) : undefined}
                 />
               ))}
               {editable && (
                 <td className=" py-4">
-                  <button onClick={onEdit ? () => onEdit(row.id) : undefined}>
-                    <PencilIcon className="h-4" />
-                  </button>
+                  <Button
+                    variant="light"
+                    className="rounded-lg px-[6px]"
+                    onClick={
+                      onEdit
+                        ? (e) => {
+                            e.stopPropagation();
+                            onEdit(row.id);
+                          }
+                        : undefined
+                    }
+                  >
+                    <PencilIcon className="h-4 w-4" />
+                  </Button>
                 </td>
               )}
             </tr>

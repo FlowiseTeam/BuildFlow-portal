@@ -7,6 +7,7 @@ export const variants = {
   danger: 'bg-red-500 hover:bg-red-700 text-white',
   success: 'bg-green-500 hover:bg-green-700 text-white',
   warning: 'bg-yellow-500 hover:bg-yellow-600 text-white',
+  none: '',
 };
 
 export const sizes = {

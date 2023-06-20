@@ -7,7 +7,7 @@ const columns = [
   { type: 'text', title: 'Imię', key: 'first_name', sortable: true },
   { type: 'text', title: 'Nazwisko', key: 'last_name', sortable: true },
   { type: 'text', title: 'Rola', key: 'role', sortable: true },
-  // { type: 'text', title: 'Status', key: 'status', sortable: true },
+  { type: 'text-array', title: 'Projekty', key: 'assigned_project' },
   {
     type: 'select',
     title: 'Status',
@@ -29,6 +29,7 @@ export function EmployeesTable({ employees }: { employees: Employee[] }) {
       employees.map((employee) => ({
         ...employee,
         id: employee._id,
+        assigned_project: employee.assigned_project?.map((project) => project.project_name),
       })),
     [employees],
   );

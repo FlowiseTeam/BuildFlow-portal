@@ -1,15 +1,3 @@
-interface CompanyInfo {
-  name: string;
-  projects: number;
-  employees: number;
-  notAssignedEmployees: number;
-}
-
-interface Company {
-  company: CompanyInfo;
-  projects: Project[];
-}
-
 export interface ProjectsQuery {
   projects: Project[];
   project_count: number;
@@ -42,7 +30,13 @@ export type FormProject = Omit<Project, 'created_at' | 'updated_at' | '_id'>;
 
 export interface Employee {
   _id: number;
-  assigned_project: number[];
+  assigned_project: {
+    created_at: string;
+    employee_id: number;
+    project_id: number;
+    project_name: string;
+    updated_at: string;
+  }[];
   created_at: string;
   first_name: string;
   last_name: string;

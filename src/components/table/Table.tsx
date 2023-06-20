@@ -4,7 +4,7 @@ import { useTable } from './useTable';
 import { Cell } from './Cell';
 import { Button } from '../button/Button';
 
-export type ColumnType = 'select' | 'text' | 'date' | 'number';
+export type ColumnType = 'select' | 'text' | 'date' | 'number' | 'text-array';
 
 export type TableColumn = {
   key: string;
@@ -75,7 +75,7 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable
                   options={column.options}
                   key={column.key}
                   centered={column.center}
-                  text={row[column.key]}
+                  value={row[column.key]}
                   type={column.type}
                   onEdit={onEdit ? () => onEdit(row.id) : undefined}
                 />

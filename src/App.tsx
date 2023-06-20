@@ -6,11 +6,11 @@ import { ErrorPage } from '@pages/error-page';
 import { ProjectPage } from '@pages/project-page';
 import { ProjectsPage } from '@pages/projects-page';
 import { VehiclesPage } from '@pages/vehicles-page';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { EmployeePage } from './pages/employee-page';
 
 function Root() {
-  return <Outlet />;
+  return <Navigate to={'/app'} />;
 }
 
 function App() {

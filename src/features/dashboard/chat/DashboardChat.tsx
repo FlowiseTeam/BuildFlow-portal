@@ -8,8 +8,8 @@ import { DashboardChatMessageFallback } from './DashboardChatMessageFallback';
 
 export function DashboardChat() {
   const { close, currentIndex, images, isOpen, open, setCurrentIndex } = useImageGallery();
-  const { data, isError, failureCount } = useQuery(['project-messages', 6], () => getProjectComments(6));
-  const { data: project } = useQuery(['project', 6], () => getProject(6));
+  const { data, isError, failureCount } = useQuery(['project-messages', 1], () => getProjectComments(1));
+  const { data: project } = useQuery(['project', 1], () => getProject(1));
 
   const messages = data?.comments.slice(-4).map((msg) => ({ ...msg, projectName: project?.name || '' }));
 

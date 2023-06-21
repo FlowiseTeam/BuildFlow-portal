@@ -6,7 +6,8 @@ import { Controller, useForm } from 'react-hook-form';
 
 export type EmployeeFormInputs = Omit<Employee, '_id' | 'updated_at' | 'created_at' | 'qualifications'>;
 
-const statuses = ['Przypisany', 'Nieprzypisany', 'Urlop'] as const;
+const Allstatuses = ['Przypisany', 'Nieprzypisany', 'Urlop'] as const;
+const newEmployeeStatuses = ['Urlop', 'Nieprzypisany'] as const;
 
 export function EmployeeForm({
   onClose,
@@ -30,6 +31,8 @@ export function EmployeeForm({
     if (!isValid) return;
     await handleFormSubmit(data);
   });
+
+  const statuses = employee ? Allstatuses : newEmployeeStatuses;
 
   return (
     <form onSubmit={onSubmit} className="p-4">

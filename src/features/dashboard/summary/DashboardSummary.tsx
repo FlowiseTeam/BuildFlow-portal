@@ -20,7 +20,7 @@ export function DashboardSummary() {
   const projectsCount = projecsData?.project_count;
   const employeesCount = employeesData?.employees_count;
   const unassignedEmployeesCount = employeesData?.employees.reduce((acc, curr) => {
-    const isAssigned = curr.assigned_project !== null;
+    const isAssigned = curr.assigned_project.length > 0;
     return isAssigned ? acc : acc + 1;
   }, 0);
 

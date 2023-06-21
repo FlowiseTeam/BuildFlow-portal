@@ -22,7 +22,9 @@ export function StatusInput({
         <Listbox.Button
           role="input"
           id={id}
-          className={`h-9 w-full rounded-lg border-2 p-1 pl-2 ${disabled ? 'cursor-not-allowed text-gray-600' : ''}`}
+          className={`h-9 w-full rounded-lg border-2 p-1 pl-2 ${
+            disabled ? 'cursor-not-allowed bg-neutral-50 text-gray-600' : ''
+          }`}
         >
           {({ value }) => value}
         </Listbox.Button>

@@ -24,7 +24,7 @@ const columns = [
   },
 ] satisfies TableColumn[];
 
-export function ProjectsTable({ projects }: { projects: Project[] }) {
+export function ProjectsTable({ projects, refetch }: { projects: Project[]; refetch: () => void }) {
   const [activeProjectId, setActiveProjectId] = useState<number | null>(null);
   const activeProject = projects.find((project) => project._id === activeProjectId);
   const handleEdit = (projectId: number) => {
@@ -49,7 +49,7 @@ export function ProjectsTable({ projects }: { projects: Project[] }) {
 
   return (
     <>
-      <EditProjectModal onClose={() => setActiveProjectId(null)} activeProject={activeProject} />
+      <EditProjectModal onClose={() => setActiveProjectId(null)} activeProject={activeProject} refetch={refetch} />
       <Table
         onRowClick={handleRowClick}
         columns={columns}

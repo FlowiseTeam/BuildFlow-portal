@@ -49,6 +49,9 @@ export const deleteEmployee = async (employeeId: number) => await axiosApi.delet
 export const getProjectComments = async (projectId: number): Promise<CommentsQuery> =>
   (await projectsAxiosApi.get(`/projects/${projectId}/comments`)).data;
 
+export const getLatestComments = async (): Promise<CommentsQuery> =>
+  (await projectsAxiosApi.get('/projects/ocmments/latest')).data;
+
 export const getImage = () => async (url: string) => await imagesApi.get(url);
 
 export const createComment = async (projectId: number, commentData: FormData) =>

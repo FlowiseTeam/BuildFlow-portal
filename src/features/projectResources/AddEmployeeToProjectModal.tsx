@@ -54,6 +54,7 @@ export function AddEmployeeToProjectModal({
     const employeeIds = selectedEmployees.map((employee) => employee.id);
     await onUpdate(employeeIds);
     await queryClient.invalidateQueries(['project', project._id]);
+    setSelectedEmployees([]);
     onClose();
   };
 

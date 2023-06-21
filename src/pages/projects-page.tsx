@@ -10,7 +10,7 @@ import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
 import { queryClient } from '@src/main';
 
 export function ProjectsPage() {
-  const { data } = useQuery('projects', getProjects, {
+  const { data, refetch } = useQuery('projects', getProjects, {
     suspense: true,
     onSuccess: (queryData) => {
       queryData.projects.forEach((project) => {
@@ -36,11 +36,11 @@ export function ProjectsPage() {
         onSuccess={onSuccessfulAdd}
       />
       <div className="mt-8 flex flex-col">
-        <div className="flex justify-between items-end">
+        <div className="flex items-end justify-between">
           <input
             name="filter"
             placeholder="Wyszukaj"
-            className="rounded-full shadow-lg px-2 text-xs py-1 outline-gray-400 outline-[1px]"
+            className="rounded-full px-2 py-1 text-xs shadow-lg outline-[1px] outline-gray-400"
           />
           <Button variant="primary" onClick={() => setIsAddProjectModalOpen(true)}>
             dodaj projekt
@@ -64,7 +64,7 @@ export function ProjectsPage() {
           )}
         </div>
         <div className="mb-24 w-0 min-w-full">
-          <ProjectsTable projects={data.projects} />
+          <ProjectsTable projects={data.projects} refetch={refetch} />
         </div>
       </div>
     </Page>

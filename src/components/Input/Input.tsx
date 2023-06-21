@@ -1,6 +1,6 @@
 import { FieldError, FieldValues, Path, RegisterOptions, UseFormRegister } from 'react-hook-form';
 
-interface InputProps<T extends FieldValues = FieldValues> extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps<T extends FieldValues = FieldValues> extends React.InputHTMLAttributes<HTMLInputElement> {
   name: Path<T>;
   error?: FieldError;
   validationSchema?: RegisterOptions<T>;

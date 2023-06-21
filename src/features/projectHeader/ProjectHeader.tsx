@@ -18,12 +18,15 @@ export function ProjectHeader({ title, projectId }: { title: string; projectId: 
 
   return (
     <div className="flex items-center justify-between ">
-      <h2 className="col font-roboto text-4xl">{title}</h2>
+      <h2 className="font-roboto text-4xl">{title}</h2>
       <div>
         <TrashIcon onClick={() => setIsDeleteModalOpen(true)} className="h-6 hover:cursor-pointer hover:text-red-700" />
-        <DeleteModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen}
+        <DeleteModal
+          isDeleteModalOpen={isDeleteModalOpen}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
           title="Czy chcesz usunąć projekt?"
-          onSuccess={() => mutateAsync()}/>
+          onSuccess={() => mutateAsync()}
+        />
       </div>
     </div>
   );

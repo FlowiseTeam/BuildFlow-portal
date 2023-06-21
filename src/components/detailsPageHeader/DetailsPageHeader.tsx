@@ -26,7 +26,7 @@ export function DetailsPageHeader({
       <Link to={backLink}>
         <div className="flex items-center">
           <ChevronLeftIcon className=" h-10" />
-          <h2 className="col font-roboto text-4xl">{title}</h2>
+          <h2 className="font-roboto text-2xl sm:text-4xl">{title}</h2>
         </div>
       </Link>
       <div>

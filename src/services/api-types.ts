@@ -7,7 +7,7 @@ export interface ProjectQuery {
   projects: Project;
 }
 
-export const projectStatuses = ['W trakcie', 'Zawieszony','Zakończony'] as const;
+export const projectStatuses = ['W trakcie', 'Zawieszony', 'Zakończony'] as const;
 
 export type ProjectStatus = (typeof projectStatuses)[number];
 
@@ -28,19 +28,22 @@ export interface Project {
 
 export type FormProject = Omit<Project, 'created_at' | 'updated_at' | '_id'>;
 
+export interface EmployeeProject {
+  _id: number;
+  created_at: string;
+  employee_id: number;
+  project_id: number;
+  project_name: string;
+  updated_at: string;
+}
+
 export interface Employee {
   _id: number;
-  assigned_project: {
-    created_at: string;
-    employee_id: number;
-    project_id: number;
-    project_name: string;
-    updated_at: string;
-  }[];
+  assigned_project: EmployeeProject[];
   created_at: string;
   first_name: string;
   last_name: string;
-  qualifications: null | string[];
+  qualifications: string[];
   updated_at: string;
   role: string;
   status: string;

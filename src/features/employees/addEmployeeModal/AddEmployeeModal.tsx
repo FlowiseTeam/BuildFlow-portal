@@ -16,7 +16,7 @@ export function AddEmployeeModal({
   const { mutateAsync } = useMutation((employee: PostEmployee) => createEmployee(employee));
 
   const handleAdd = async (employeeFormInputs: EmployeeFormInputs) => {
-    await mutateAsync({ ...employeeFormInputs, qualifications: null, assigned_project: [] });
+    await mutateAsync({ ...employeeFormInputs, qualifications: [], assigned_project: [] });
     onSuccess();
   };
 

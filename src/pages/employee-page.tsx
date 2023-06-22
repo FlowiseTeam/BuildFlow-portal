@@ -7,6 +7,7 @@ import { EmployeeQualifications } from '@src/features/employees/employeeQualific
 import { DetailsPageHeader } from '@src/components/detailsPageHeader/DetailsPageHeader';
 import { useEmployeeQuery } from '@src/features/employees/hooks/useEmployeeQuery';
 import { useState } from 'react';
+import { EmployeeProjectsList } from '@src/features/employees/employeeProjectsList/EmployeeProjectsList';
 
 export function EmployeePage() {
   const id = useParams<{ id: string }>().id;
@@ -32,12 +33,15 @@ export function EmployeePage() {
         />
       }
     >
-      <div className="mb-16 mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="mb-16 mt-8 grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2">
         <DetailCard className="p-2 md:col-span-1">
           <EditEmployee isEdited={isEdited} employee={employee} />
         </DetailCard>
         <DetailCard>
           <EmployeeQualifications employee={employee} isEdited={isEdited} />
+        </DetailCard>
+        <DetailCard>
+          <EmployeeProjectsList employee={employee} isEdited={isEdited} />
         </DetailCard>
       </div>
     </Page>

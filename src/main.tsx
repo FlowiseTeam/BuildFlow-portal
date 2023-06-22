@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <HashRouter>
       <QueryClientProvider client={queryClient}>
         <App />
-        {/* <ReactQueryDevtools initialIsOpen /> */}
+        <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>
     </HashRouter>
   </React.StrictMode>,

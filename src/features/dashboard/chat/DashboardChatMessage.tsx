@@ -25,7 +25,9 @@ export function DashboardChatMessage({
         >
           {message.projectName}
         </p>
-        <p className="text-sm font-light text-gray-400">{message.status}</p>
+        {/* <p className="text-sm font-light text-gray-400">{message.status}</p> */}
+
+        <p className="text-sm font-light text-gray-400">{''}</p>
       </div>
       <div className="flex justify-between">
         <p className="flex-grow">{message.message}</p>

@@ -38,12 +38,12 @@ export function ProjectPage() {
           <ProjectForm project={project} disabled={!isEdited} handleFormSubmit={onUpdate} />
         </DetailCard>
         <DetailCard className="md:row-span-1 xl:col-start-4 xl:row-span-2 xl:row-start-1">
-          <ProjectChat projectId={project._id} />
+          <ProjectChat projectId={Number(id)} />
         </DetailCard>
-        <DetailCard className="min-h-[14rem] sm:col-span-2  xl:col-span-2 overflow-hidden">
+        <DetailCard className="min-h-[14rem] overflow-hidden  sm:col-span-2 xl:col-span-2">
           <ProjectResources project={project} isEdited={isEdited} onUpdate={onUpdate} />
         </DetailCard>
-        <DetailCard className="sm:col-span-2 md:col-span-1 overflow-hidden">
+        <DetailCard className="overflow-hidden sm:col-span-2 md:col-span-1">
           <FallbackMap />
         </DetailCard>
       </div>

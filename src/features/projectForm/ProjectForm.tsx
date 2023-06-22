@@ -31,7 +31,13 @@ export function ProjectForm({
     handleSubmit,
     formState: { errors, isDirty, isValid },
     control,
-  } = useForm<AddProjectInputs>();
+  } = useForm<AddProjectInputs>({
+    defaultValues: {
+      ...project,
+      start_date: project?.start_date.substring(0, 10),
+      end_date: project?.end_date.substring(0, 10),
+    },
+  });
 
   const onSubmit = handleSubmit(async (data) => {
     if (!isValid) return;

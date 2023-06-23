@@ -4,7 +4,7 @@ import { Project } from '@services/api-types';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const columns = [
+export const columns = [
   { type: 'text', title: 'Nazwa', key: 'name', sortable: true },
   { type: 'text', title: 'Adres', key: 'address', sortable: false },
   { type: 'date', title: 'Termin rozp.', key: 'start_date', sortable: true, sortbyOrder: 'desc', center: true },

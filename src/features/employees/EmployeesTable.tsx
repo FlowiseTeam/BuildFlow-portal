@@ -3,7 +3,7 @@ import { Employee } from '@services/api-types';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const columns = [
+export const columns = [
   { type: 'text', title: 'Imię', key: 'first_name', sortable: true },
   { type: 'text', title: 'Nazwisko', key: 'last_name', sortable: true },
   { type: 'text', title: 'Rola', key: 'role', sortable: true },
@@ -38,6 +38,8 @@ export function EmployeesTable({ employees }: { employees: Employee[] }) {
   const handleRowClick = (id: number) => {
     navigate(`/app/employees/${id}`);
   };
+
+  console.log(tableData);
 
   return (
     <>

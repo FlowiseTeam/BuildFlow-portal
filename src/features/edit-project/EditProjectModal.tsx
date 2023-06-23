@@ -1,16 +1,50 @@
 import { Modal } from '@components/modal/Modal';
-import { Project } from '@services/api-types';
+import { Project, ProjectStatus, projectStatuses } from '@services/api-types';
+import { Button } from '@src/components/button/Button';
+import { StatusInput } from '@src/components/statusInput/StatusInput';
+import { updateProject } from '@src/services/api';
+import { useEffect, useState } from 'react';
 
 export function EditProjectModal({
   activeProject,
-  setActiveProjectId,
+  onClose,
+  refetch,
 }: {
   activeProject?: Project;
-  setActiveProjectId: React.Dispatch<React.SetStateAction<number | null>>;
+  onClose: () => void;
+  refetch: () => void;
 }) {
+  const [status, setStatus] = useState(activeProject?.status || projectStatuses[0]);
+
+  const handleSubmit = async () => {
+    const project = { ...activeProject, status } as Project;
+    await updateProject(project);
+    refetch();
+    onClose();
+  };
+
+  useEffect(() => {
+    setStatus(activeProject?.status || projectStatuses[0]);
+  }, [activeProject]);
+
   return (
-    <Modal title={activeProject?.name} show={!!activeProject} onClose={() => setActiveProjectId(null)}>
-      <div></div>
+    <Modal title="Edytuj projekt" maxW="max-w-[30rem]" show={!!activeProject} onClose={onClose}>
+      <div className="mx-auto max-w-[16rem]">
+        <StatusInput
+          id="status"
+          onChange={(status: ProjectStatus) => setStatus(status)}
+          values={projectStatuses}
+          defaultValue={status}
+        />
+      </div>
+      <div className="mt-8 w-full text-right">
+        <Button onClick={onClose} className="mr-6">
+          Anuluj
+        </Button>
+        <Button variant="primary" onClick={handleSubmit}>
+          Aktualizuj
+        </Button>
+      </div>
     </Modal>
   );
 }

@@ -6,6 +6,7 @@ import path from 'path';
 export default defineConfig({
   resolve: {
     alias: {
+      '@src': path.resolve(__dirname, './src/'),
       '@services': path.resolve(__dirname, './src/services'),
       '@layouts': path.resolve(__dirname, './src/layouts'),
       '@components': path.resolve(__dirname, './src/components'),
@@ -15,6 +16,11 @@ export default defineConfig({
       '@data': path.resolve(__dirname, './src/data'),
       '@utils': path.resolve(__dirname, './src/utils'),
     },
+  },
+  root: './',
+  test: {
+    globals: true,
+    environment: 'jsdom',
   },
   plugins: [react()],
 });

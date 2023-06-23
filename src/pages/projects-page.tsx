@@ -3,62 +3,48 @@ import { getProjects } from '@services/api';
 import { Page } from '@layouts/Page';
 import { useState } from 'react';
 import { AddProjectModal } from '@features/add-project/AddProjectModal';
-import { Table } from '@components/table/Table';
 import { Button } from '@components/button/Button';
-import { EditProjectModal } from '@features/edit-project/EditProjectModal';
 import { ListBulletIcon } from '@heroicons/react/24/outline';
 import { DashboardIcon } from '@components/icons/DashboardIcon';
-
-const columns = [
-  { title: 'Nazwa', key: 'name', sortable: true },
-  { title: 'Adres', key: 'address', sortable: false },
-  { title: 'Termin rozp.', key: 'start_date', sortable: true, sortbyOrder: 'desc', center: true },
-  { title: 'Termin ukoń.', key: 'end_date', sortable: true, center: true },
-  { title: 'Ilość prac', key: 'workers', sortable: true, center: true },
-];
+import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
+import { queryClient } from '@src/main';
 
 export function ProjectsPage() {
-  const { data, refetch } = useQuery('projects', getProjects, { suspense: true });
+  const { data, refetch } = useQuery('projects', getProjects, {
+    suspense: true,
+    onSuccess: (queryData) => {
+      queryData.projects.forEach((project) => {
+        queryClient.setQueryData(['project', project._id], project);
+      });
+    },
+  });
   if (!data) throw Error('Something went wrong');
-  const [view, setView] = useState<'list' | 'grid'>('list');
-  const [activeProjectId, setActiveProjectId] = useState<number | null>(null);
+  const [view, setView] = useState<'list' | 'tiles'>('list');
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
-  const activeProject = data.project.find((project) => project._id === activeProjectId);
 
-  const toggleView = () => setView(view === 'list' ? 'grid' : 'list');
-
-  if (!data) {
-    return <div>Something went wrong</div>;
-  }
-
-  const handleEdit = (projectId: number) => {
-    setActiveProjectId(projectId);
-  };
+  const toggleView = () => setView(view === 'list' ? 'tiles' : 'list');
 
   const onSuccessfulAdd = () => {
-    refetch();
     setIsAddProjectModalOpen(false);
   };
 
-  const tableData = data.project.map((project) => ({
-    ...project,
-    id: project._id,
-    address: `${project.city}, ${project.street}`,
-    workers: project.workers.length,
-  }));
-
   return (
     <Page title="Projekty">
-      <EditProjectModal activeProject={activeProject} setActiveProjectId={setActiveProjectId} />
       <AddProjectModal
         show={isAddProjectModalOpen}
         onClose={() => setIsAddProjectModalOpen(false)}
         onSuccess={onSuccessfulAdd}
       />
       <div className="mt-8 flex flex-col">
-        <div className="flex justify-between">
-          <button>szukaj</button>
-          <Button onClick={() => setIsAddProjectModalOpen(true)}>dodaj projekt</Button>
+        <div className="flex items-end justify-between">
+          <input
+            name="filter"
+            placeholder="Wyszukaj"
+            className="rounded-full px-2 py-1 text-xs shadow-lg outline-[1px] outline-gray-400"
+          />
+          <Button variant="primary" onClick={() => setIsAddProjectModalOpen(true)}>
+            dodaj projekt
+          </Button>
         </div>
         <div className="my-4 ml-auto flex items-center gap-4">
           {view === 'list' ? (
@@ -77,13 +63,8 @@ export function ProjectsPage() {
             </>
           )}
         </div>
-        <div className="w-0 min-w-full">
-          <Table
-            columns={columns}
-            data={tableData}
-            defaultSort={{ direction: 'asc', key: 'endDate' }}
-            onEdit={handleEdit}
-          />
+        <div className="mb-24 w-0 min-w-full">
+          <ProjectsTable projects={data.projects} refetch={refetch} />
         </div>
       </div>
     </Page>

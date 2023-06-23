@@ -12,11 +12,11 @@ export function Sidebar() {
 
   return (
     <>
-      <div onClick={toggle} className={isOpen ? 'fixed inset-0 bg-black bg-opacity-25 lg:hidden' : ''} />
+      <div onClick={toggle} className={isOpen ? 'fixed inset-0 z-10 bg-black bg-opacity-25 lg:hidden' : ''} />
       <aside
         className={`fixed top-0 z-10 transition-transform lg:top-auto ${
           isOpen ? '' : '-translate-x-56 lg:-translate-x-0'
-        } 500ms h-full w-56 flex-shrink-0 bg-white px-4 pt-4 font-abhaya shadow-sm shadow-zinc-400`}
+        } 500ms h-full w-56 flex-shrink-0 bg-white px-4 pt-4 font-abhaya shadow-[8px_0px_3px_-8px] shadow-zinc-400`}
       >
         <XMarkIcon onClick={toggle} className="ml-auto h-8 lg:hidden" />
         <SidebarNav>

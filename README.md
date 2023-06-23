@@ -10,10 +10,20 @@ To install project, you can follow these steps:
 2.  Install the required dependencies by running `npm install`
 3.  Start the app by running `npm run dev`
 
+## Storybook
+
+![Storybook](./assets/storybook.png)
+
+To run storybook, you can follow these steps:
+
+1.  Run `npm run storybook`
+2.  Open your browser and go to `http://localhost:6006`
+
 ## Technologies Used
 
 - Typescript
 - React
 - Tailwind CSS
+- React-query, React-form-hook
 - Vitest, testing-library
 - Storybook

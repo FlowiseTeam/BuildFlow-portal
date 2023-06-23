@@ -1,30 +1,43 @@
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useTable } from './useTable';
+import { Cell } from './Cell';
+import { Button } from '../button/Button';
+
+export type ColumnType = 'select' | 'text' | 'date' | 'number' | 'text-array';
 
 export type TableColumn = {
   key: string;
   title: string;
   sortable?: boolean;
+  sortbyOrder?: 'desc' | 'asc';
   center?: boolean;
+  isEditable?: boolean;
+  type: ColumnType;
+  options?: { value: string; className?: string }[];
 };
 
-export type Data = Array<Record<string, any> & { id: number }>;
+export interface CellProps {
+  id: number;
+  [key: string]: any;
+}
 
 export type SortDirection = 'asc' | 'desc';
 
 type TableProps = {
   columns: TableColumn[];
-  data: Data;
+  data: CellProps[];
   defaultSort?: { key: string; direction: SortDirection };
-  onEdit: (id: number) => void;
+  editable?: boolean;
+  onEdit?: (id: number) => void;
+  onRowClick: (id: number) => void;
 };
 
-export function Table({ columns, data, defaultSort, onEdit }: TableProps) {
+export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable = true }: TableProps) {
   const { handleSort, sortColumn, sortDirection, sortedData } = useTable(columns, data, defaultSort);
 
   return (
-    <div className="overflow-x-scroll">
+    <div className="overflow-x-auto">
       <table className="font-roboto w-full text-left text-sm dark:text-gray-400">
         <thead className="text-xs uppercase  dark:bg-gray-700 dark:text-gray-400">
           <tr className="bg-gray-100">
@@ -32,7 +45,7 @@ export function Table({ columns, data, defaultSort, onEdit }: TableProps) {
               <th
                 key={column.key}
                 scope="col"
-                className="cursor-pointer px-6 py-3  first:rounded   "
+                className="cursor-pointer px-6 py-3  first:rounded-tl   "
                 onClick={() => handleSort(column)}
               >
                 <div className="flex items-baseline justify-center">
@@ -47,22 +60,33 @@ export function Table({ columns, data, defaultSort, onEdit }: TableProps) {
                 </div>
               </th>
             ))}
-            <th className="rounded-r">Edytuj</th>
+            {editable && <th className="rounded-tr opacity-0">Edytuj</th>}
           </tr>
         </thead>
         <tbody className="text-gray-700 [&>*:nth-child(2n-1)]:bg-neutral-200/75">
           {sortedData.map((row) => (
-            <tr className="px-6 py-4" key={row.id}>
+            <tr
+              className="px-6 py-4 hover:cursor-pointer hover:!bg-black/10"
+              key={row.id}
+              onClick={() => onRowClick(row.id)}
+            >
               {columns.map((column) => (
-                <td key={column.key} className={`px-6 py-4 ${column.center ? 'text-center' : ''}`}>
-                  {row[column.key]}
-                </td>
+                <Cell
+                  options={column.options}
+                  key={column.key}
+                  centered={column.center}
+                  value={row[column.key]}
+                  type={column.type}
+                  onEdit={onEdit ? () => onEdit(row.id) : undefined}
+                />
               ))}
-              <td className=" py-4">
-                <button onClick={() => onEdit(row.id)}>
-                  <PencilIcon className="h-4" />
-                </button>
-              </td>
+              {editable && (
+                <td className=" py-4">
+                  <Button aria-label="edytuj" variant="light" className="rounded-lg px-[6px]">
+                    <PencilIcon className="h-4 w-4" />
+                  </Button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

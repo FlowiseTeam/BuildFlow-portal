@@ -7,14 +7,14 @@ export function Header() {
   const { toggle } = useSidebarContext();
 
   return (
-    <header className="sticky top-0 flex w-full items-center justify-between px-4 py-2 ">
+    <header className="sticky top-0 z-10 flex w-full items-center justify-between bg-white px-4 py-2">
       <button className="lg:hidden">
         <Bars3Icon className="h-6 w-6" onClick={toggle} />
       </button>
       <h1 className="ml-4 mt-4 font-abhaya text-4xl font-bold text-primary">Buildflow</h1>
       <Menu as="div" className="relative md:self-start">
         <div>
-          <Menu.Button className="">
+          <Menu.Button className="" aria-label="logowanie">
             <UserCircleIcon className="inline-block h-6 w-6" />
             <ChevronDownIcon className="inline-block h-6 w-6 text-primary" />
           </Menu.Button>

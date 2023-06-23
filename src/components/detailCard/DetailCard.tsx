@@ -7,5 +7,5 @@ export function DetailCard({
   className?: string;
   border?: string;
 }) {
-  return <div className={` rounded-[20px] ${border} shadow-lg ${className}`}>{children}</div>;
+  return <div className={` rounded-[20px] ${border} shadow-lg ${className} overflow-hidden`}>{children}</div>;
 }

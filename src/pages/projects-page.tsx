@@ -8,6 +8,8 @@ import { ListBulletIcon } from '@heroicons/react/24/outline';
 import { DashboardIcon } from '@components/icons/DashboardIcon';
 import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
 import { queryClient } from '@src/main';
+import { ProjectsGrid } from '@src/features/projects/grid/ProjectsGrid';
+import { useProjectsViewStore } from '@src/features/projects/useProjectsViewStore';
 
 export function ProjectsPage() {
   const { data, refetch } = useQuery('projects', getProjects, {
@@ -19,10 +21,8 @@ export function ProjectsPage() {
     },
   });
   if (!data) throw Error('Something went wrong');
-  const [view, setView] = useState<'list' | 'tiles'>('list');
+  const { view, toggleView } = useProjectsViewStore();
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
-
-  const toggleView = () => setView(view === 'list' ? 'tiles' : 'list');
 
   const onSuccessfulAdd = () => {
     setIsAddProjectModalOpen(false);
@@ -64,7 +64,8 @@ export function ProjectsPage() {
           )}
         </div>
         <div className="mb-24 w-0 min-w-full">
-          <ProjectsTable projects={data.projects} refetch={refetch} />
+          {view === 'list' && <ProjectsTable projects={data.projects} refetch={refetch} />}
+          {view === 'grid' && <ProjectsGrid projects={data.projects} refetch={refetch} />}
         </div>
       </div>
     </Page>

@@ -10,7 +10,7 @@ export function EditProjectModal({
   onClose,
   refetch,
 }: {
-  activeProject?: Project;
+  activeProject?: Project | null;
   onClose: () => void;
   refetch: () => void;
 }) {

@@ -1,4 +1,4 @@
-import { queryClient } from '@src/main';
+import { queryClient } from '@src/App';
 import { getEmployee, deleteEmployee } from '@src/services/api';
 import { useQuery, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';

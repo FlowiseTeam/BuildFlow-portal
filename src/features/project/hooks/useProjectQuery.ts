@@ -1,4 +1,4 @@
-import { queryClient } from '@src/main';
+import { queryClient } from '@src/App';
 import { getProject, updateProject, deleteProject } from '@src/services/api';
 import { FormProject, Project } from '@src/services/api-types';
 import { useQuery, useMutation } from 'react-query';

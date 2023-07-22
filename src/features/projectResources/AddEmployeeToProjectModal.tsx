@@ -4,11 +4,11 @@ import { Combobox } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { Button } from '@src/components/button/Button';
 import { Modal } from '@src/components/modal/Modal';
-import { queryClient } from '@src/main';
 import { updateProject } from '@src/services/api';
 import { Project, Employee } from '@src/services/api-types';
 import { useMemo, useState } from 'react';
 import { useMutation } from 'react-query';
+import { queryClient } from '@src/App';
 
 export function AddEmployeeToProjectModal({
   project,

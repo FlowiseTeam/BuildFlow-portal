@@ -7,9 +7,9 @@ import { Button } from '@components/button/Button';
 import { ListBulletIcon } from '@heroicons/react/24/outline';
 import { DashboardIcon } from '@components/icons/DashboardIcon';
 import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
-import { queryClient } from '@src/main';
 import { ProjectsGrid } from '@src/features/projects/grid/ProjectsGrid';
 import { useProjectsViewStore } from '@src/features/projects/useProjectsViewStore';
+import { queryClient } from '@src/App';
 
 export function ProjectsPage() {
   const { data, refetch } = useQuery('projects', getProjects, {

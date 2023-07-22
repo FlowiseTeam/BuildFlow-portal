@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@components/button/Button';
 import { EmployeesTable } from '@features/employees/EmployeesTable';
 import { AddEmployeeModal } from '@features/employees/addEmployeeModal/AddEmployeeModal';
-import { queryClient } from '@src/main';
+import { queryClient } from '@src/App';
 
 export function EmployeesPage() {
   const { data, refetch } = useQuery('employees', getEmployees, {

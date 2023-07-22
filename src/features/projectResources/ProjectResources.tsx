@@ -7,7 +7,7 @@ import { Button } from '@src/components/button/Button';
 import { useState } from 'react';
 import { AddEmployeeToProjectModal } from './AddEmployeeToProjectModal';
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { queryClient } from '@src/main';
+import { queryClient } from '@src/App';
 
 export function ProjectResources({
   className,

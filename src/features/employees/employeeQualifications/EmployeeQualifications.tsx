@@ -3,8 +3,8 @@ import { AddQualificationModal } from './AddQualificationModal';
 import { useState } from 'react';
 import { Employee } from '@src/services/api-types';
 import { updateEmployee } from '@src/services/api';
-import { queryClient } from '@src/main';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { queryClient } from '@src/App';
 
 export function EmployeeQualifications({ employee, isEdited }: { employee: Employee; isEdited: boolean }) {
   const [isOpen, setIsOpen] = useState(false);

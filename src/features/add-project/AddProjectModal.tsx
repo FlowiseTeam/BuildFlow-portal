@@ -2,7 +2,7 @@ import { Modal } from '@components/modal/Modal';
 import { ProjectForm } from '@features/projectForm/ProjectForm';
 import { createProject } from '@services/api';
 import { FormProject } from '@services/api-types';
-import { queryClient } from '@src/main';
+import { queryClient } from '@src/App';
 import { useMutation } from 'react-query';
 
 export function AddProjectModal({

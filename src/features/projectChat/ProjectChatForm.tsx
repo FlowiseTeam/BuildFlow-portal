@@ -3,8 +3,8 @@ import { Button } from '@src/components/button/Button';
 import { useForm } from 'react-hook-form';
 import { ProjectChatSelectedImage } from './ProjectChatSelectedImage';
 import { createComment } from '@src/services/api';
-import { queryClient } from '@src/main';
 import { useState } from 'react';
+import { queryClient } from '@src/App';
 
 type ProjectChatFormInputs = {
   message: string;

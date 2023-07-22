@@ -9,9 +9,11 @@ import {
   ProjectsQuery,
 } from './api-types';
 import { EmployeeFormInputs } from '@features/employees/employeeForm/EmployeeForm';
-const API_URL = import.meta.env.MODE === 'production' ? 'http://localhost:3001/api' : 'http://localhost:3001/api';
+import { mockMirageServer } from '../mirage/mirageMockServer';
+export const API_URL =
+  import.meta.env.MODE === 'production' ? 'http://localhost:3001/api' : 'http://localhost:3001/api';
 
-const PROJECTS_API_URL =
+export const PROJECTS_API_URL =
   import.meta.env.MODE === 'production' ? 'http://localhost:3000/api' : 'http://localhost:3000/api';
 
 const axiosApi = axios.create({ baseURL: API_URL });
@@ -50,7 +52,7 @@ export const getProjectComments = async (projectId: number): Promise<CommentsQue
   (await projectsAxiosApi.get(`/projects/${projectId}/comments`)).data;
 
 export const getLatestComments = async (): Promise<CommentsQuery> =>
-  (await projectsAxiosApi.get('/projects/ocmments/latest')).data;
+  (await projectsAxiosApi.get('/projects/comments/latest')).data;
 
 export const getImage = () => async (url: string) => await imagesApi.get(url);
 
@@ -61,3 +63,7 @@ export const createComment = async (projectId: number, commentData: FormData) =>
     data: commentData,
     headers: { 'Content-Type': 'multipart/form-data' },
   });
+
+if (import.meta.env.MODE !== 'production') {
+  mockMirageServer(PROJECTS_API_URL, API_URL);
+}

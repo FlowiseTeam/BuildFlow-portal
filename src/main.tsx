@@ -6,6 +6,7 @@ import './index.css';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { ErrorBoundary } from './components/queryBoundaries/ErrorBoundary';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <HashRouter>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
         <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>
     </HashRouter>

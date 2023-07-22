@@ -39,8 +39,6 @@ export function EmployeesTable({ employees }: { employees: Employee[] }) {
     navigate(`/app/employees/${id}`);
   };
 
-  console.log(tableData);
-
   return (
     <>
       <Table

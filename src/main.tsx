@@ -7,6 +7,8 @@ import './index.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ErrorBoundary } from './components/queryBoundaries/ErrorBoundary';
+import { NotificationProvider } from './layouts/notifications/NotificationProvider';
+import { Notifications } from './layouts/notifications/Notifications';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +23,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <HashRouter>
       <QueryClientProvider client={queryClient}>
         <ErrorBoundary>
-          <App />
+          <NotificationProvider>
+            <Notifications />
+            <App />
+          </NotificationProvider>
         </ErrorBoundary>
         <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>

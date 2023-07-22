@@ -13,6 +13,7 @@ export default {
       },
       animation: {
         enter: 'linear-enter 300ms ease-in',
+        'notification-enter': 'linear-enter 200ms ease-in-out',
       },
       keyframes: {
         'linear-enter': {

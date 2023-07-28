@@ -1,4 +1,4 @@
-import { Server } from 'miragejs';
+import { Server, Response } from 'miragejs';
 import { AppSchema } from '../mirageMockServer';
 
 export function setRoutesGetMethod<T extends Server>(server: T, PROJECTS_API_URL: string, API_URL: string) {
@@ -41,8 +41,14 @@ export function setRoutesGetMethod<T extends Server>(server: T, PROJECTS_API_URL
   });
 
   server.get(`${API_URL}/employees/:id`, (schema, request) => {
+    const employee = schema.find('employee', request.params.id);
+
+    if (!employee) {
+      return new Response(404);
+    }
+
     return {
-      employee: schema.find('employee', request.params.id),
+      employee,
     };
   });
 }

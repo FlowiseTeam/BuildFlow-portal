@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from 'react';
-import { NotificationType, Notification } from './Notifications';
+import { NotificationType, Notification, Notifications } from './Notifications';
 import { concat } from 'lodash';
 
 interface NotificationContextValue {
-  push: (message: string, type: NotificationType) => void;
+  notify: (message: string, type: NotificationType) => number;
   remove: (id: number) => void;
   notifications: Notification[];
 }
@@ -15,14 +15,16 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const [timeoutsQueue, setTimeoutsQueue] = useState<{ timeoutId: NodeJS.Timeout; notificationId: number }[]>([]);
   const [nextNotificationId, setNextNotificationId] = useState(0);
 
-  const push = (message: string, type: NotificationType) => {
-    const notification: Notification = { message, type, id: nextNotificationId };
-    setNotifications((prev) => [...prev, notification]);
+  const notify = (message: string, type: NotificationType) => {
+    const id = nextNotificationId;
+    const notification: Notification = { message, type, id };
+    setNotifications((prev) => concat(prev, notification));
     const timeoutId = setTimeout(() => {
-      remove(nextNotificationId);
+      remove(id);
     }, 5000);
-    setTimeoutsQueue((prev) => concat(prev, { timeoutId, notificationId: nextNotificationId }));
+    setTimeoutsQueue((prev) => concat(prev, { timeoutId, notificationId: id }));
     setNextNotificationId((prev) => prev + 1);
+    return id;
   };
 
   const remove = (id: number) => {
@@ -35,7 +37,12 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   };
 
   return (
-    <NotificationContext.Provider value={{ notifications, push, remove }}>{children}</NotificationContext.Provider>
+    <NotificationContext.Provider value={{ notifications, notify, remove }}>
+      <>
+        <Notifications />
+        {children}
+      </>
+    </NotificationContext.Provider>
   );
 }
 

@@ -3,7 +3,7 @@ import React from 'react';
 interface ErrorBoundaryProps {
   children: React.ReactNode;
   onReset?: () => void;
-  FallbackComponent?: React.ComponentType<{ error: Error }>;
+  fallback?: React.ReactNode;
 }
 
 interface ErrorBoundaryState {
@@ -33,10 +33,10 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   render() {
     const { hasError } = this.state;
-    const { children, FallbackComponent } = this.props;
+    const { children, fallback } = this.props;
     if (hasError) {
-      if (FallbackComponent) {
-        return <FallbackComponent error={new Error('An error occurred.')} />;
+      if (fallback) {
+        return <>{fallback}</>;
       }
       return <h1>Something went wrong.</h1>;
     }

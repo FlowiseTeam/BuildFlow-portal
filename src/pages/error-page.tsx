@@ -1,3 +1,9 @@
+import { Page } from '@src/layouts/Page';
+
 export function ErrorPage() {
-  return <h1>Error page</h1>;
+  return (
+    <Page>
+      <h1>Error page</h1>
+    </Page>
+  );
 }

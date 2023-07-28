@@ -10,8 +10,13 @@ import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
 import { ProjectsGrid } from '@src/features/projects/grid/ProjectsGrid';
 import { useProjectsViewStore } from '@src/features/projects/useProjectsViewStore';
 import { queryClient } from '@src/App';
+import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
+import { useNotifications } from '@src/layouts/notifications/NotificationProvider';
+import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
+import { LoadingPageSuspense } from '@src/components/queryBoundaries/LoadingView';
 
-export function ProjectsPage() {
+function ProjectsPage() {
+  const { notify } = useNotifications();
   const { data, refetch } = useQuery('projects', getProjects, {
     suspense: true,
     onSuccess: (queryData) => {
@@ -19,8 +24,11 @@ export function ProjectsPage() {
         queryClient.setQueryData(['project', project._id], project);
       });
     },
+    onError: () => notify('Nie udało się pobrać listy projektów.', 'error'),
   });
+
   if (!data) throw Error('Something went wrong');
+
   const { view, toggleView } = useProjectsViewStore();
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
 
@@ -69,5 +77,15 @@ export function ProjectsPage() {
         </div>
       </div>
     </Page>
+  );
+}
+
+export default function () {
+  return (
+    <ErrorBoundary fallback={<PageFallback title="Projekty" message="Nie udało się załadować listy projektów." />}>
+      <LoadingPageSuspense>
+        <ProjectsPage />
+      </LoadingPageSuspense>
+    </ErrorBoundary>
   );
 }

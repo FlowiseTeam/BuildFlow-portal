@@ -1,7 +1,7 @@
 import { DetailCard } from '@src/components/detailCard/DetailCard';
 import { ImageGallery } from '@src/components/imageGallery/ImageGallery';
 import { useImageGallery } from '@src/components/imageGallery/useImageGallery';
-import { getProject, getProjectComments } from '@src/services/api';
+import { getProject, getProjectComments } from '@src/services/api/index';
 import { useQuery } from 'react-query';
 import { DashboardChatMessage } from './DashboardChatMessage';
 import { DashboardChatMessageFallback } from './DashboardChatMessageFallback';

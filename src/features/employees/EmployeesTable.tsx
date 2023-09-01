@@ -1,5 +1,5 @@
 import { Table, TableColumn } from '@components/table/Table';
-import { Employee } from '@services/api-types';
+import { Employee } from '@src/services/api/index';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 

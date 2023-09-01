@@ -1,7 +1,7 @@
 import { EditProjectModal } from '@src/features/edit-project/EditProjectModal';
-import { Project } from '@src/services/api-types';
 import { useState } from 'react';
 import { ProjectGridItem } from './components/ProjectGridItem';
+import { Project } from '@src/services/api/index';
 
 export function ProjectsGrid({ projects, refetch }: { projects: Project[]; refetch: () => void }) {
   const [activeProject, setActiveProject] = useState<null | Project>(null);

@@ -1,10 +1,9 @@
 import { Button } from '@src/components/button/Button';
 import { AddQualificationModal } from './AddQualificationModal';
 import { useState } from 'react';
-import { Employee } from '@src/services/api-types';
-import { updateEmployee } from '@src/services/api';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { queryClient } from '@src/App';
+import { Employee, updateEmployee } from '@src/services/api/index';
 
 export function EmployeeQualifications({ employee, isEdited }: { employee: Employee; isEdited: boolean }) {
   const [isOpen, setIsOpen] = useState(false);

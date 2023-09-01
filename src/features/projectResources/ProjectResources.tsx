@@ -1,6 +1,4 @@
 import { Tab } from '@headlessui/react';
-import { getEmployees } from '@src/services/api';
-import { FormProject, Project } from '@src/services/api-types';
 import { UseMutateAsyncFunction, useQuery } from 'react-query';
 import { ProjectResourcesCellsFallback } from './ProjectResourcesCellsFallback';
 import { Button } from '@src/components/button/Button';
@@ -8,6 +6,7 @@ import { useState } from 'react';
 import { AddEmployeeToProjectModal } from './AddEmployeeToProjectModal';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { queryClient } from '@src/App';
+import { getEmployees, Project, FormProject } from '@src/services/api/index';
 
 export function ProjectResources({
   className,

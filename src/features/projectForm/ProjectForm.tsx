@@ -1,7 +1,7 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
 import { StatusInput } from '@components/statusInput/StatusInput';
-import { FormProject, Project, projectStatuses } from '@services/api-types';
+import { FormProject, Project, projectStatuses } from '@src/services/api/index';
 import { Controller, useForm } from 'react-hook-form';
 
 interface AddProjectInputs {

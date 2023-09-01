@@ -1,4 +1,4 @@
-import { Comment } from '@src/services/api-types';
+import { Comment } from '@src/services/api/index';
 import { useNavigate } from 'react-router-dom';
 
 type DashboardMessage = Comment & { projectName: string };

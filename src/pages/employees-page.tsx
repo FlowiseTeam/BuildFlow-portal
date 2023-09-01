@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getEmployees } from '@services/api';
+import { getEmployees } from '@services/api/index';
 import { Page } from '@layouts/Page';
 import { useState } from 'react';
 import { Button } from '@components/button/Button';

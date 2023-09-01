@@ -1,8 +1,7 @@
 import { Modal } from '@components/modal/Modal';
-import { Project, ProjectStatus, projectStatuses } from '@services/api-types';
 import { Button } from '@src/components/button/Button';
 import { StatusInput } from '@src/components/statusInput/StatusInput';
-import { updateProject } from '@src/services/api';
+import { Project, projectStatuses, updateProject, ProjectStatus } from '@src/services/api/index';
 import { useEffect, useState } from 'react';
 
 export function EditProjectModal({

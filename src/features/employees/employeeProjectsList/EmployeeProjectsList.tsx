@@ -1,10 +1,9 @@
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { Button } from '@src/components/button/Button';
-import { Employee, Project } from '@src/services/api-types';
 import { useState } from 'react';
 import { AddToProjectModal } from './AddToProjectModal';
-import { updateEmployee } from '@src/services/api';
 import { queryClient } from '@src/App';
+import { Employee, updateEmployee, Project } from '@src/services/api/index';
 
 export function EmployeeProjectsList({ employee, isEdited }: { employee: Employee; isEdited: boolean }) {
   const [isOpen, setIsOpen] = useState(false);

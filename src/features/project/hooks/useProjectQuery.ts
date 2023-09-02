@@ -1,6 +1,5 @@
 import { queryClient } from '@src/App';
-import { getProject, updateProject, deleteProject } from '@src/services/api';
-import { FormProject, Project } from '@src/services/api-types';
+import { getProject, FormProject, Project, updateProject, deleteProject } from '@src/services/api/index';
 import { useQuery, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 

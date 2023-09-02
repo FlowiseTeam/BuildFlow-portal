@@ -1,8 +1,7 @@
 import { Modal } from '@components/modal/Modal';
 import { useMutation } from 'react-query';
 import { EmployeeForm, EmployeeFormInputs } from '../employeeForm/EmployeeForm';
-import { createEmployee } from '@services/api';
-import { PostEmployee } from '@src/services/api-types';
+import { PostEmployee, createEmployee } from '@src/services/api/index';
 
 export function AddEmployeeModal({
   show,

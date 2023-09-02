@@ -1,12 +1,11 @@
 import { Listbox } from '@headlessui/react';
 import { Button } from '@src/components/button/Button';
 import { Modal } from '@src/components/modal/Modal';
-import { getProjects } from '@src/services/api';
-import { EmployeeProject, Project } from '@src/services/api-types';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 import { CheckIcon } from '@heroicons/react/20/solid';
+import { EmployeeProject, Project, getProjects } from '@src/services/api/index';
 
 export function AddToProjectModal({
   show,

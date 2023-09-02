@@ -1,11 +1,11 @@
-import { Factory, Model, Registry, belongsTo, createServer, hasMany } from 'miragejs';
-import { Employee, Project } from '../services/api-types';
+import { Model, Registry, belongsTo, createServer, hasMany } from 'miragejs';
 import Schema from 'miragejs/orm/schema';
 import { ModelDefinition } from 'miragejs/-types';
-import { setRoutesGetMethod } from './routes/get';
 import { commentFactory } from './factories/comment';
 import { employeeFactory } from './factories/employee';
-import { setRoutesPostMethod } from './routes/post';
+import { Project, Employee } from '@src/services/api/index';
+import { projectRoutes } from './routes/projects';
+import { employeesRoutes } from './routes/employees';
 
 const ProjectModel: ModelDefinition<Project> = Model.extend({ comments: hasMany() });
 const CommentModel: ModelDefinition<Comment> = Model.extend({ project: belongsTo() });
@@ -55,8 +55,8 @@ export function mockMirageServer(PROJECTS_API_URL: string, API_URL: string) {
     },
 
     routes() {
-      setRoutesGetMethod(this, PROJECTS_API_URL, API_URL);
-      setRoutesPostMethod(this, PROJECTS_API_URL, API_URL);
+      projectRoutes(this, PROJECTS_API_URL);
+      employeesRoutes(this, API_URL);
     },
   });
 }

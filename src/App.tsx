@@ -14,7 +14,7 @@ import { ErrorBoundary } from './components/queryBoundaries/ErrorBoundary';
 import { NotificationProvider } from './layouts/notifications/NotificationProvider';
 
 function Root() {
-  return <Navigate to={'/app'} />;
+  return <Navigate to="/app" />;
 }
 
 export const queryClient = new QueryClient({

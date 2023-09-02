@@ -1,4 +1,4 @@
-import { Comment } from '@src/services/api-types';
+import { Comment } from '@src/services/api/index';
 
 export function ChatComment({
   message,

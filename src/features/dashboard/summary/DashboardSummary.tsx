@@ -1,6 +1,6 @@
 import { DetailCard } from '@components/detailCard/DetailCard';
 import { SummaryCard } from './SummaryCard';
-import { getEmployees, getProjects } from '@src/services/api';
+import { getProjects, getEmployees } from '@src/services/api/index';
 import { useQuery } from 'react-query';
 
 export function DashboardSummary() {

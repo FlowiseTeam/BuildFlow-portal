@@ -1,7 +1,7 @@
 import { UserGroupIcon, TruckIcon, CalendarDaysIcon } from '@heroicons/react/20/solid';
 import { Button } from '@src/components/button/Button';
 import { FallbackMap } from '@src/components/fallbackMap/FallbackMap';
-import { Project } from '@src/services/api-types';
+import { Project } from '@src/services/api/index';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

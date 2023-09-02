@@ -1,8 +1,7 @@
-import { updateEmployee } from '@services/api';
-import { Employee } from '@services/api-types';
 import { useMutation } from 'react-query';
 import { EmployeeForm, EmployeeFormInputs } from '../employeeForm/EmployeeForm';
 import { queryClient } from '@src/App';
+import { Employee, updateEmployee } from '@src/services/api/index';
 
 export function EditEmployee({ employee, isEdited }: { employee: Employee; isEdited: boolean }) {
   const { mutateAsync } = useMutation(['employee', employee._id], (Employee: Employee) => updateEmployee(Employee));

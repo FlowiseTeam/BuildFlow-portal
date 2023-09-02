@@ -1,3 +1,5 @@
+import { tm } from '@src/lib/tw';
+
 export const variants = {
   light:
     'text-neutral-700 hover:bg-neutral-300 hover:text-neutral-800 disabled:cursor-not-allowed disabled:bg-transparent',
@@ -25,7 +27,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export function Button({ children, variant = 'neutral', size = 'sm', className, ...rest }: ButtonProps) {
   return (
-    <button className={`rounded-full ${variants[variant]} ${sizes[size]} ${className}`} {...rest}>
+    <button className={tm('rounded-full', variants[variant], sizes[size], className)} {...rest}>
       {children}
     </button>
   );

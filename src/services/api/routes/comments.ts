@@ -19,7 +19,7 @@ export interface CommentsQuery {
 export const getProjectComments = async (projectId: number): Promise<CommentsQuery> =>
   (await projectsAxiosApi.get(`/projects/${projectId}/comments`)).data;
 
-export const getLatestComments = async (): Promise<CommentsQuery> =>
+export const getLatestComments = async (): Promise<Comment[]> =>
   (await projectsAxiosApi.get('/projects/comments/latest')).data;
 
 export const getImage = () => async (url: string) => await imagesApi.get(url);

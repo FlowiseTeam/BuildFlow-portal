@@ -30,7 +30,7 @@ export function projectRoutes<T extends Server>(server: T, PROJECTS_API_URL: str
   server.get(`${PROJECTS_API_URL}/projects/comments/latest`, (schema) => {
     // TODO: use schema
     return {
-      comments: [{}],
+      comments: [],
       comment_count: 0,
     };
   });

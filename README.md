@@ -8,7 +8,8 @@ To install project, you can follow these steps:
 
 1.  Clone this repository to your local machine using `git clone https://github.com/FlowiseTeam/BuildFlow-portal.git`
 2.  Install the required dependencies by running `npm install`
-3.  Start the app by running `npm run dev`
+3.  Start the app with _Mirage.js_ by running `npm run dev`
+4.  Start the app with _Back-End_ by running `npm run proxy`
 
 ## Storybook
 

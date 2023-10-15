@@ -17,22 +17,23 @@ export function DashboardChat() {
       {isError && <p className="text-xs text-red-600">Nie można pobrać danych...</p>}
       {!isError && failureCount > 0 && <p className="text-xs text-yellow-600">Pobieranie trwa dłużej niż zwykle...</p>}
       <div className="grid gap-6 xl:grid-cols-2">
-        {!comments && (
-          <>
-            <DetailCard className="basis-full p-4">
-              <DashboardChatMessageFallback />
-            </DetailCard>
-            <DetailCard className="basis-full p-4">
-              <DashboardChatMessageFallback />
-            </DetailCard>
-            <DetailCard className="basis-full p-4">
-              <DashboardChatMessageFallback />
-            </DetailCard>
-            <DetailCard className="basis-full p-4">
-              <DashboardChatMessageFallback />
-            </DetailCard>
-          </>
-        )}
+        {!comments ||
+          (!comments.length && (
+            <>
+              <DetailCard className="basis-full p-4">
+                <DashboardChatMessageFallback />
+              </DetailCard>
+              <DetailCard className="basis-full p-4">
+                <DashboardChatMessageFallback />
+              </DetailCard>
+              <DetailCard className="basis-full p-4">
+                <DashboardChatMessageFallback />
+              </DetailCard>
+              <DetailCard className="basis-full p-4">
+                <DashboardChatMessageFallback />
+              </DetailCard>
+            </>
+          ))}
         {comments &&
           comments.map((msg) => (
             <DetailCard key={msg._id} className="basis-full p-4">

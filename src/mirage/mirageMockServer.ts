@@ -6,10 +6,13 @@ import { employeeFactory } from './factories/employee';
 import { Project, Employee } from '@src/services/api/index';
 import { projectRoutes } from './routes/projects';
 import { employeesRoutes } from './routes/employees';
+import { Vehicle } from '@src/services/api/routes/vehicles';
+import { vehiclesRoutes } from './routes/vehicles';
 
 const ProjectModel: ModelDefinition<Project> = Model.extend({ comments: hasMany() });
 const CommentModel: ModelDefinition<Comment> = Model.extend({ project: belongsTo() });
 const EmployeeModel: ModelDefinition<Employee> = Model.extend({});
+const VehicleModel: ModelDefinition<Vehicle> = Model.extend({});
 
 // TODO: check for valid type
 type AppRegistry = Registry<
@@ -26,6 +29,7 @@ export function mockMirageServer(PROJECTS_API_URL: string, API_URL: string) {
       project: ProjectModel,
       comment: CommentModel,
       employee: EmployeeModel,
+      vehicle: VehicleModel,
     },
 
     factories: {
@@ -57,6 +61,7 @@ export function mockMirageServer(PROJECTS_API_URL: string, API_URL: string) {
     routes() {
       projectRoutes(this, PROJECTS_API_URL);
       employeesRoutes(this, API_URL);
+      vehiclesRoutes(this, PROJECTS_API_URL);
     },
   });
 }

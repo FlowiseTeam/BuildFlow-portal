@@ -31,7 +31,8 @@ export function DashboardSummary() {
           isError={isErrorProjects}
           isSlowFetch={failureCountProjects > 0}
           name="Projekty"
-          count={isLoadingProjects ? '' : projectsCount}
+          count={projectsCount}
+          isLoading={isLoadingProjects}
           imgSrc="projectsicon.svg"
         />
       </DetailCard>
@@ -40,7 +41,8 @@ export function DashboardSummary() {
           isError={isErrorEmployees}
           isSlowFetch={failureCountEmployees > 0}
           name="Pracownicy"
-          count={isLoadingEmployees ? '' : employeesCount}
+          count={employeesCount}
+          isLoading={isLoadingEmployees}
           imgSrc="employeesicon.svg"
         />
       </DetailCard>
@@ -49,7 +51,8 @@ export function DashboardSummary() {
           isError={isErrorEmployees}
           isSlowFetch={failureCountEmployees > 0}
           name="Nieprzypisani"
-          count={isLoadingEmployees ? '' : unassignedEmployeesCount}
+          count={unassignedEmployeesCount}
+          isLoading={isLoadingEmployees}
           imgSrc="marcIcon.svg"
         />
       </DetailCard>

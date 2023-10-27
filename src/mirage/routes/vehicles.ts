@@ -32,4 +32,11 @@ export function vehiclesRoutes<T extends Server>(server: T, API_URL: string) {
 
     return schema.vehicles.create(attrs);
   });
+
+  server.put(`${API_URL}/vehicles/:id`, (schema: AppSchema, request) => {
+    const attrs = JSON.parse(request.requestBody);
+    const vehicle = server.schema.vehicles.find(attrs._id);
+
+    return vehicle.update(attrs);
+  });
 }

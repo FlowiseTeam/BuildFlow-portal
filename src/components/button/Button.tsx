@@ -25,9 +25,16 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   size?: keyof typeof sizes;
 }
 
-export function Button({ children, variant = 'neutral', size = 'sm', className, ...rest }: ButtonProps) {
+export function Button({
+  children,
+  variant = 'neutral',
+  size = 'sm',
+  className,
+  type = 'button',
+  ...rest
+}: ButtonProps) {
   return (
-    <button className={tm('rounded-full', variants[variant], sizes[size], className)} {...rest}>
+    <button type={type} className={tm('rounded-full', variants[variant], sizes[size], className)} {...rest}>
       {children}
     </button>
   );

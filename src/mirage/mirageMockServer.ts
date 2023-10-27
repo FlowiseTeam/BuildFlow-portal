@@ -8,6 +8,8 @@ import { projectRoutes } from './routes/projects';
 import { employeesRoutes } from './routes/employees';
 import { Vehicle } from '@src/services/api/routes/vehicles';
 import { vehiclesRoutes } from './routes/vehicles';
+import { VEHICLES_API_URL } from '@src/services/api/setup';
+import { getVehicleSeeds } from './seeds/vehicles';
 
 const ProjectModel: ModelDefinition<Project> = Model.extend({ comments: hasMany() });
 const CommentModel: ModelDefinition<Comment> = Model.extend({ project: belongsTo() });
@@ -52,6 +54,7 @@ export function mockMirageServer(PROJECTS_API_URL: string, API_URL: string) {
         zipcode: '60-700',
         _id: 1,
       });
+      getVehicleSeeds(server);
 
       server.create('employee');
 
@@ -61,7 +64,7 @@ export function mockMirageServer(PROJECTS_API_URL: string, API_URL: string) {
     routes() {
       projectRoutes(this, PROJECTS_API_URL);
       employeesRoutes(this, API_URL);
-      vehiclesRoutes(this, PROJECTS_API_URL);
+      vehiclesRoutes(this, VEHICLES_API_URL);
     },
   });
 }

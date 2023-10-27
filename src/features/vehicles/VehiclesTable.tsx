@@ -9,7 +9,18 @@ const columns = [
   { type: 'text', title: 'Numer rejestracyjny', key: 'reg_number', sortable: false, headCenter: false },
   { type: 'text-array', title: 'Przypisany projekt', key: 'assigned_project', sortable: false, headCenter: false },
   { type: 'date', title: 'Data przeglądu', key: 'rev_date', sortable: false, headCenter: false },
-  { type: 'text', title: 'Status', key: 'status', sortable: true, headCenter: false },
+  {
+    type: 'select',
+    title: 'Status',
+    key: 'status',
+    sortable: true,
+    headCenter: false,
+    options: [
+      { value: 'W boju', className: 'bg-yellow-300 hover:bg-yellow-400' },
+      { value: 'W serwisie', className: 'bg-red-400 hover:bg-red-500' },
+      { value: 'Na firmie', className: 'bg-green-400 hover:bg-green-500' },
+    ],
+  },
 ] satisfies TableColumn[];
 
 export function VehiclesTable() {
@@ -30,5 +41,13 @@ export function VehiclesTable() {
     [data],
   );
 
-  return <Table columns={columns} data={vehiclesTableData} onRowClick={handleRowClick} isFetching={isLoading} />;
+  return (
+    <Table
+      columns={columns}
+      data={vehiclesTableData}
+      onRowClick={handleRowClick}
+      isFetching={isLoading}
+      editable={false}
+    />
+  );
 }

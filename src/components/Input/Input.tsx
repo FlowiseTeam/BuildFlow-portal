@@ -46,9 +46,10 @@ export function Input<T extends FieldValues = FieldValues>({
   disabled,
   ...rest
 }: InputProps<T>) {
+  console.log(error);
   return (
     <div className={`flex flex-col ${className}`}>
-      <label className="text-xs text-gray-600" htmlFor={id}>
+      <label className="ml-1 text-xs text-gray-600" htmlFor={id}>
         {labelText}
       </label>
       <input

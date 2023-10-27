@@ -1,8 +1,8 @@
 import { DetailCard } from '@src/components/detailCard/DetailCard';
 import { CalendarEvents } from '../calendar/calenderEvents/CalendarEvents';
-import { VehiclesTable } from '../vehicles/VehiclesTable';
 import { DashboardSummary } from './summary/DashboardSummary';
 import { DashboardChat } from './chat/DashboardChat';
+// import { DashboardVehicles } from '../vehicles/DashboardVehicles';
 
 export function Dashboard() {
   return (
@@ -16,11 +16,9 @@ export function Dashboard() {
       <DetailCard className="xl:col-start-4 xl:row-span-3 xl:row-start-1" border="">
         <CalendarEvents />
       </DetailCard>
-      <div className=" sm:col-span-2 xl:col-span-3">
-        <DetailCard className="overflow-hidden">
-          <VehiclesTable />
-        </DetailCard>
-      </div>
+      {/* <div className=" sm:col-span-2 xl:col-span-3">
+        <DashboardVehicles />
+      </div> */}
     </div>
   );
 }

@@ -14,6 +14,18 @@ import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
 import { useNotifications } from '@src/layouts/notifications/NotificationProvider';
 import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
 import { LoadingPageSuspense } from '@src/components/queryBoundaries/LoadingView';
+import { SearchInput } from '@src/components/Input/SearchInput';
+
+function ProjectViewToggler({ view, toggle }: { view: 'list' | 'grid'; toggle: () => void }) {
+  return (
+    <span className="flex items-center gap-4">
+      <span>{view === 'list' ? 'lista' : 'kafelki'}</span>
+      <Button className="rounded px-1 py-1" onClick={toggle}>
+        {view === 'list' ? <ListBulletIcon className="h-6" /> : <DashboardIcon className="h-6" />}
+      </Button>
+    </span>
+  );
+}
 
 function ProjectsPage() {
   const { notify } = useNotifications();
@@ -44,32 +56,14 @@ function ProjectsPage() {
         onSuccess={onSuccessfulAdd}
       />
       <div className="mt-8 flex flex-col">
-        <div className="flex items-end justify-between">
-          <input
-            name="filter"
-            placeholder="Wyszukaj"
-            className="rounded-full px-2 py-1 text-xs shadow-lg outline-[1px] outline-gray-400"
-          />
-          <Button variant="primary" onClick={() => setIsAddProjectModalOpen(true)}>
-            dodaj projekt
-          </Button>
-        </div>
-        <div className="my-4 ml-auto flex items-center gap-4">
-          {view === 'list' ? (
-            <>
-              <p>lista</p>
-              <Button className="rounded px-1 py-1" onClick={toggleView}>
-                <ListBulletIcon className="h-6" />
-              </Button>
-            </>
-          ) : (
-            <>
-              <p>kafelki</p>
-              <Button className="rounded px-1 py-1" onClick={toggleView}>
-                <DashboardIcon className="h-6" />
-              </Button>
-            </>
-          )}
+        <div className="mb-6 flex items-center justify-between">
+          <SearchInput />
+          <span className="flex items-center gap-12">
+            <ProjectViewToggler view={view} toggle={toggleView} />
+            <Button variant="primary" onClick={() => setIsAddProjectModalOpen(true)}>
+              dodaj projekt
+            </Button>
+          </span>
         </div>
         <div className="mb-24 w-0 min-w-full">
           {view === 'list' && <ProjectsTable projects={data.projects} refetch={refetch} />}

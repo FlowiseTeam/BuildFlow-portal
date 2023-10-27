@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ErrorBoundary } from './components/queryBoundaries/ErrorBoundary';
 import { NotificationProvider } from './layouts/notifications/NotificationProvider';
+import VehiclePage from './pages/vehicle-page';
 
 function Root() {
   return <Navigate to="/app" />;
@@ -35,7 +36,10 @@ function App() {
               <Route path="/" element={<Root />} />
               <Route path="/app" element={<AppLayout />}>
                 <Route index element={<AppPage />} />
-                <Route path="vehicles" element={<VehiclesPage />} />
+                <Route path="vehicles">
+                  <Route index element={<VehiclesPage />} />
+                  <Route path=":id" element={<VehiclePage />} />
+                </Route>
                 <Route path="employees">
                   <Route index element={<EmployeesPage />} />
                   <Route path=":id" element={<EmployeePage />} />

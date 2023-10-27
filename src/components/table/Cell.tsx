@@ -56,6 +56,10 @@ export function Cell({ value, type, centered, onEdit, options }: CellProps) {
       );
       break;
     }
+    case 'distance': {
+      element = <td className={`px-6 py-4 ${centered ? 'text-center' : ''}`}>{`${value} km`}</td>;
+      break;
+    }
     default: {
       element = <td className={`px-6 py-4 ${centered ? 'text-center' : ''}`}>{value}</td>;
     }

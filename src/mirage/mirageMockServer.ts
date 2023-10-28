@@ -1,4 +1,4 @@
-import { Model, Registry, belongsTo, createServer, hasMany } from 'miragejs';
+import { Model, Registry, belongsTo, createServer, hasMany, Server } from 'miragejs';
 import Schema from 'miragejs/orm/schema';
 import { ModelDefinition } from 'miragejs/-types';
 import { commentFactory } from './factories/comment';
@@ -8,24 +8,30 @@ import { projectRoutes } from './routes/projects';
 import { employeesRoutes } from './routes/employees';
 import { Vehicle } from '@src/services/api/routes/vehicles';
 import { vehiclesRoutes } from './routes/vehicles';
-import { VEHICLES_API_URL } from '@src/services/api/setup';
 import { getVehicleSeeds } from './seeds/vehicles';
+import { getProjectSeeds } from './seeds/projects';
 
 const ProjectModel: ModelDefinition<Project> = Model.extend({ comments: hasMany() });
 const CommentModel: ModelDefinition<Comment> = Model.extend({ project: belongsTo() });
 const EmployeeModel: ModelDefinition<Employee> = Model.extend({});
 const VehicleModel: ModelDefinition<Vehicle> = Model.extend({});
 
-// TODO: check for valid type
 type AppRegistry = Registry<
-  { project: typeof ProjectModel; comment: typeof CommentModel; employee: typeof EmployeeModel },
+  {
+    project: typeof ProjectModel;
+    comment: typeof CommentModel;
+    employee: typeof EmployeeModel;
+    vehicle: typeof VehicleModel;
+  },
   {}
 >;
 
 export type AppSchema = Schema<AppRegistry>;
 
+export type ServerType = Server<AppRegistry>;
+
 //urls must be passed manually because the lib is poorly wirtten
-export function mockMirageServer(PROJECTS_API_URL: string, API_URL: string) {
+export function mockMirageServer(PROJECTS_API_URL: string, API_URL: string, VEHICLES_API_URL: string) {
   createServer({
     models: {
       project: ProjectModel,
@@ -40,25 +46,12 @@ export function mockMirageServer(PROJECTS_API_URL: string, API_URL: string) {
     },
 
     seeds(server) {
-      const centrumProject = server.create('project', {
-        city: 'Poznań',
-        client: 'Miasto Poznań',
-        created_at: '2023-06-21T17:42:54.789Z',
-        employees: [],
-        end_date: '2033-10-10T00:00:00.000Z',
-        name: 'Projekt Centrum',
-        start_date: '2001-10-10T00:00:00.000Z',
-        status: 'Zawieszony',
-        street: 'Święty Marcin',
-        updated_at: '2023-07-18T17:32:47.187Z',
-        zipcode: '60-700',
-        _id: 1,
-      });
+      const { projectOne } = getProjectSeeds(server);
       getVehicleSeeds(server);
 
       server.create('employee');
 
-      server.createList('comment', 5, { project: centrumProject });
+      server.createList('comment', 5, { project: projectOne });
     },
 
     routes() {

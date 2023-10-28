@@ -43,7 +43,7 @@ export function VehicleForm({
       name: data.name,
       status: data.status,
       reg_number: data.reg_number,
-      rev_state: null,
+      rev_date: null,
       mileage: data.mileage,
       capacity: null,
     };

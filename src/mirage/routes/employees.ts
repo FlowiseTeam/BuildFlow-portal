@@ -1,10 +1,14 @@
-import { Server, Response } from 'miragejs';
-import { AppSchema } from '../mirageMockServer';
+import { Response } from 'miragejs';
+import { ServerType } from '../mirageMockServer';
 
 let employeeId = 1;
 
-export function employeesRoutes<T extends Server>(server: T, API_URL: string) {
-  server.get(`${API_URL}/employees/`, (schema) => {
+export function employeesRoutes(server: ServerType, API_URL: string) {
+  function url(path: string) {
+    return `${API_URL}/${path}`;
+  }
+
+  server.get(url('employees'), (schema) => {
     const employees = schema.all('employee').models;
 
     return {
@@ -13,7 +17,7 @@ export function employeesRoutes<T extends Server>(server: T, API_URL: string) {
     };
   });
 
-  server.get(`${API_URL}/employees/:id`, (schema, request) => {
+  server.get(url('employees/:id'), (schema, request) => {
     const employee = schema.find('employee', request.params.id);
 
     if (!employee) {
@@ -25,11 +29,13 @@ export function employeesRoutes<T extends Server>(server: T, API_URL: string) {
     };
   });
 
-  server.post(`${API_URL}/employees`, (schema: AppSchema, request) => {
+  server.post(url('employees'), (schema, request) => {
     const attrs = JSON.parse(request.requestBody);
 
     Object.assign(attrs, { _id: ++employeeId });
 
-    return schema.employees.create(attrs);
+    // return schema.employees.create(attrs);
+    const xd = schema.create('employee', attrs);
+    return { employee: xd };
   });
 }

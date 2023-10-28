@@ -11,8 +11,8 @@ The Mirage.js server is initialized in the api.ts file. The server is only initi
 mockMirageServer.ts is the entry point for the Mirage.js server.
 
 - models are used to define the database schema,
-- factories are used to generate data,
-- seeds are used to populate the database with data,
+- factories are more complex way to generate data,
+- seeds are simple way to generate data,
 - routes are used to define the API endpoints,
 
 ## Folder structure
@@ -22,11 +22,10 @@ mirageMockServer.js // entry point for the Mirage.js server
 ├── models // models
 ├── routes // used to define the API endpoints
 └── seeds // used to populate the database with data
-└── user.ts
 
 ## Keep in mind
 
-- api endpoints must be passed to mockMirageServer(), otherwise it will throw inicialization error (wtf)
+- api endpoints must be passed to mockMirageServer(), otherwise it will throw inicialization error
 - all entities are forced to have additional **id** field
   - production: {\_id: 1, name: 'John Doe'}
   - mirage: {id: 1, name:, \_id: 1, 'John Doe'}

@@ -2,7 +2,7 @@ import { Modal } from '@components/modal/Modal';
 import { ProjectForm } from '@features/projectForm/ProjectForm';
 import { queryClient } from '@src/App';
 import { FormProject, createProject } from '@src/services/api/index';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 export function AddProjectModal({
   show,

@@ -5,12 +5,12 @@ export function DeleteModal({
   isDeleteModalOpen,
   setIsDeleteModalOpen,
   onSuccess,
-  title
+  title,
 }: {
   isDeleteModalOpen: boolean;
   setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSuccess: () => void;
-  title: string
+  title: string;
 }) {
   return (
     <Modal
@@ -19,7 +19,7 @@ export function DeleteModal({
       onClose={() => setIsDeleteModalOpen(false)}
       title={title}
     >
-      <div className="flex flex-col gap-4">
+      <div className="mt-8 flex flex-col gap-2">
         <Button onClick={() => setIsDeleteModalOpen(false)}>Anuluj</Button>
         <Button variant="danger" onClick={onSuccess}>
           Tak

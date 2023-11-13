@@ -2,10 +2,10 @@ import { Listbox } from '@headlessui/react';
 import { Button } from '@src/components/button/Button';
 import { Modal } from '@src/components/modal/Modal';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 
 import { CheckIcon } from '@heroicons/react/20/solid';
-import { Project, getProjects } from '@src/services/api/index';
+import { Project } from '@src/services/api/index';
+import { useProjectsQuery } from '@src/services/api/hooks/projects';
 
 interface AddToProjectModalProps {
   show: boolean;
@@ -15,7 +15,7 @@ interface AddToProjectModalProps {
 }
 
 export function AddToProjectModal({ show, onClose, onAdd, assignedProjects }: AddToProjectModalProps) {
-  const { data } = useQuery(['projects'], () => getProjects());
+  const { data } = useProjectsQuery();
   const [selectedProjects, setSelectedProjects] = useState<Project[]>([]);
 
   const assignedProjectIds = assignedProjects.map((project) => project.project_id);

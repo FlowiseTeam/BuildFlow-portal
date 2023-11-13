@@ -1,6 +1,8 @@
 import { Input } from '@src/components/Input/Input';
 import { Button } from '@src/components/button/Button';
+import { LoadingIcon } from '@src/components/loadings/Loading';
 import { StatusInput } from '@src/components/statusInput/StatusInput';
+import { useToggle } from '@src/hooks/useToggle';
 import { FormVehicle } from '@src/services/api/routes/vehicles';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -15,22 +17,32 @@ interface AddVehicleFields {
 
 const vehicleStatuses = ['W boju', 'Na firmie', 'W serwisie'] as const;
 
+const vehicleStatusesColors: Record<(typeof vehicleStatuses)[number], string> = {
+  'W boju': 'border-yellow-300',
+  'Na firmie': 'border-green-400',
+  'W serwisie': 'border-red-400',
+};
+
 export function VehicleForm({
   vehicle,
   onClose,
   handleFormSubmit,
-  disabled = false,
+  isAddModal = false,
+  isPending = false,
 }: {
   vehicle?: FormVehicle;
   onClose?: () => void;
   handleFormSubmit: any;
-  disabled?: boolean;
+  isAddModal?: boolean;
+  isPending?: boolean;
 }) {
+  const [isEdited, toggleIsEdited] = useToggle(isAddModal);
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
     control,
+    reset,
   } = useForm<AddVehicleFields>({
     defaultValues: {
       ...vehicle,
@@ -47,7 +59,10 @@ export function VehicleForm({
       mileage: data.mileage,
       capacity: null,
     };
-    await handleFormSubmit(vehicleForm);
+
+    const updatedVehicle = { ...vehicle, ...vehicleForm };
+    toggleIsEdited();
+    await handleFormSubmit(updatedVehicle);
   });
 
   return (
@@ -63,7 +78,7 @@ export function VehicleForm({
             labelText="Nazwa"
             name="name"
             error={errors.name}
-            disabled={disabled}
+            disabled={!isEdited}
           />
         </div>
         <Input
@@ -75,7 +90,7 @@ export function VehicleForm({
           labelText="Nr. rejestracyjny"
           name="reg_number"
           error={errors.reg_number}
-          disabled={disabled}
+          disabled={!isEdited}
         />
         <Input
           register={register}
@@ -86,35 +101,50 @@ export function VehicleForm({
           labelText="Przebieg (km)"
           name="mileage"
           error={errors.mileage}
-          disabled={disabled}
+          disabled={!isEdited}
         />
         <Controller
           control={control}
           defaultValue={vehicleStatuses[0]}
+          rules={{ required: true }}
           name="status"
           render={({ field: { onChange } }) => (
             <StatusInput
               id="status"
-              disabled={disabled}
+              disabled={!isEdited}
               onChange={onChange}
               values={vehicleStatuses}
               defaultValue={vehicleStatuses[0]}
+              colors={vehicleStatusesColors}
+              isRequired
             />
           )}
         ></Controller>
       </div>
       <div className="flex justify-end gap-3">
-        {onClose && <Button onClick={onClose}>Powrót</Button>}
-        {vehicle && (
-          <Button disabled={!isDirty} type="submit" variant="primary">
-            Aktualizuj
-          </Button>
+        {vehicle && !isEdited && !isPending && <Button onClick={toggleIsEdited}>Edytuj</Button>}
+        {vehicle && isEdited && !isPending && (
+          <>
+            <Button
+              onClick={() => {
+                toggleIsEdited();
+                reset();
+              }}
+            >
+              Anuluj
+            </Button>
+            <Button disabled={!isDirty} type="submit" variant="primary">
+              Aktualizuj
+            </Button>
+          </>
         )}
+        {onClose && <Button onClick={onClose}>Powrót</Button>}
         {!vehicle && (
           <Button disabled={!isDirty} type="submit" variant="primary">
             Dodaj
           </Button>
         )}
+        {isPending && <LoadingIcon />}
       </div>
     </form>
   );

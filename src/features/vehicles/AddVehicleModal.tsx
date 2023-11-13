@@ -1,6 +1,6 @@
 import { Modal } from '@components/modal/Modal';
 import { queryClient } from '@src/App';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { VehicleForm } from './VehicleForm';
 import { FormVehicle, createVehicle } from '@src/services/api/routes/vehicles';
 
@@ -23,7 +23,7 @@ export function AddVehicleModal({
 
   return (
     <Modal show={show} onClose={onClose} title="Dodaj Pojazd">
-      <VehicleForm handleFormSubmit={handleAdd} onClose={onClose} />
+      <VehicleForm handleFormSubmit={handleAdd} onClose={onClose} isAddModal />
     </Modal>
   );
 }

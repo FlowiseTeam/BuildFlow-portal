@@ -46,16 +46,21 @@ export function Input<T extends FieldValues = FieldValues>({
   disabled,
   ...rest
 }: InputProps<T>) {
-  console.log(error);
   return (
     <div className={`flex flex-col ${className}`}>
-      <label className="ml-1 text-xs text-gray-600" htmlFor={id}>
+      <label
+        className={tm(
+          'after:text-red ml-1 text-xs text-gray-600',
+          !disabled && validationSchema?.required && "after:ml-[2px] after:text-red-500 after:content-['*']",
+        )}
+        htmlFor={id}
+      >
         {labelText}
       </label>
       <input
         className={tm(
           'h-9 rounded-lg border-2 p-1 pl-2',
-          disabled && 'cursor-not-allowed text-gray-600',
+          disabled && ' text-gray-600',
           error && 'focus:outline-red-500',
         )}
         type={type}

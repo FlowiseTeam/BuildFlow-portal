@@ -1,12 +1,13 @@
 import { Tab } from '@headlessui/react';
-import { UseMutateAsyncFunction, useQuery } from 'react-query';
+import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { ProjectResourcesCellsFallback } from './ProjectResourcesCellsFallback';
 import { Button } from '@src/components/button/Button';
 import { useState } from 'react';
 import { AddEmployeeToProjectModal } from './AddEmployeeToProjectModal';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { queryClient } from '@src/App';
-import { getEmployees, Project, FormProject } from '@src/services/api/index';
+import { Project, FormProject } from '@src/services/api/index';
+import { useEmployeesQuery } from '@src/services/api/hooks/employees';
 
 export function ProjectResources({
   className,
@@ -19,14 +20,9 @@ export function ProjectResources({
   isEdited: boolean;
   onUpdate: UseMutateAsyncFunction<any, unknown, Partial<FormProject>, unknown>;
 }) {
+  const { data, isLoading } = useEmployeesQuery();
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
-  const { data, isLoading } = useQuery('employees', () => getEmployees(), {
-    onSuccess: (queryData) => {
-      queryData.employees.forEach((employee) => {
-        queryClient.setQueryData(['employee', employee._id], employee);
-      });
-    },
-  });
+
   const projectEmployees = data?.employees.filter((e) => project.employees.includes(e._id)) || [];
 
   const handleDeleteEmployee = async (employeeId: number) => {

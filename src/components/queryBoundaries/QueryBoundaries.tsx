@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { QueryErrorResetBoundary } from 'react-query';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { LoadingView } from './LoadingView';
 import { ErrorBoundary } from './ErrorBoundary';
 

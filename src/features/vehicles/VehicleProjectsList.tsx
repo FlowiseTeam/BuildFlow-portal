@@ -7,9 +7,12 @@ import { AddToProjectModal } from '../employees/employeeProjectsList/AddToProjec
 import { usePutVehicle } from '@src/services/api/hooks/vehicles';
 import { LoadingView } from '@src/components/loadings/Loading';
 
-export function VehicleProjectsList({ vehicle, isEdited }: { vehicle: Vehicle; isEdited: boolean }) {
+export function VehicleProjectsList({ vehicle }: { vehicle: Vehicle }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { mutate, isLoading } = usePutVehicle();
+  const { mutate, isPending } = usePutVehicle();
+
+  const projects = vehicle.assigned_project;
+  console.log(projects);
 
   const handleAddProjects = (projects: Project[]) => {
     setIsOpen(false);
@@ -22,6 +25,8 @@ export function VehicleProjectsList({ vehicle, isEdited }: { vehicle: Vehicle; i
       ...vehicle,
       assigned_project: [...vehicle.assigned_project, ...assignedProjects],
     } as Vehicle;
+
+    console.log('it is', updatedVehicle);
     mutate(updatedVehicle);
   };
 
@@ -40,25 +45,23 @@ export function VehicleProjectsList({ vehicle, isEdited }: { vehicle: Vehicle; i
         assignedProjects={vehicle.assigned_project}
       />
       <div className="relative h-full">
-        {isLoading && <LoadingView />}
-        <header className="flex items-center justify-between border-b-2 px-4 py-2 font-semibold">
+        {isPending && <LoadingView />}
+        <div className="flex items-center justify-between border-b-2 px-4 py-2 font-semibold">
           <p>Przypisane projekty</p>
-          <Button onClick={() => !isLoading && setIsOpen(true)} size="xs">
+          <Button onClick={() => !isPending && setIsOpen(true)} size="xs">
             Dodaj
           </Button>
-        </header>
+        </div>
         <ul className="my-2 px-4 [&>*:not(:first-of-type)]:border-t-2">
-          {vehicle.assigned_project.map((project, i) => (
+          {projects.map((project, i) => (
             <li className="flex items-center justify-between py-1" key={project.project_id}>
               <span>{project.project_name}</span>
-              {isEdited && (
-                <Button size="custom" className="p-1" onClick={() => handleRemoveProject(i)}>
-                  <XMarkIcon className="h-4 w-4" />
-                </Button>
-              )}
+              <Button size="custom" className="p-1" onClick={() => handleRemoveProject(i)}>
+                <XMarkIcon className="h-4 w-4" />
+              </Button>
             </li>
           ))}
-          {!vehicle.assigned_project && <li className="text-gray-500">Brak uprawnień.</li>}
+          {!projects.length && <li className="text-sm text-gray-500">Brak przypisanych projektów.</li>}
         </ul>
       </div>
     </>

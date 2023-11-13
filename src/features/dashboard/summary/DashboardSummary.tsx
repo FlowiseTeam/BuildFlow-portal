@@ -1,7 +1,7 @@
 import { DetailCard } from '@components/detailCard/DetailCard';
 import { SummaryCard } from './SummaryCard';
-import { getProjects, getEmployees } from '@src/services/api/index';
-import { useQuery } from 'react-query';
+import { useProjectsQuery } from '@src/services/api/hooks/projects';
+import { useEmployeesQuery } from '@src/services/api/hooks/employees';
 
 export function DashboardSummary() {
   const {
@@ -9,13 +9,13 @@ export function DashboardSummary() {
     isLoading: isLoadingProjects,
     isError: isErrorProjects,
     failureCount: failureCountProjects,
-  } = useQuery('projects', () => getProjects());
+  } = useProjectsQuery();
   const {
     data: employeesData,
     isLoading: isLoadingEmployees,
     isError: isErrorEmployees,
     failureCount: failureCountEmployees,
-  } = useQuery('employees', () => getEmployees());
+  } = useEmployeesQuery();
 
   const projectsCount = projecsData?.project_count;
   const employeesCount = employeesData?.employees_count;

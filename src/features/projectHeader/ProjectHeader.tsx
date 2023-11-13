@@ -1,7 +1,7 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { deleteProject } from '@services/api';
 import { useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { queryClient } from '../../main';
 import { DeleteModal } from '@src/components/deleteModal/DeleteModal';

@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { getProjects } from '@services/api';
 import { Page } from '@layouts/Page';
 import { useState } from 'react';
@@ -9,12 +9,12 @@ import { DashboardIcon } from '@components/icons/DashboardIcon';
 import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
 import { ProjectsGrid } from '@src/features/projects/grid/ProjectsGrid';
 import { useProjectsViewStore } from '@src/features/projects/useProjectsViewStore';
-import { queryClient } from '@src/App';
 import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
 import { useNotifications } from '@src/layouts/notifications/NotificationProvider';
 import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
 import { LoadingPageSuspense } from '@src/components/queryBoundaries/LoadingView';
 import { SearchInput } from '@src/components/Input/SearchInput';
+import { queryClient } from '@src/App';
 
 function ProjectViewToggler({ view, toggle }: { view: 'list' | 'grid'; toggle: () => void }) {
   return (
@@ -28,18 +28,18 @@ function ProjectViewToggler({ view, toggle }: { view: 'list' | 'grid'; toggle: (
 }
 
 function ProjectsPage() {
-  const { notify } = useNotifications();
-  const { data, refetch } = useQuery('projects', getProjects, {
-    suspense: true,
-    onSuccess: (queryData) => {
-      queryData.projects.forEach((project) => {
+  const { data, refetch } = useSuspenseQuery({
+    queryKey: ['projects'],
+    queryFn: async () => {
+      const data = await getProjects();
+
+      data.projects.forEach((project) => {
         queryClient.setQueryData(['project', project._id], project);
       });
-    },
-    onError: () => notify('Nie udało się pobrać listy projektów.', 'error'),
-  });
 
-  if (!data) throw Error('Something went wrong');
+      return data;
+    },
+  });
 
   const { view, toggleView } = useProjectsViewStore();
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);

@@ -1,28 +1,15 @@
-import { useQuery } from 'react-query';
-import { getEmployees } from '@services/api/index';
 import { Page } from '@layouts/Page';
 import { useState } from 'react';
 import { Button } from '@components/button/Button';
 import { EmployeesTable } from '@features/employees/EmployeesTable';
 import { AddEmployeeModal } from '@features/employees/addEmployeeModal/AddEmployeeModal';
-import { queryClient } from '@src/App';
 import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
-import { useNotifications } from '@src/layouts/notifications/NotificationProvider';
 import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
 import { SearchInput } from '@src/components/Input/SearchInput';
+import { useSuspenseEmployeesQuery } from '@src/services/api/hooks/employees';
 
 function EmployeesPageWithoutFallback() {
-  const { notify } = useNotifications();
-  const { data, refetch } = useQuery('employees', getEmployees, {
-    suspense: true,
-    onSuccess: (queryData) => {
-      queryData.employees.forEach((employee) => {
-        queryClient.setQueryData(['employee', employee._id], employee);
-      });
-    },
-    onError: () => notify('Nie udało się pobrać listy pracowników.', 'error'),
-  });
-  if (!data) throw Error('Something went wrong');
+  const { data, refetch } = useSuspenseEmployeesQuery();
 
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
 

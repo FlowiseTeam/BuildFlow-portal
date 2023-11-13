@@ -8,11 +8,12 @@ import ProjectsPage from '@pages/projects-page';
 import { VehiclesPage } from '@pages/vehicles-page';
 import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
 import { EmployeePage } from './pages/employee-page';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import { ReactQueryDevtools } from 'react-query/devtools';
 import { ErrorBoundary } from './components/queryBoundaries/ErrorBoundary';
 import { NotificationProvider } from './layouts/notifications/NotificationProvider';
 import VehiclePage from './pages/vehicle-page';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 function Root() {
   return <Navigate to="/app" />;

@@ -5,20 +5,34 @@ import { ProjectForm } from '@features/projectForm/ProjectForm';
 import { ProjectResources } from '@features/projectResources/ProjectResources';
 import { Page } from '@layouts/Page';
 import { DetailsPageHeader } from '@src/components/detailsPageHeader/DetailsPageHeader';
-import { useProjectQuery } from '@src/features/project/hooks/useProjectQuery';
 import { useState } from 'react';
 import { useIdParam } from '@src/hooks/useParams';
 import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
 import { LoadingPageSuspense } from '@src/components/queryBoundaries/LoadingView';
 import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
+import {
+  useProjectDeleteMutation,
+  useProjectMutation,
+  useProjectSuspenseQuery,
+} from '@src/services/api/hooks/projects';
+import { useNavigate } from 'react-router-dom';
 
 function ProjectPage() {
   const id = useIdParam();
+  const navigate = useNavigate();
 
   const [isEdited, setIsEdited] = useState(false);
   const toggleIsEdited = () => setIsEdited((prev) => !prev);
 
-  const { project, onDelete, onUpdate } = useProjectQuery(Number(id));
+  const { data: project } = useProjectSuspenseQuery(Number(id));
+
+  const { mutateAsync: deleteVehicle } = useProjectDeleteMutation(+id);
+  const { mutateAsync: onUpdate } = useProjectMutation(+id);
+
+  const onDelete = () => {
+    deleteVehicle();
+    navigate('/app/vehicles');
+  };
 
   return (
     <Page

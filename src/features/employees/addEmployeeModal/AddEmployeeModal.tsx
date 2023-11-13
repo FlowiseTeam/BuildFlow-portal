@@ -1,5 +1,5 @@
 import { Modal } from '@components/modal/Modal';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { EmployeeForm, EmployeeFormInputs } from '../employeeForm/EmployeeForm';
 import { PostEmployee, createEmployee } from '@src/services/api/index';
 

@@ -1,5 +1,13 @@
 import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { Vehicle, deleteVehicle, getVehicle, getVehicles, updateVehicle } from '../routes/vehicles';
+import {
+  FormVehicle,
+  Vehicle,
+  createVehicle,
+  deleteVehicle,
+  getVehicle,
+  getVehicles,
+  updateVehicle,
+} from '../routes/vehicles';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryClient } from '@src/App';
 
@@ -56,6 +64,17 @@ export function useVehicleMutation(id: number) {
     mutationFn: (vehicle: Vehicle) => updateVehicle(vehicle),
     onSuccess: (_, vehicle) => {
       queryClient.setQueryData(['vehicle', id], vehicle);
+    },
+  });
+}
+
+export function useVehicleCreate() {
+  return useMutation({
+    // mutationKey: ['vehicle', id],
+    mutationFn: (vehicle: FormVehicle) => createVehicle(vehicle),
+    onSuccess: () => {
+      // queryClient.setQueryData(['vehicle', id], vehicle);
+      queryClient.invalidateQueries({ queryKey: ['vehicles'] });
     },
   });
 }

@@ -26,5 +26,5 @@ To run storybook, you can follow these steps:
 - React
 - Tailwind CSS
 - React-query, React-form-hook
-- Vitest, testing-library
+- Vitest, testing-library, Cypress
 - Storybook

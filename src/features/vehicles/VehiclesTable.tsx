@@ -24,7 +24,7 @@ const columns = [
 ] satisfies TableColumn[];
 
 export function VehiclesTable() {
-  const { data, isLoading, isFetching } = useVehicles();
+  const { data, isLoading, isPending } = useVehicles();
   const navigate = useNavigate();
 
   const handleRowClick = (id: number) => {

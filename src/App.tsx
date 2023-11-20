@@ -9,11 +9,13 @@ import { VehiclesPage } from '@pages/vehicles-page';
 import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
 import { EmployeePage } from './pages/employee-page';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// import { ReactQueryDevtools } from 'react-query/devtools';
 import { ErrorBoundary } from './components/queryBoundaries/ErrorBoundary';
 import { NotificationProvider } from './layouts/notifications/NotificationProvider';
 import VehiclePage from './pages/vehicle-page';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { KPOPage } from './pages/bdo/kpo/kpo-page';
+import { KEOPage } from './pages/bdo/keo-page';
+import { KPOAddPage } from './pages/bdo/kpo/kpo-add-page';
 
 function Root() {
   return <Navigate to="/app" />;
@@ -45,7 +47,13 @@ function App() {
                   <Route index element={<EmployeesPage />} />
                   <Route path=":id" element={<EmployeePage />} />
                 </Route>
-                <Route path="bdo" element={<BDOPage />} />
+                <Route path="bdo">
+                  <Route path="kpo">
+                    <Route index element={<KPOPage />} />
+                    <Route path="add" element={<KPOAddPage />} />
+                  </Route>
+                  <Route path="kpo" element={<KEOPage />} />
+                </Route>
                 <Route path="projects">
                   <Route index element={<ProjectsPage />} />
                   <Route path=":id" element={<ProjectPage />} />

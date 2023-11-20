@@ -2,6 +2,7 @@ import { queryClient } from '@src/App';
 import {
   FormProject,
   Project,
+  createProject,
   deleteProject,
   getLatestComments,
   getProject,
@@ -57,6 +58,10 @@ export function useProjectSuspenseQuery(id: number) {
 
 export function useProjectMutation(id: number) {
   return useMutation({ mutationKey: ['project', id], mutationFn: (project: Project) => updateProject(project) });
+}
+
+export function useProjectCreate() {
+  return useMutation({ mutationFn: (project: FormProject) => createProject(project) });
 }
 
 export function useProjectDeleteMutation(id: number) {

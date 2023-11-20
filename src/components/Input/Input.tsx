@@ -70,7 +70,7 @@ export function Input<T extends FieldValues = FieldValues>({
         {...register(name, validationSchema)}
         {...rest}
       />
-      <div className="h-6">
+      <div className="h-5">
         {error && validationSchema && (
           <p className="text-xs text-red-600">{errorMessage(error.type, validationSchema)}</p>
         )}

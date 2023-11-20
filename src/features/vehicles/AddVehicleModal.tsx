@@ -1,8 +1,8 @@
 import { Modal } from '@components/modal/Modal';
 import { queryClient } from '@src/App';
-import { useMutation } from '@tanstack/react-query';
 import { VehicleForm } from './VehicleForm';
-import { FormVehicle, createVehicle } from '@src/services/api/routes/vehicles';
+import { FormVehicle } from '@src/services/api/routes/vehicles';
+import { useVehicleCreate } from '@src/services/api/hooks/vehicles';
 
 export function AddVehicleModal({
   show,
@@ -13,11 +13,11 @@ export function AddVehicleModal({
   onClose: () => void;
   onSuccess: () => void;
 }) {
-  const { mutateAsync } = useMutation((vehicle: FormVehicle) => createVehicle(vehicle));
+  const { mutateAsync } = useVehicleCreate();
 
   const handleAdd = async (vehicleForm: FormVehicle) => {
     await mutateAsync(vehicleForm);
-    queryClient.refetchQueries('vehicles');
+    queryClient.refetchQueries({ queryKey: ['vehicles'] });
     onSuccess();
   };
 

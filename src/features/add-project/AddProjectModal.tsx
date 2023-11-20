@@ -1,8 +1,8 @@
 import { Modal } from '@components/modal/Modal';
 import { ProjectForm } from '@features/projectForm/ProjectForm';
 import { queryClient } from '@src/App';
-import { FormProject, createProject } from '@src/services/api/index';
-import { useMutation } from '@tanstack/react-query';
+import { useProjectCreate } from '@src/services/api/hooks/projects';
+import { FormProject } from '@src/services/api/index';
 
 export function AddProjectModal({
   show,
@@ -13,11 +13,11 @@ export function AddProjectModal({
   onClose: () => void;
   onSuccess: () => void;
 }) {
-  const { mutateAsync } = useMutation((project: FormProject) => createProject(project));
+  const { mutateAsync } = useProjectCreate();
 
   const handleAdd = async (projectForm: FormProject) => {
     await mutateAsync(projectForm);
-    queryClient.refetchQueries('projects');
+    queryClient.refetchQueries({ queryKey: ['projects'] });
     onSuccess();
   };
 

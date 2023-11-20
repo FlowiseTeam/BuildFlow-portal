@@ -20,7 +20,7 @@ export function ProjectResources({
   isEdited: boolean;
   onUpdate: UseMutateAsyncFunction<any, unknown, Partial<FormProject>, unknown>;
 }) {
-  const { data, isLoading } = useEmployeesQuery();
+  const { data, isLoading, isError } = useEmployeesQuery();
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
 
   const projectEmployees = data?.employees.filter((e) => project.employees.includes(e._id)) || [];
@@ -63,6 +63,9 @@ export function ProjectResources({
           <Tab.Panels>
             <Tab.Panel className="my-4 grid max-h-[20rem] auto-rows-auto overflow-y-auto [&>*:not(:first-of-type)]:border-t-2">
               {isLoading && <ProjectResourcesCellsFallback />}
+              {isError && (
+                <p className="text-center text-sm italic text-gray-700">Nie udało się pobrać listy pracowników</p>
+              )}
               {projectEmployees.map((employee) => (
                 <div key={employee._id} className="mx-4 flex justify-between py-1">
                   <p>{`${employee.first_name} ${employee.last_name}`}</p>

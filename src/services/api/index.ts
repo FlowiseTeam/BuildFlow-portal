@@ -13,3 +13,4 @@ export {
   updateProject,
 } from './routes/projects';
 export type { FormProject, Project, ProjectQuery, ProjectStatus, ProjectsQuery } from './routes/projects';
+//TODO: deprecated. Stop using index files

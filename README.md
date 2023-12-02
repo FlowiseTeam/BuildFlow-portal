@@ -28,3 +28,22 @@ To run storybook, you can follow these steps:
 - React-query, React-form-hook
 - Vitest, testing-library, Cypress
 - Storybook
+
+## Project structure
+
+```
+├───.storybook //storybook config
+├───assets //deprecated, static assets folder
+├───cypress //E2E cypress tests are here
+├───public // static assets for Vite shoudl be kept here
+└───src
+    ├───components //common components should be kept here
+    ├───data //json data file should be kept here
+    ├───features //all features should be kept here, example project - project components, modals, etc
+    ├───hooks //all common hooks, ex. useParams, useToggle
+    ├───layouts //common layouts related components should be stored here, ex. notifications, app layout, page layout
+    ├───lib //place to use adapter pattern for 3rd party libs. Useful in case of need to replace library with other solution
+    ├───mirage //mirage is used to intercept API calls for faster development, see README in that folder
+    ├───pages //every app page has its own file here
+    ├───services //all api functionality is stored here
+```

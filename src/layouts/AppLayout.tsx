@@ -1,12 +1,12 @@
 import { Header } from '@components/header/Header';
 import { QueryBoundaries } from '@components/queryBoundaries/QueryBoundaries';
 import { Sidebar } from '@components/sidebar/Sidebar';
-import { SidebarProvider } from '@components/sidebar/SidebarProvider';
+import { ProtectedRoute } from '@src/pages/ProtectedRoute';
 import { Outlet } from 'react-router-dom';
 
 export function AppLayout() {
   return (
-    <SidebarProvider>
+    <ProtectedRoute>
       <div className="flex min-h-screen flex-col">
         <Header />
         <main className="flex flex-grow">
@@ -16,6 +16,6 @@ export function AppLayout() {
           </QueryBoundaries>
         </main>
       </div>
-    </SidebarProvider>
+    </ProtectedRoute>
   );
 }

@@ -1,22 +1,15 @@
-import { useQuery } from 'react-query';
-import { getEmployees } from '@services/api';
 import { Page } from '@layouts/Page';
 import { useState } from 'react';
 import { Button } from '@components/button/Button';
 import { EmployeesTable } from '@features/employees/EmployeesTable';
 import { AddEmployeeModal } from '@features/employees/addEmployeeModal/AddEmployeeModal';
-import { queryClient } from '@src/main';
+import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
+import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
+import { SearchInput } from '@src/components/Input/SearchInput';
+import { useSuspenseEmployeesQuery } from '@src/services/api/hooks/employees';
 
-export function EmployeesPage() {
-  const { data, refetch } = useQuery('employees', getEmployees, {
-    suspense: true,
-    onSuccess: (queryData) => {
-      queryData.employees.forEach((employee) => {
-        queryClient.setQueryData(['employee', employee._id], employee);
-      });
-    },
-  });
-  if (!data) throw Error('Something went wrong');
+function EmployeesPageWithoutFallback() {
+  const { data, refetch } = useSuspenseEmployeesQuery();
 
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
 
@@ -34,7 +27,7 @@ export function EmployeesPage() {
       />
       <div className="mt-8 flex flex-col">
         <div className="flex justify-between">
-          <button>Szukaj</button>
+          <SearchInput />
           <Button variant="primary" onClick={() => setIsAddEmployeeModalOpen(true)}>
             Dodaj pracownika
           </Button>
@@ -44,5 +37,13 @@ export function EmployeesPage() {
         </div>
       </div>
     </Page>
+  );
+}
+
+export function EmployeesPage() {
+  return (
+    <ErrorBoundary fallback={<PageFallback title="Pracownicy" message="Nie udało się pobrać listy pracowników." />}>
+      <EmployeesPageWithoutFallback />
+    </ErrorBoundary>
   );
 }

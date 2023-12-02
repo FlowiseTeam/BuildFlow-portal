@@ -4,21 +4,35 @@ import { ProjectChat } from '@features/projectChat/ProjectChat';
 import { ProjectForm } from '@features/projectForm/ProjectForm';
 import { ProjectResources } from '@features/projectResources/ProjectResources';
 import { Page } from '@layouts/Page';
-import { useParams } from 'react-router-dom';
 import { DetailsPageHeader } from '@src/components/detailsPageHeader/DetailsPageHeader';
-import { useProjectQuery } from '@src/features/project/hooks/useProjectQuery';
 import { useState } from 'react';
+import { useIdParam } from '@src/hooks/useParams';
+import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
+import { LoadingPageSuspense } from '@src/components/queryBoundaries/LoadingView';
+import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
+import {
+  useProjectDeleteMutation,
+  useProjectMutation,
+  useProjectSuspenseQuery,
+} from '@src/services/api/hooks/projects';
+import { useNavigate } from 'react-router-dom';
 
-export function ProjectPage() {
-  const id = useParams<{ id: string }>().id;
-  if (!id) {
-    throw new Error('Project id is not defined');
-  }
+function ProjectPage() {
+  const id = useIdParam();
+  const navigate = useNavigate();
 
   const [isEdited, setIsEdited] = useState(false);
   const toggleIsEdited = () => setIsEdited((prev) => !prev);
 
-  const { project, onDelete, onUpdate } = useProjectQuery(Number(id));
+  const { data: project } = useProjectSuspenseQuery(Number(id));
+
+  const { mutateAsync: deleteVehicle } = useProjectDeleteMutation(+id);
+  const { mutateAsync: onUpdate } = useProjectMutation(+id);
+
+  const onDelete = () => {
+    deleteVehicle();
+    navigate('/app/vehicles');
+  };
 
   return (
     <Page
@@ -48,5 +62,15 @@ export function ProjectPage() {
         </DetailCard>
       </div>
     </Page>
+  );
+}
+
+export default function () {
+  return (
+    <ErrorBoundary fallback={<PageFallback title="Projekt" message="Nie udało się załadować projektu." />}>
+      <LoadingPageSuspense>
+        <ProjectPage />
+      </LoadingPageSuspense>
+    </ErrorBoundary>
   );
 }

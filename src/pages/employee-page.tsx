@@ -1,24 +1,30 @@
 import { DetailCard } from '@components/detailCard/DetailCard';
 import { Page } from '@layouts/Page';
-import { useParams } from 'react-router-dom';
 import { EditEmployee } from '@features/employees/editEmployee/EditEmployee';
 import { getFullName } from '@src/features/employees/utils';
 import { EmployeeQualifications } from '@src/features/employees/employeeQualifications/EmployeeQualifications';
 import { DetailsPageHeader } from '@src/components/detailsPageHeader/DetailsPageHeader';
-import { useEmployeeQuery } from '@src/features/employees/hooks/useEmployeeQuery';
 import { useState } from 'react';
 import { EmployeeProjectsList } from '@src/features/employees/employeeProjectsList/EmployeeProjectsList';
+import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
+import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
+import { useIdParam } from '@src/hooks/useParams';
+import { useEmployeeDeleteMutation, useSuspenseEmployeeQuery } from '@src/services/api/hooks/employees';
+import { useNavigate } from 'react-router-dom';
 
-export function EmployeePage() {
-  const id = useParams<{ id: string }>().id;
-  if (!id) {
-    throw new Error('Employee id is not defined');
-  }
+function PageEmployee() {
+  const id = useIdParam();
+  const navigate = useNavigate();
+  const { data: employee } = useSuspenseEmployeeQuery(Number(id));
+  const { mutateAsync: deleteEmployee } = useEmployeeDeleteMutation(Number(id));
+
+  const onDelete = () => {
+    deleteEmployee();
+    navigate('/app/projects');
+  };
 
   const [isEdited, setIsEdited] = useState(false);
   const toggleIsEdited = () => setIsEdited((prev) => !prev);
-
-  const { employee, onDelete } = useEmployeeQuery(Number(id));
 
   return (
     <Page
@@ -45,5 +51,13 @@ export function EmployeePage() {
         </DetailCard>
       </div>
     </Page>
+  );
+}
+
+export function EmployeePage() {
+  return (
+    <ErrorBoundary fallback={<PageFallback title="Pracownik" message="Nie udało się pobrać pracownika" />}>
+      <PageEmployee />
+    </ErrorBoundary>
   );
 }

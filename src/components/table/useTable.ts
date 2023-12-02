@@ -37,6 +37,7 @@ export function useTable(
           a[sortColumn.key].toLowerCase() > b[sortColumn.key].toLowerCase() ? sortFactor : -sortFactor,
         );
       }
+      case 'distance':
       case 'number': {
         return [...data].sort((a, b) => (a[sortColumn.key] > b[sortColumn.key] ? sortFactor : -sortFactor));
       }

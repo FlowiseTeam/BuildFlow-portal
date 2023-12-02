@@ -1,7 +1,7 @@
 import { DetailCard } from '@components/detailCard/DetailCard';
 import { SummaryCard } from './SummaryCard';
-import { getEmployees, getProjects } from '@src/services/api';
-import { useQuery } from 'react-query';
+import { useProjectsQuery } from '@src/services/api/hooks/projects';
+import { useEmployeesQuery } from '@src/services/api/hooks/employees';
 
 export function DashboardSummary() {
   const {
@@ -9,13 +9,13 @@ export function DashboardSummary() {
     isLoading: isLoadingProjects,
     isError: isErrorProjects,
     failureCount: failureCountProjects,
-  } = useQuery('projects', () => getProjects());
+  } = useProjectsQuery();
   const {
     data: employeesData,
     isLoading: isLoadingEmployees,
     isError: isErrorEmployees,
     failureCount: failureCountEmployees,
-  } = useQuery('employees', () => getEmployees());
+  } = useEmployeesQuery();
 
   const projectsCount = projecsData?.project_count;
   const employeesCount = employeesData?.employees_count;
@@ -31,7 +31,8 @@ export function DashboardSummary() {
           isError={isErrorProjects}
           isSlowFetch={failureCountProjects > 0}
           name="Projekty"
-          count={isLoadingProjects ? '' : projectsCount}
+          count={projectsCount}
+          isLoading={isLoadingProjects}
           imgSrc="projectsicon.svg"
         />
       </DetailCard>
@@ -40,7 +41,8 @@ export function DashboardSummary() {
           isError={isErrorEmployees}
           isSlowFetch={failureCountEmployees > 0}
           name="Pracownicy"
-          count={isLoadingEmployees ? '' : employeesCount}
+          count={employeesCount}
+          isLoading={isLoadingEmployees}
           imgSrc="employeesicon.svg"
         />
       </DetailCard>
@@ -49,7 +51,8 @@ export function DashboardSummary() {
           isError={isErrorEmployees}
           isSlowFetch={failureCountEmployees > 0}
           name="Nieprzypisani"
-          count={isLoadingEmployees ? '' : unassignedEmployeesCount}
+          count={unassignedEmployeesCount}
+          isLoading={isLoadingEmployees}
           imgSrc="marcIcon.svg"
         />
       </DetailCard>

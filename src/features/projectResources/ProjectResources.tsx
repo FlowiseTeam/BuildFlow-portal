@@ -1,13 +1,13 @@
 import { Tab } from '@headlessui/react';
-import { getEmployees } from '@src/services/api';
-import { FormProject, Project } from '@src/services/api-types';
-import { UseMutateAsyncFunction, useQuery } from 'react-query';
+import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { ProjectResourcesCellsFallback } from './ProjectResourcesCellsFallback';
 import { Button } from '@src/components/button/Button';
 import { useState } from 'react';
 import { AddEmployeeToProjectModal } from './AddEmployeeToProjectModal';
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { queryClient } from '@src/main';
+import { queryClient } from '@src/App';
+import { Project, FormProject } from '@src/services/api/index';
+import { useEmployeesQuery } from '@src/services/api/hooks/employees';
 
 export function ProjectResources({
   className,
@@ -20,14 +20,9 @@ export function ProjectResources({
   isEdited: boolean;
   onUpdate: UseMutateAsyncFunction<any, unknown, Partial<FormProject>, unknown>;
 }) {
+  const { data, isLoading, isError } = useEmployeesQuery();
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
-  const { data, isLoading } = useQuery('employees', () => getEmployees(), {
-    onSuccess: (queryData) => {
-      queryData.employees.forEach((employee) => {
-        queryClient.setQueryData(['employee', employee._id], employee);
-      });
-    },
-  });
+
   const projectEmployees = data?.employees.filter((e) => project.employees.includes(e._id)) || [];
 
   const handleDeleteEmployee = async (employeeId: number) => {
@@ -68,6 +63,9 @@ export function ProjectResources({
           <Tab.Panels>
             <Tab.Panel className="my-4 grid max-h-[20rem] auto-rows-auto overflow-y-auto [&>*:not(:first-of-type)]:border-t-2">
               {isLoading && <ProjectResourcesCellsFallback />}
+              {isError && (
+                <p className="text-center text-sm italic text-gray-700">Nie udało się pobrać listy pracowników</p>
+              )}
               {projectEmployees.map((employee) => (
                 <div key={employee._id} className="mx-4 flex justify-between py-1">
                   <p>{`${employee.first_name} ${employee.last_name}`}</p>

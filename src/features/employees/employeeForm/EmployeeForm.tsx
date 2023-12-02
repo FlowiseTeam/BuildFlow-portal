@@ -1,7 +1,7 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
-import { Employee } from '@services/api-types';
 import { ListboxInput } from '@src/components/listboxInput/ListboxInput';
+import { Employee } from '@src/services/api/index';
 import { Controller, useForm } from 'react-hook-form';
 
 export type EmployeeFormInputs = Omit<Employee, '_id' | 'updated_at' | 'created_at' | 'qualifications'>;

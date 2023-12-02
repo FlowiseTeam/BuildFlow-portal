@@ -1,27 +1,17 @@
-import { HashRouter } from 'react-router-dom';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
+
 import App from './App';
+
+import { mockMirageServer } from './mirage/mirageMockServer';
+import { PROJECTS_API_URL, API_URL } from './services/api/index';
+
 import './index.css';
+import { VEHICLES_API_URL } from './services/api/setup';
 
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+if (import.meta.env.MODE === 'development') {
+  mockMirageServer(PROJECTS_API_URL, API_URL, VEHICLES_API_URL);
+}
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+const root = createRoot(document.getElementById('root') as HTMLElement);
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <HashRouter>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools initialIsOpen />
-      </QueryClientProvider>
-    </HashRouter>
-  </React.StrictMode>,
-);
+root.render(<App />);

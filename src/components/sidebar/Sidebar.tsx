@@ -6,6 +6,8 @@ import { UserIcon } from '@components/icons/UserIcon';
 import { CarIcon } from '@components/icons/CarIcon';
 import { DashboardIcon } from '@components/icons/DashboardIcon';
 import { LeafIcon } from '@components/icons/LeafIcon';
+import { SidebarGroup } from './SidebarGroup';
+import { SidebarGroupItem } from './SidebarGroupItem';
 
 export function Sidebar() {
   const { isOpen, toggle } = useSidebarContext();
@@ -24,7 +26,10 @@ export function Sidebar() {
           <SidebarItem to="/app/projects" name="Projekty" icon={<ClipboardIcon />} />
           <SidebarItem to="/app/employees" name="Pracownicy" icon={<UserIcon />} />
           <SidebarItem to="/app/vehicles" name="Pojazdy" icon={<CarIcon />} />
-          <SidebarItem to="/app/bdo" name="BDO" icon={<LeafIcon />} />
+          <SidebarGroup pattern="/app/bdo" to="/app/bdo/kpo" name="Raporty" icon={<LeafIcon />}>
+            <SidebarGroupItem to="/app/bdo/kpo" name="KPO" />
+            <SidebarGroupItem to="/app/bdo/keo" name="KEO" />
+          </SidebarGroup>
         </SidebarNav>
       </aside>
     </>

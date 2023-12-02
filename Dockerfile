@@ -15,4 +15,4 @@ RUN npm install
 COPY . .
 
 # Starting our application
-CMD npm run dev -- --host
+CMD npm run proxy -- --host

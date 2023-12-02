@@ -1,25 +1,21 @@
 import { Listbox } from '@headlessui/react';
 import { Button } from '@src/components/button/Button';
 import { Modal } from '@src/components/modal/Modal';
-import { getProjects } from '@src/services/api';
-import { EmployeeProject, Project } from '@src/services/api-types';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 
 import { CheckIcon } from '@heroicons/react/20/solid';
+import { Project } from '@src/services/api/index';
+import { useProjectsQuery } from '@src/services/api/hooks/projects';
 
-export function AddToProjectModal({
-  show,
-  onClose,
-  onAdd,
-  assignedProjects,
-}: {
+interface AddToProjectModalProps {
   show: boolean;
   onClose: () => void;
   onAdd: (projects: Project[]) => void;
-  assignedProjects: EmployeeProject[];
-}) {
-  const { data } = useQuery(['projects'], () => getProjects());
+  assignedProjects: any;
+}
+
+export function AddToProjectModal({ show, onClose, onAdd, assignedProjects }: AddToProjectModalProps) {
+  const { data } = useProjectsQuery();
   const [selectedProjects, setSelectedProjects] = useState<Project[]>([]);
 
   const assignedProjectIds = assignedProjects.map((project) => project.project_id);
@@ -60,7 +56,7 @@ export function AddToProjectModal({
           <Listbox.Button className="w-full" as="div">
             <Button className="w-full whitespace-nowrap">Wybierz projekty</Button>
           </Listbox.Button>
-          <Listbox.Options className="absolute mt-2 w-full rounded bg-white py-1 shadow">
+          <Listbox.Options className="absolute mt-2 max-h-64 w-full overflow-y-scroll rounded bg-white py-1 shadow">
             {unassignedProjects?.map((project) => (
               <Listbox.Option value={project} key={project._id} className="relative">
                 {({ selected }) => (
@@ -69,7 +65,7 @@ export function AddToProjectModal({
                       <CheckIcon className="absolute left-2 top-1/2 h-5 w-5 -translate-y-1/2 transform text-primary" />
                     )}
                     <p
-                      className={`relative rounded px-1 pl-10 hover:cursor-pointer ${
+                      className={`relative px-1 py-1 pl-10 hover:cursor-pointer hover:bg-black/10 ${
                         selected ? 'bg-primary-light/40' : ''
                       }`}
                     >

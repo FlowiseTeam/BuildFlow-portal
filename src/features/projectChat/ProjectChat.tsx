@@ -1,14 +1,13 @@
 import { ChatComment } from './ChatComment';
-import { useQuery } from 'react-query';
-import { getProjectComments } from '@src/services/api';
 import { useEffect, useRef } from 'react';
 import { useImageGallery } from '@src/components/imageGallery/useImageGallery';
 import { ImageGallery } from '@src/components/imageGallery/ImageGallery';
 import { ChatCommentFallback } from './ChatCommentFallback';
 import { ProjectChatForm } from './ProjectChatForm';
+import { useProjectComments } from '@src/services/api/hooks/projects';
 
 export function ProjectChat({ projectId }: { projectId: number }) {
-  const { data, isError } = useQuery(['project-messages', projectId], () => getProjectComments(projectId));
+  const { data, isError } = useProjectComments(projectId);
   const commentsDivRef = useRef<HTMLDivElement>(null);
   const { close, currentIndex, images, isOpen, open, setCurrentIndex } = useImageGallery();
 

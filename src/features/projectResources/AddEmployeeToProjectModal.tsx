@@ -1,14 +1,11 @@
-// @ts-nocheck
-
 import { Combobox } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { Button } from '@src/components/button/Button';
 import { Modal } from '@src/components/modal/Modal';
-import { queryClient } from '@src/main';
-import { updateProject } from '@src/services/api';
-import { Project, Employee } from '@src/services/api-types';
+import { Project, updateProject, Employee } from '@src/services/api/index';
 import { useMemo, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '@src/App';
 
 export function AddEmployeeToProjectModal({
   project,
@@ -24,9 +21,15 @@ export function AddEmployeeToProjectModal({
   const [selectedEmployees, setSelectedEmployees] = useState<{ name: string; id: number; wasSelected: boolean }[]>([]);
   const [query, setQuery] = useState('');
 
-  const { mutateAsync: onUpdate } = useMutation(['project', project._id], (employeeIds: number[]) => {
-    const updatedProject = { ...project, employees: [...project.employees, ...employeeIds] } as Project;
-    return updateProject(updatedProject);
+  const { mutateAsync: onUpdate } = useMutation({
+    mutationKey: ['project', project._id],
+    mutationFn: (employeeIds: number[]) => {
+      const updatedProject = { ...project, employees: [...project.employees, ...employeeIds] } as Project;
+      return updateProject(updatedProject);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['employees'] });
+    },
   });
 
   const employeesByName = useMemo(
@@ -53,7 +56,7 @@ export function AddEmployeeToProjectModal({
   const handleSubmit = async () => {
     const employeeIds = selectedEmployees.map((employee) => employee.id);
     await onUpdate(employeeIds);
-    queryClient.invalidateQueries(['project', project._id]);
+    queryClient.invalidateQueries({ queryKey: ['project', project._id] });
     setSelectedEmployees([]);
     onClose();
   };

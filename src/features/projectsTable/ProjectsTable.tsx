@@ -1,6 +1,6 @@
 import { Table, TableColumn } from '@components/table/Table';
 import { EditProjectModal } from '@features/edit-project/EditProjectModal';
-import { Project } from '@services/api-types';
+import { Project } from '@services/api/index';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

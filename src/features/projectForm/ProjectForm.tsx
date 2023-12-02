@@ -1,7 +1,7 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
 import { StatusInput } from '@components/statusInput/StatusInput';
-import { FormProject, Project, projectStatuses } from '@services/api-types';
+import { FormProject, Project, projectStatuses } from '@src/services/api/index';
 import { Controller, useForm } from 'react-hook-form';
 
 interface AddProjectInputs {
@@ -22,7 +22,7 @@ export function ProjectForm({
   disabled = false,
 }: {
   onClose?: () => void;
-  handleFormSubmit: (data: FormProject) => Promise<void>;
+  handleFormSubmit: (project: Project) => Promise<void>;
   project?: Project;
   disabled?: boolean;
 }) {
@@ -39,7 +39,7 @@ export function ProjectForm({
     },
   });
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit((data) => {
     if (!isValid) return;
     const proj: FormProject = {
       name: data.name,
@@ -52,7 +52,10 @@ export function ProjectForm({
       client: data.client,
       employees: project?.employees || [],
     };
-    await handleFormSubmit(proj);
+
+    const updatedProject = { ...project!, ...proj };
+
+    handleFormSubmit(updatedProject);
   });
 
   return (

@@ -1,6 +1,5 @@
 import { ReactKeycloakProvider, useKeycloak } from '@react-keycloak/web';
 import { keycloak } from '@src/keycloak';
-import { useEffect } from 'react';
 
 export function useAuth() {
   if (import.meta.env.MODE !== 'cypress') {
@@ -13,28 +12,22 @@ export function useAuth() {
   return { authenticated: true, login: () => {}, logout: () => {}, token: 'token' };
 }
 
-function TokenProvider({ children }: { children: React.ReactNode }) {
-  const { token } = useAuth();
-
-  useEffect(() => {
-    if (token) {
-      localStorage.setItem('token', token);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const tokenLogger = (tokens: { token?: string }) => {
+    if (tokens?.token) {
+      localStorage.setItem('token', tokens.token);
     } else {
       localStorage.removeItem('token');
     }
-  }, [token]);
+  };
 
-  return <>{children}</>;
-}
-
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   if (import.meta.env.MODE === 'cypress') {
-    return <TokenProvider>{children}</TokenProvider>;
+    return <>{children}</>;
   }
 
   return (
-    <ReactKeycloakProvider authClient={keycloak} initOptions={{ responseMode: 'query' }}>
-      <TokenProvider>{children}</TokenProvider>
+    <ReactKeycloakProvider authClient={keycloak} initOptions={{ responseMode: 'query' }} onTokens={tokenLogger}>
+      {children}
     </ReactKeycloakProvider>
   );
 };

@@ -1,5 +1,5 @@
 import { Page } from '@layouts/Page';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@components/button/Button';
 import { EmployeesTable } from '@features/employees/EmployeesTable';
 import { AddEmployeeModal } from '@features/employees/addEmployeeModal/AddEmployeeModal';
@@ -10,6 +10,11 @@ import { useSuspenseEmployeesQuery } from '@src/services/api/hooks/employees';
 
 function EmployeesPageWithoutFallback() {
   const { data, refetch } = useSuspenseEmployeesQuery();
+  const [filteredData, setFilteredData] = useState(data.employees);
+
+  useEffect(() => {
+    setFilteredData(data.employees);
+  }, [data.employees]);
 
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
 
@@ -33,7 +38,7 @@ function EmployeesPageWithoutFallback() {
           </Button>
         </div>
         <div className="mt-8 w-0 min-w-full">
-          <EmployeesTable employees={data.employees} />
+          <EmployeesTable employees={filteredData} />
         </div>
       </div>
     </Page>

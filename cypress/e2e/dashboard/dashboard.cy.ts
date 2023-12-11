@@ -49,27 +49,27 @@ describe('Dashboard page', () => {
   it('shows company name with morning greeting', () => {
     cy.clock(new Date(2023, 1, 1, 10, 0, 0).getTime());
 
-    cy.contains('Bud-pol');
-    cy.contains('Dzień dobry.');
+    cy.contains('Bud-pol').should('be.visible');
+    cy.contains('Dzień dobry.').should('be.visible');
   });
 
   it('shows stats', () => {
-    cy.contains('Projekty');
-    cy.contains('1');
+    cy.contains('Projekty').should('be.visible');
+    cy.contains('1').should('be.visible');
 
-    cy.contains('Pracownicy');
-    cy.contains('4');
+    cy.contains('Pracownicy').should('be.visible');
+    cy.contains('4').should('be.visible');
 
-    cy.contains('Nieprzypisani');
-    cy.contains('3');
+    cy.contains('Nieprzypisani').should('be.visible');
+    cy.contains('3').should('be.visible');
   });
 
   it('shows latests comments', () => {
-    cy.contains('test message');
-    cy.contains('1.12.2023');
+    cy.contains('test message').should('be.visible');
+    cy.contains('1.12.2023').should('be.visible');
 
-    cy.contains('another message');
-    cy.contains('and another');
-    cy.contains('last message');
+    cy.contains('another message').should('be.visible');
+    cy.contains('and another').should('be.visible');
+    cy.contains('last message').should('be.visible');
   });
 });

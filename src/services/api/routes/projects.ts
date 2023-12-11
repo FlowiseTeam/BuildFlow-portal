@@ -32,8 +32,8 @@ export type FormProject = Omit<Project, 'created_at' | 'updated_at' | '_id'>;
 
 export const getProjects = async (): Promise<ProjectsQuery> => (await projectsAxiosApi.get('/projects')).data;
 
-export const getProject = async (projectId: number): Promise<ProjectQuery['projects']> =>
-  (await projectsAxiosApi.get(`/projects/${projectId}`)).data.projects;
+export const getProject = (projectId: number): Promise<ProjectQuery['projects']> =>
+  projectsAxiosApi.get(`/projects/${projectId}`).then((data) => data.data.project);
 
 export const updateProject = async (project: Project) =>
   (await projectsAxiosApi.put(`/projects/${project._id}`, project)).data;

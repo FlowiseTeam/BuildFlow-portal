@@ -41,7 +41,7 @@ export function useEmployeeQuery(id: number) {
 
 export function useSuspenseEmployeeQuery(id: number) {
   return useSuspenseQuery({
-    queryKey: ['employees', id],
+    queryKey: ['employee', id],
     queryFn: () => getEmployee(id),
   });
 }

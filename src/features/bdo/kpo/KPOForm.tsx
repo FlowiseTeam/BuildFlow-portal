@@ -28,12 +28,10 @@ interface KPOFields {
 export function KPOForm({
   onClose,
   handleFormSubmit,
-  project,
   disabled = false,
 }: {
   onClose?: () => void;
   handleFormSubmit: (project: Project) => Promise<void>;
-  project?: Project;
   disabled?: boolean;
 }) {
   const {
@@ -43,7 +41,9 @@ export function KPOForm({
     control,
   } = useForm<KPOFields>();
 
-  const onSubmit = handleSubmit((data) => {});
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
 
   return (
     <form onSubmit={onSubmit}>
@@ -94,7 +94,8 @@ export function KPOForm({
               labelText="Numer rejestrowy"
               name="acquirer.registrationNumber"
               error={errors.acquirer?.registrationNumber}
-              disabled
+              // value={'XDD'}
+              // disabled
             />
             <Input
               register={register}
@@ -176,6 +177,9 @@ export function KPOForm({
             disabled={disabled}
           />
         </fieldset>
+      </div>
+      <div className="flex justify-end">
+        <Button type="submit">Dodaj</Button>
       </div>
     </form>
   );

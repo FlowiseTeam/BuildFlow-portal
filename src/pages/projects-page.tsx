@@ -21,7 +21,11 @@ function ProjectViewToggler({ view, toggle }: { view: 'list' | 'grid'; toggle: (
     <span className="flex items-center gap-4">
       <span>{view === 'list' ? 'lista' : 'kafelki'}</span>
       <Button className="rounded px-1 py-1" onClick={toggle}>
-        {view === 'list' ? <ListBulletIcon className="h-6" /> : <DashboardIcon className="h-6" />}
+        {view === 'list' ? (
+          <ListBulletIcon className="h-6" data-testid="list-button" />
+        ) : (
+          <DashboardIcon className="h-6" data-testid="grid-button" />
+        )}
       </Button>
     </span>
   );

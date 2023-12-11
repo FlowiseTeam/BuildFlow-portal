@@ -26,6 +26,8 @@ function ProjectPage() {
 
   const { data: project } = useProjectSuspenseQuery(Number(id));
 
+  console.log(project);
+
   const { mutateAsync: deleteVehicle } = useProjectDeleteMutation(+id);
   const { mutateAsync: onUpdate } = useProjectMutation(+id);
 

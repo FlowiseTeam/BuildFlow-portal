@@ -36,7 +36,9 @@ export function AddQualificationModal({
           error={formState.errors.qualification}
         />
         <div className="text-right">
-          <Button disabled={!formState.isValid}>Dodaj</Button>
+          <Button disabled={!formState.isValid} type="submit">
+            Dodaj
+          </Button>
         </div>
       </form>
     </Modal>

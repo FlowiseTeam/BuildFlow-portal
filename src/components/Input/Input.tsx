@@ -32,6 +32,7 @@ export interface InputProps<T extends FieldValues = FieldValues> extends React.I
   register?: UseFormRegister<T> | typeof noop;
   className?: string;
   labelText?: string;
+  registerProps?: any[];
 }
 
 export function Input<T extends FieldValues = FieldValues>({
@@ -44,6 +45,7 @@ export function Input<T extends FieldValues = FieldValues>({
   id,
   type,
   disabled,
+  registerProps = [],
   ...rest
 }: InputProps<T>) {
   return (
@@ -67,7 +69,7 @@ export function Input<T extends FieldValues = FieldValues>({
         id={id}
         aria-invalid={!!error}
         disabled={disabled}
-        {...register(name, validationSchema)}
+        {...register(name, validationSchema, ...registerProps)}
         {...rest}
       />
       <div className="h-5">

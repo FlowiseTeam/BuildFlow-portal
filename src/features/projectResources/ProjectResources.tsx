@@ -8,6 +8,7 @@ import { TrashIcon } from '@heroicons/react/24/outline';
 import { queryClient } from '@src/App';
 import { Project, FormProject } from '@src/services/api/index';
 import { useEmployeesQuery } from '@src/services/api/hooks/employees';
+import { ProjectVehiclesTab } from './ProjectVehiclesTab';
 
 export function ProjectResources({
   className,
@@ -51,6 +52,13 @@ export function ProjectResources({
               >
                 Pracownicy
               </Tab>
+              <Tab
+                className={({ selected }) =>
+                  ` rounded-[16px] rounded-b-none px-2 py-2 text-sm font-medium leading-5 ${selected ? 'bg-white' : ''}`
+                }
+              >
+                Pojazdy
+              </Tab>
             </div>
             <div className="mt-[2px]">
               {!isLoading && (
@@ -83,6 +91,9 @@ export function ProjectResources({
                   </div>
                 </div>
               ))}
+            </Tab.Panel>
+            <Tab.Panel className="my-4 grid max-h-[20rem] auto-rows-auto overflow-y-auto [&>*:not(:first-of-type)]:border-t-2">
+              <ProjectVehiclesTab project={project} isEdited={isEdited} />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

@@ -1,3 +1,5 @@
+import { tm } from '@src/lib/tw';
+
 export function LoadingView() {
   return (
     <div className="absolute z-10 flex h-full w-full items-center justify-center bg-white bg-opacity-80 brightness-200">
@@ -6,12 +8,20 @@ export function LoadingView() {
   );
 }
 
-export function LoadingIcon() {
+export function LoadingSpace() {
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <LoadingIcon />
+    </div>
+  );
+}
+
+export function LoadingIcon({ className = '' }) {
   return (
     <div role="status">
       <svg
         aria-hidden="true"
-        className="mr-2 h-8 w-8 animate-spin fill-purple-600 text-gray-200 dark:text-gray-600"
+        className={tm('mr-2 h-8 w-8 animate-spin fill-purple-600 text-gray-200 dark:text-gray-600', className)}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

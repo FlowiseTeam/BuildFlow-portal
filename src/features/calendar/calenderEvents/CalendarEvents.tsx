@@ -12,51 +12,6 @@ interface CalendarDay {
   events: CalendarEvent[];
 }
 
-const events: CalendarDay[] = [
-  {
-    date: 'Dziś',
-    id: 1,
-    events: [
-      {
-        name: 'Przedstawienie BDO',
-        id: 1,
-      },
-      {
-        name: 'Przedstawienie BDO',
-        id: 2,
-      },
-    ],
-  },
-  {
-    date: 'Jutro',
-    id: 2,
-    events: [
-      {
-        name: 'Przedstawienie BDO',
-        id: 1,
-      },
-      {
-        name: 'Przedstawienie BDO',
-        id: 2,
-      },
-    ],
-  },
-  {
-    date: '14 kwietnia',
-    id: 3,
-    events: [
-      {
-        name: 'Przedstawienie BDO',
-        id: 1,
-      },
-      {
-        name: 'Przedstawienie BDO',
-        id: 2,
-      },
-    ],
-  },
-];
-
 export function CalendarEventsHeader() {
   return (
     <div className="mb-6 flex items-center justify-between">
@@ -70,7 +25,7 @@ export function CalendarDay({ day }: { day: CalendarDay }) {
   return (
     <div className="mb-6">
       <p className="mb-1 text-xl font-medium text-primary">{day.date}</p>
-      <ul className="list-disc ml-4">
+      <ul className="ml-4 list-disc">
         {day.events.map((event) => (
           <li key={event.id}>
             <p className=" font-medium text-gray-600">{event.name}</p>
@@ -86,9 +41,7 @@ export function CalendarEvents() {
     <div className="p-3 font-abhaya">
       <CalendarEventsHeader />
       <div>
-        {events.map((day) => (
-          <CalendarDay key={day.id} day={day} />
-        ))}
+        <p>Brak podpiętego kalendarza</p>
       </div>
       <div className="mt-auto border-t-2 pt-2 text-center">
         <Button variant="light">Dodaj wydarzenie</Button>

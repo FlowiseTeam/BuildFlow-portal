@@ -1,74 +1,72 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
-import { StatusInput } from '@components/statusInput/StatusInput';
+import { ControlledSelect } from '@src/components/Input/ControlledSelect';
 import { tm } from '@src/lib/tw';
-import { FormProject, Project, projectStatuses } from '@src/services/api/index';
-import { Controller, useForm } from 'react-hook-form';
+import { KEORecord, KeoInfo } from '@src/services/api/routes/bdo';
+import { useForm } from 'react-hook-form';
 
 interface KEOFields {
-  transporter: {
-    name: string;
-    registrationNumber: string | number;
-  };
-  acquirer: {
-    name: string;
-    registrationNumber: string | number;
-    businessPlaceNumber: string | number;
-  };
-  details: {
-    wasteCode: string | number;
-    weight: string | number;
-    receivingVehicleRegistrationNumber: string | number;
-    startDate: string;
-    startTime: string;
-  };
-  comment?: string;
+  KeoName: string;
+  WasteMassInstallation: number;
+  WasteMassExcludingInstallation: number;
+  WasteFromServices: string;
+  CommuneName: string;
+  ManufactureDate: string;
+  HazardousWasteReclassification: boolean;
 }
 
-export function KEOForm({
-  onClose,
-  handleFormSubmit,
-  project,
-  disabled = false,
-}: {
-  onClose?: () => void;
-  handleFormSubmit: (project: Project) => Promise<void>;
-  project?: Project;
-  disabled?: boolean;
-}) {
+interface KEOFormProps {
+  handleFormSubmit: any;
+  keoInfo: KeoInfo;
+}
+
+export function KEOForm({ handleFormSubmit, keoInfo }: KEOFormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     control,
+    watch,
   } = useForm<KEOFields>();
 
-  const onSubmit = handleSubmit((data) => {});
+  const onSubmit = handleSubmit((data) => {
+    const res: KEORecord = {
+      HazardousWasteReclassification: false,
+      KeoId: keoInfo.cards.find((card) => card.name === data.KeoName)?.KeoId!,
+      ManufactureDate: data.ManufactureDate,
+      WasteFromServices: data.WasteFromServices,
+      WasteMassExcludingInstallation: data.WasteMassExcludingInstallation,
+      WasteMassInstallation: data.WasteMassExcludingInstallation,
+      ...(data.CommuneName && {
+        CommuneId: String(keoInfo.commons.find((commune) => commune.name === data.CommuneName)?.commonId!),
+      }),
+    };
+
+    handleFormSubmit(res);
+  });
+
+  const isWasteGenerated = watch('WasteFromServices');
 
   return (
     <form onSubmit={onSubmit}>
       <div className="p-4">
         <fieldset>
           <div className="grid gap-x-4 md:grid-cols-2">
-            <Input
-              register={register}
-              validationSchema={{ required: true, minLength: 3 }}
-              id="transporter-name"
-              type="text"
-              labelText="Nazwa lub imię nazwisko"
-              name="transporter.name"
-              error={errors.transporter?.name}
-              disabled={disabled}
+            <ControlledSelect
+              control={control}
+              rules={{ required: true }}
+              name="KeoName"
+              values={keoInfo.cards.map((card) => card.name)}
+              labelText="Numer karty ewidencji"
             />
             <Input
               register={register}
-              validationSchema={{ required: true, minLength: 3 }}
-              id="transporter.registration-number"
-              type="text"
-              labelText="Numer rejestrowy"
-              name="transporter.registrationNumber"
-              error={errors.transporter?.registrationNumber}
-              disabled={disabled}
+              validationSchema={{ required: true }}
+              id="input-date"
+              type="datetime-local"
+              labelText="Data wytworzenia"
+              name="ManufactureDate"
+              error={errors.ManufactureDate}
             />
           </div>
         </fieldset>
@@ -77,26 +75,44 @@ export function KEOForm({
           <div className="grid gap-x-4 md:grid-cols-2">
             <Input
               register={register}
-              validationSchema={{ minLength: 3 }}
-              id="acquirer-name"
-              type="text"
+              validationSchema={{ required: true }}
+              id="WasteMassInstallation"
+              type="number"
               labelText="W związku z eksploatacją instalacji"
-              name="acquirer.name"
-              error={errors.acquirer?.name}
-              disabled={disabled}
+              name="WasteMassInstallation"
+              error={errors.WasteMassInstallation}
             />
             <Input
               register={register}
-              validationSchema={{ required: true, minLength: 3 }}
-              id="acquirer-registration-number"
-              type="text"
+              validationSchema={{ required: true }}
+              id="WasteMassExcludingInstallation"
+              type="number"
               labelText="Poza instalacją"
-              name="acquirer.registrationNumber"
-              error={errors.acquirer?.registrationNumber}
-              disabled
+              name="WasteMassExcludingInstallation"
+              error={errors.WasteMassExcludingInstallation}
             />
           </div>
         </fieldset>
+        <Input
+          register={register}
+          id="WasteFromServices"
+          type="checkbox"
+          labelText="Wytwarzanie odpadów w wyniku świadczenia usług i/lub działalności w zakresie obiektów liniowych"
+          name="WasteFromServices"
+          error={errors.WasteFromServices}
+          className="items-start"
+        />
+        {isWasteGenerated && (
+          <ControlledSelect
+            control={control}
+            values={keoInfo.commons.map((common) => common.name)}
+            labelText="Gmina"
+            name="CommuneName"
+          />
+        )}
+      </div>
+      <div className="w-full text-right">
+        <Button type="submit">Zatwierdź</Button>
       </div>
     </form>
   );

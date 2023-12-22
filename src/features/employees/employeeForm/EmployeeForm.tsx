@@ -84,7 +84,7 @@ export function EmployeeForm({
               defaultValue={employee?.status || statuses[0]}
             />
           )}
-        ></Controller>
+        />
       </div>
       <div className="flex justify-end gap-3">
         {onClose && <Button onClick={onClose}>Powrót</Button>}

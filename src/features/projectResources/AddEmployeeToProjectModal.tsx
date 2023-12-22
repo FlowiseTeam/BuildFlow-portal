@@ -6,6 +6,7 @@ import { Project, updateProject, Employee } from '@src/services/api/index';
 import { useMemo, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '@src/App';
+import { LoadingIcon } from '@src/components/loadings/Loading';
 
 export function AddEmployeeToProjectModal({
   project,
@@ -21,7 +22,7 @@ export function AddEmployeeToProjectModal({
   const [selectedEmployees, setSelectedEmployees] = useState<{ name: string; id: number; wasSelected: boolean }[]>([]);
   const [query, setQuery] = useState('');
 
-  const { mutateAsync: onUpdate } = useMutation({
+  const { mutateAsync: onUpdate, isPending } = useMutation({
     mutationKey: ['project', project._id],
     mutationFn: (employeeIds: number[]) => {
       const updatedProject = { ...project, employees: [...project.employees, ...employeeIds] } as Project;
@@ -65,6 +66,11 @@ export function AddEmployeeToProjectModal({
     <Modal className="max-w-sm" onClose={onClose} show={show} title="Dodaj pracowników">
       <Combobox value={selectedEmployees} onChange={setSelectedEmployees} multiple>
         <div>
+          {isPending && (
+            <p className="flex justify-center">
+              <LoadingIcon />
+            </p>
+          )}
           <p className="text-sm font-semibold">Wcześniej przypisani:</p>
           <div className="min-h-[3rem]">
             {employeesByName

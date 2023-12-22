@@ -10,16 +10,16 @@ interface AddVehicleFields {
   name: string;
   status: string;
   reg_number: string;
-  rev_state: null | string;
+  rev_date: null | string;
   mileage: number;
   capacity: null;
 }
 
-const vehicleStatuses = ['W boju', 'Na firmie', 'W serwisie'] as const;
+const vehicleStatuses = ['W użyciu', 'Wolny', 'W serwisie'] as const;
 
 const vehicleStatusesColors: Record<(typeof vehicleStatuses)[number], string> = {
-  'W boju': 'border-yellow-300',
-  'Na firmie': 'border-green-400',
+  'W użyciu': 'border-yellow-300',
+  Wolny: 'border-green-400',
   'W serwisie': 'border-red-400',
 };
 
@@ -105,7 +105,7 @@ export function VehicleForm({
         />
         <Controller
           control={control}
-          defaultValue={vehicleStatuses[0]}
+          defaultValue={vehicle?.status || vehicleStatuses[0]}
           rules={{ required: true }}
           name="status"
           render={({ field: { onChange } }) => (
@@ -114,12 +114,23 @@ export function VehicleForm({
               disabled={!isEdited}
               onChange={onChange}
               values={vehicleStatuses}
-              defaultValue={vehicleStatuses[0]}
+              defaultValue={vehicle?.status || vehicleStatuses[0]}
               colors={vehicleStatusesColors}
               isRequired
             />
           )}
-        ></Controller>
+        />
+        <Input
+          register={register}
+          validationSchema={{ required: true }}
+          id="rev_date"
+          type="date"
+          defaultValue={vehicle?.mileage}
+          labelText="Data przeglądu"
+          name="rev_date"
+          error={errors.mileage}
+          disabled={!isEdited}
+        />
       </div>
       <div className="flex justify-end gap-3">
         {vehicle && !isEdited && !isPending && <Button onClick={toggleIsEdited}>Edytuj</Button>}

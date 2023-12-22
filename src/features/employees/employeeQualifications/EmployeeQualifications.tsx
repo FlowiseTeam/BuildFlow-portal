@@ -4,17 +4,24 @@ import { useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { queryClient } from '@src/App';
 import { Employee, updateEmployee } from '@src/services/api/index';
+import { useEmployeeMutation } from '@src/services/api/hooks/employees';
 
 export function EmployeeQualifications({ employee, isEdited }: { employee: Employee; isEdited: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { mutateAsync } = useEmployeeMutation(employee._id);
 
   const qualifications = employee.qualifications || [];
 
   const handleAddQualification = async (qualification: string) => {
     const qualfs = qualifications || [];
     const updatedEmployee = { ...employee, qualifications: [...qualfs, qualification] };
-    queryClient.setQueryData(['employee', employee._id], updatedEmployee);
-    await updateEmployee({ ...employee, qualifications: [...qualfs, qualification] });
+
+    mutateAsync(updatedEmployee).then(() => {
+      queryClient.setQueryData(['employee', employee._id], updatedEmployee);
+      // queryClient.refetchQueries()
+    });
+    // queryClient.setQueryData(['employee', employee._id], updatedEmployee);
+    // updateEmployee({ ...employee, qualifications: [...qualfs, qualification] });
   };
 
   const handleRemoveQualification = async (index: number) => {

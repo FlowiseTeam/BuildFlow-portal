@@ -27,7 +27,7 @@ export function ProjectGridItem({
           onClick={() => setActiveProject(project)}
           size="xs"
           variant="none"
-          className={`absolute ml-2 mt-2 ${statusButtonStyles[project.status]}`}
+          className={`absolute right-0 mt-2 ${statusButtonStyles[project.status]}`}
         >
           {project.status}
         </Button>

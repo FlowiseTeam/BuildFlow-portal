@@ -1,13 +1,11 @@
-import { UseQueryResult } from '@tanstack/react-query';
+type States<T> = { loading: React.ReactNode; exists: (data: NonNullable<T>) => React.ReactNode };
 
-type States<T> = { loading: React.ReactNode; exists: (data: T) => React.ReactNode };
-
-export function strategy<T, Error>(queryResult: UseQueryResult<T, Error>, states: States<T>) {
-  if (queryResult.isLoading) {
+export function strategy<T>(data: T, isLoading: boolean, states: States<T>) {
+  if (isLoading) {
     return states.loading;
   }
-  if (queryResult.data) {
-    return states.exists(queryResult.data);
+  if (data) {
+    return states.exists(data);
   }
   return states.loading;
 }

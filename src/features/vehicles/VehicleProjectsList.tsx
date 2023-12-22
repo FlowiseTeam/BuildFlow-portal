@@ -12,7 +12,6 @@ export function VehicleProjectsList({ vehicle }: { vehicle: Vehicle }) {
   const { mutate, isPending } = usePutVehicle();
 
   const projects = vehicle.assigned_project;
-  console.log(projects);
 
   const handleAddProjects = (projects: Project[]) => {
     setIsOpen(false);
@@ -26,7 +25,6 @@ export function VehicleProjectsList({ vehicle }: { vehicle: Vehicle }) {
       assigned_project: [...vehicle.assigned_project, ...assignedProjects],
     } as Vehicle;
 
-    console.log('it is', updatedVehicle);
     mutate(updatedVehicle);
   };
 

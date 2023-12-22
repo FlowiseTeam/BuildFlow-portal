@@ -39,6 +39,7 @@ export interface Card {
   WasteGeneratedTerytPk: string;
   WasteGeneratingAdditionalInfo: string;
   KpoId: any;
+  _id: string;
 }
 
 export interface KpoInfo {
@@ -100,10 +101,12 @@ export interface KEORecord {
 
 export const getKpoInfo = (): Promise<KpoInfo> => http.get('bdo-info/kpo').then((data) => data.data);
 
-export const postKpoCard = (card) => http.post('kpo', card);
+export const postKpoCard = (card: unknown) => http.post('kpo', card);
 
 export const getKpoCards = (): Promise<Card[]> => http.get('kpo').then((data) => data.data.cards);
 
 export const getKeoInfo = (): Promise<KeoInfo> => http.get('bdo-info/keo').then((data) => data.data);
 
 export const postKeoRecord = (record: KEORecord) => http.post('keo', record);
+
+export const deleteKpoCard = (id: string | number) => http.delete(`kpo/${id}`);

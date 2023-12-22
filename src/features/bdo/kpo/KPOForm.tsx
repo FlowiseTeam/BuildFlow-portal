@@ -77,7 +77,7 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
 
   const { mutate } = useKpoCardMutation();
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit((data) => {
     const result: CreateCard = {
       AdditionalInfo: data.AdditionalInfo,
       CarrierCompanyId: data.CarrierCompanyId,
@@ -86,12 +86,12 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
       ReceiverCompanyId: data.ReceiverCompanyId,
       ReceiverEupId: data.ReceiverEupId.code,
       VehicleRegNumber: data.VehicleRegNumber,
-      WasteCodeId: data.WasteCode.code,
+      WasteCodeId: data.WasteCode.WasteCodeId,
       WasteMass: data.WasteMass,
       WasteCodeExtended: true,
       HazardousWasteReclassification: true,
     };
-    await mutate(result);
+    mutate(result);
     navigate('..');
   });
 

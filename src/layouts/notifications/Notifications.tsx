@@ -41,7 +41,7 @@ function Notification({
   remove: (id: number) => void;
 }) {
   return (
-    <div className="relative min-h-[4rem] w-64 animate-notification-enter rounded-md border-[1px] border-stone-200 bg-stone-100 px-4 py-1 text-sm shadow-lg [&>*]:hover:flex">
+    <div className="relative min-h-[4rem] w-64 animate-notification-enter rounded-md border-[1px] border-stone-200 bg-stone-100 px-4 py-1 pt-2 text-sm shadow-lg [&>*]:hover:flex">
       <div className="absolute -left-2 -top-2 hidden items-center justify-center hover:cursor-pointer ">
         <div className=" absolute h-3 w-3 bg-white"></div>
         <XCircleIcon className="z-10 h-5 text-neutral-300" onClick={() => remove(id)} />

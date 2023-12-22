@@ -62,8 +62,6 @@ export function AddEmployeeToProjectModal({
     onClose();
   };
 
-  console.log(isPending);
-
   return (
     <Modal className="max-w-sm" onClose={onClose} show={show} title="Dodaj pracowników">
       <Combobox value={selectedEmployees} onChange={setSelectedEmployees} multiple>

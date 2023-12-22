@@ -1,5 +1,14 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { KEORecord, getKeoInfo, getKpoCards, getKpoInfo, postKeoRecord, postKpoCard } from '../routes/bdo';
+import {
+  KEORecord,
+  deleteKpoCard,
+  getKeoInfo,
+  getKpoCards,
+  getKpoInfo,
+  postKeoRecord,
+  postKpoCard,
+} from '../routes/bdo';
+import { queryClient } from '@src/App';
 
 export const useKpoInfoQuery = () => {
   return useQuery({
@@ -11,6 +20,9 @@ export const useKpoInfoQuery = () => {
 export const useKpoCardMutation = () => {
   return useMutation({
     mutationFn: (card: any) => postKpoCard(card),
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['kpo-cards'] });
+    },
   });
 };
 
@@ -24,3 +36,11 @@ export const useKpoCardsQuery = () => {
 export const useKeoInfoQuery = () => useQuery({ queryKey: ['bdo-info/keo'], queryFn: getKeoInfo });
 
 export const useKeoRecordCreate = () => useMutation({ mutationFn: (record: KEORecord) => postKeoRecord(record) });
+
+export const useKeoCardDelete = () =>
+  useMutation({
+    mutationFn: (id: string | number) => deleteKpoCard(id),
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['kpo-cards'] });
+    },
+  });

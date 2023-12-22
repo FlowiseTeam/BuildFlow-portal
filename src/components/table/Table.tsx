@@ -1,5 +1,5 @@
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useTable } from './useTable';
 import { Cell } from './Cell';
 import { Button } from '../button/Button';
@@ -33,9 +33,21 @@ type TableProps = {
   isFetching?: boolean;
   onEdit?: (id: number) => void;
   onRowClick?: (id: number) => void;
+  removable?: boolean;
+  onRemove?: (id: number | string) => void;
 };
 
-export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable = true, isFetching }: TableProps) {
+export function Table({
+  columns,
+  data,
+  defaultSort,
+  onEdit,
+  onRowClick,
+  editable = true,
+  isFetching,
+  removable,
+  onRemove,
+}: TableProps) {
   const { handleSort, sortColumn, sortDirection, sortedData } = useTable(columns, data, defaultSort);
 
   return (
@@ -63,6 +75,7 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable
               </th>
             ))}
             {editable && <th className="rounded-tr opacity-0">Edytuj</th>}
+            {removable && <th className="rounded-tr opacity-0">Usuń</th>}
           </tr>
         </thead>
         <tbody className="relative text-gray-700 [&>*:nth-child(2n-1)]:bg-neutral-200/75">
@@ -90,6 +103,18 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable
                 <td className="py-4">
                   <Button aria-label="edytuj" variant="light" className="rounded-lg px-[6px]">
                     <PencilIcon className="h-4 w-4" />
+                  </Button>
+                </td>
+              )}
+              {removable && (
+                <td className="py-4">
+                  <Button
+                    onClick={() => onRemove && onRemove(row.id)}
+                    aria-label="Usuń"
+                    variant="light"
+                    className="rounded-lg px-[6px]"
+                  >
+                    <TrashIcon className="h-4 w-4" />
                   </Button>
                 </td>
               )}

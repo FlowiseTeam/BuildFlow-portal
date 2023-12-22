@@ -5,6 +5,7 @@ import { tm } from '@src/lib/tw';
 import { useKpoCardMutation } from '@src/services/api/hooks/bdo';
 import { KpoInfo } from '@src/services/api/routes/bdo';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 interface WasteCodeType {
   WasteCodeId: number;
@@ -57,10 +58,12 @@ interface KPOFormProps {
   disabled?: boolean;
 }
 
-export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }: KPOFormProps) {
+export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
   if (!kpoInfo) {
     return null;
   }
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -75,8 +78,6 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
   const { mutate } = useKpoCardMutation();
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-
     const result: CreateCard = {
       AdditionalInfo: data.AdditionalInfo,
       CarrierCompanyId: data.CarrierCompanyId,
@@ -90,9 +91,8 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
       WasteCodeExtended: true,
       HazardousWasteReclassification: true,
     };
-
-    console.log(result);
-    const res2 = await mutate(res);
+    await mutate(result);
+    navigate('..');
   });
 
   const isDisabled = disabled;
@@ -112,6 +112,7 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
           <div className="grid gap-x-4 md:grid-cols-2">
             <ControlledSelect
               control={control}
+              rules={{ required: true }}
               name="CarrierCompanyName"
               values={carriers.map((carrier) => carrier.name)}
               labelText="Nazwa lub imię nazwisko"
@@ -136,6 +137,7 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
           <div className="grid gap-x-4 md:grid-cols-2">
             <ControlledSelect
               control={control}
+              rules={{ required: true }}
               name="ReceiverCompanyName"
               values={receivers.map((receiver) => receiver.name)}
               labelText="Nazwa lub imię nazwisko"
@@ -154,6 +156,7 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
             />
             <ControlledSelect
               control={control}
+              rules={{ required: true }}
               Button={EupIdButton}
               Option={EupIdOption}
               name="ReceiverEupId"
@@ -168,6 +171,7 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
           <div className="grid gap-x-4  md:grid-cols-2">
             <ControlledSelect
               control={control}
+              rules={{ required: true }}
               values={wasteCodes}
               Option={WasteCodeOption}
               Button={WasteCodeButton}
@@ -178,7 +182,7 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
 
             <Input
               register={register}
-              validationSchema={{ minLength: 3 }}
+              validationSchema={{ minLength: 3, required: true }}
               id="VehicleRegNumber"
               type="text"
               labelText="Nr. rejestracyjny pojazdu odbierającego"
@@ -188,7 +192,7 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
             />
             <Input
               register={register}
-              validationSchema={{ minLength: 3 }}
+              validationSchema={{ required: true }}
               id="PlannedTransportTime"
               type="datetime-local"
               labelText="Data rozpoczęcia"
@@ -202,7 +206,6 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
           <Legend>Informacje dodatkowe</Legend>
           <Input
             register={register}
-            validationSchema={{ minLength: 3 }}
             type="text"
             labelText="Dodatkowe informacje"
             name="AdditionalInfo"
@@ -211,7 +214,7 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
           />
           <Input
             register={register}
-            validationSchema={{ minLength: 3 }}
+            validationSchema={{ required: true }}
             id="details-weight"
             type="number"
             labelText="Waga"
@@ -232,6 +235,7 @@ export function KPOForm({ kpoInfo, onClose, handleFormSubmit, disabled = false }
           {isWasteGenerated && (
             <ControlledSelect
               control={control}
+              rules={{ required: true }}
               values={kpoInfo.commons.map((common) => common.name)}
               labelText="Gmina"
               name="WasteCode"

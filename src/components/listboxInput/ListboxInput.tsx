@@ -1,5 +1,6 @@
 import { Listbox } from '@headlessui/react';
-import { tj } from '@src/lib/tw';
+import { tj, tm } from '@src/lib/tw';
+import { errorMessage } from '../Input/Input';
 
 type ListboxInputProps =
   | {
@@ -12,6 +13,8 @@ type ListboxInputProps =
       placeholder?: string;
       Option?: JSX.Element;
       Button?: JSX.Element;
+      error;
+      rules;
     }
   | {
       onChange: (...event: any[]) => void;
@@ -23,6 +26,8 @@ type ListboxInputProps =
       placeholder?: string;
       Option: JSX.Element;
       Button: JSX.Element;
+      error;
+      rules;
     };
 
 export function ListboxInput({
@@ -35,11 +40,19 @@ export function ListboxInput({
   placeholder,
   Option,
   Button,
+  error,
+  rules,
 }: ListboxInputProps) {
   return (
     <Listbox disabled={disabled} onChange={onChange} defaultValue={defaultValue}>
       <div className="relative flex flex-col">
-        <label className="text-xs text-gray-600" htmlFor={id}>
+        <label
+          className={tm(
+            'text-xs text-gray-600',
+            !disabled && rules?.required && "after:ml-[2px] after:text-red-500 after:content-['*']",
+          )}
+          htmlFor={id}
+        >
           {labelText}
         </label>
         <Listbox.Button
@@ -63,6 +76,7 @@ export function ListboxInput({
             </Listbox.Option>
           ))}
         </Listbox.Options>
+        {error && <p className="text-xs text-red-600">{errorMessage(error.type, rules)}</p>}
       </div>
     </Listbox>
   );

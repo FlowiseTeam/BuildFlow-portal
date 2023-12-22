@@ -18,7 +18,11 @@ export function KPOCardsTableContainer() {
   );
 }
 
-const columns = [{ key: 'wasteMass', title: 'Masa śmieci', type: 'text' }] satisfies TableColumn[];
+const columns = [
+  { key: 'wasteMass', title: 'Masa śmieci', type: 'text', headCenter: false },
+  { key: 'kpoId', title: 'Kpo ID', type: 'text', headCenter: false },
+  { key: 'vehicleRegNum', title: 'Nr pojazdu', type: 'text', headCenter: false },
+] satisfies TableColumn[];
 
 function CardsTable({ cards }: { cards: Card[] }) {
   const tableData = useMemo(
@@ -27,9 +31,10 @@ function CardsTable({ cards }: { cards: Card[] }) {
         id: card.WasteCodeId,
         wasteMass: card.WasteMass,
         kpoId: card.KpoId,
+        vehicleRegNum: card.VehicleRegNumber,
       })),
     [cards],
   );
 
-  return <Table columns={columns} data={tableData} />;
+  return <Table columns={columns} data={tableData} editable={false} />;
 }

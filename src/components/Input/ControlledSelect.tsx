@@ -35,7 +35,7 @@ export function ControlledSelect<TFV extends FieldValues>({
       defaultValue={defaultValue}
       rules={rules}
       name={name}
-      render={({ field: { onChange } }) => (
+      render={({ field: { onChange }, fieldState: { error } }) => (
         <ListboxInput
           labelText={labelText}
           onChange={(v) => {
@@ -49,6 +49,8 @@ export function ControlledSelect<TFV extends FieldValues>({
           placeholder={placeholder}
           Option={Option}
           Button={Button}
+          error={error}
+          rules={rules}
         />
       )}
     />

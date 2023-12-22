@@ -14,7 +14,9 @@ function KPOView() {
         <Button variant="primary" onClick={() => navigate('add')}>
           Dodaj kartę
         </Button>
-        <KPOCardsTableContainer />
+        <div className="mt-12">
+          <KPOCardsTableContainer />
+        </div>
       </div>
     </Page>
   );
@@ -27,8 +29,3 @@ export function KPOPage() {
     </ErrorBoundary>
   );
 }
-
-//  <div className="mt-12">
-//           <p className="text-2xl">Statusy wygenerowanych kart</p>
-//           <p className="mt-6 italic text-gray-700">Brak wygenerowanych kart</p>
-//         </div>

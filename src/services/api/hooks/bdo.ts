@@ -10,7 +10,7 @@ export const useKpoInfoQuery = () => {
 
 export const useKpoCardMutation = () => {
   return useMutation({
-    mutationFn: (card) => postKpoCard(card),
+    mutationFn: (card: any) => postKpoCard(card),
   });
 };
 

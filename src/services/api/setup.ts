@@ -20,17 +20,8 @@ export const vehiclesAxiosApi = axios.create({ baseURL: VEHICLES_API_URL });
 
 export const bdoAxiosApi = axios.create({ baseURL: BDO_API_URL });
 
-axiosApi.interceptors.request.use(
-  (config) => {
-    config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
-
 const apis = [axiosApi, imagesApi, projectsAxiosApi, vehiclesAxiosApi];
+
 apis.forEach((api) => {
   api.interceptors.request.use(
     (config) => {

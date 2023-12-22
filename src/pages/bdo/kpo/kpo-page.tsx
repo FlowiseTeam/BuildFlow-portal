@@ -2,6 +2,7 @@ import { Page } from '@layouts/Page';
 import { Button } from '@src/components/button/Button';
 import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
 import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
+import { KPOCardsTableContainer } from '@src/features/bdo/kpo/CardsTable';
 import { useNavigate } from 'react-router-dom';
 
 function KPOView() {
@@ -13,10 +14,7 @@ function KPOView() {
         <Button variant="primary" onClick={() => navigate('add')}>
           Dodaj kartę
         </Button>
-        <div className="mt-12">
-          <p className="text-2xl">Statusy wygenerowanych kart</p>
-          <p className="mt-6 italic text-gray-700">Brak wygenerowanych kart</p>
-        </div>
+        <KPOCardsTableContainer />
       </div>
     </Page>
   );
@@ -29,3 +27,8 @@ export function KPOPage() {
     </ErrorBoundary>
   );
 }
+
+//  <div className="mt-12">
+//           <p className="text-2xl">Statusy wygenerowanych kart</p>
+//           <p className="mt-6 italic text-gray-700">Brak wygenerowanych kart</p>
+//         </div>

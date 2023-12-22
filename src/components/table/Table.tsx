@@ -32,7 +32,7 @@ type TableProps = {
   editable?: boolean;
   isFetching?: boolean;
   onEdit?: (id: number) => void;
-  onRowClick: (id: number) => void;
+  onRowClick?: (id: number) => void;
 };
 
 export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable = true, isFetching }: TableProps) {
@@ -74,7 +74,7 @@ export function Table({ columns, data, defaultSort, onEdit, onRowClick, editable
             <tr
               className="px-6 py-4 hover:cursor-pointer hover:!bg-black/10"
               key={row.id}
-              onClick={() => onRowClick(row.id)}
+              onClick={() => onRowClick && onRowClick(row.id)}
             >
               {columns.map((column) => (
                 <Cell

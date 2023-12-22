@@ -31,3 +31,6 @@ export const createComment = async (projectId: number, commentData: FormData) =>
     data: commentData,
     headers: { 'Content-Type': 'multipart/form-data' },
   });
+
+export const deleteComment = (projectId: number, commentId: number) =>
+  projectsAxiosApi.delete(`projects/${projectId}/comments/${commentId}`);

@@ -54,10 +54,10 @@ describe('Dashboard page', () => {
   });
 
   it('shows stats', () => {
-    cy.contains('Projekty').should('be.visible');
+    cy.contains('p', 'Projekty').should('be.visible');
     cy.contains('1').should('be.visible');
 
-    cy.contains('Pracownicy').should('be.visible');
+    cy.contains('p', 'Pracownicy').should('be.visible');
     cy.contains('4').should('be.visible');
 
     cy.contains('Nieprzypisani').should('be.visible');

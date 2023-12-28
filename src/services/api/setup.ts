@@ -1,14 +1,19 @@
 import axios from 'axios';
 
-export const API_URL =
-  import.meta.env.MODE === 'production' ? 'http://localhost:3001/api' : 'http://localhost:3001/api';
+// export const API_URL =
+//   import.meta.env.MODE === 'production' ? 'http://localhost:3001/api' : 'http://localhost:3001/api';
 
-export const PROJECTS_API_URL =
-  import.meta.env.MODE === 'production' ? 'http://localhost:3000/api' : 'http://localhost:3000/api';
+// export const PROJECTS_API_URL =
+//   import.meta.env.MODE === 'production' ? 'http://localhost:3000/api' : 'http://localhost:3000/api';
 
-export const VEHICLES_API_URL = 'http://localhost:3002/api';
+// export const VEHICLES_API_URL = 'http://localhost:3002/api';
 
-export const BDO_API_URL = 'http://localhost:3003/api';
+// export const BDO_API_URL = 'http://localhost:3003/api';
+
+export const PROJECTS_API_URL = import.meta.env.VITE_PROJECTS_URL;
+export const API_URL = import.meta.env.VITE_EMPLOYEES_URL;
+export const VEHICLES_API_URL = import.meta.env.VITE_VEHICLES_URL;
+export const BDO_API_URL = import.meta.env.VITE_BDO_URL;
 
 export const axiosApi = axios.create({ baseURL: API_URL });
 

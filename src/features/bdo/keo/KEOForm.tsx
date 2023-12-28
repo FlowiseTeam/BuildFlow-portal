@@ -112,7 +112,9 @@ export function KEOForm({ handleFormSubmit, keoInfo }: KEOFormProps) {
         )}
       </div>
       <div className="w-full text-right">
-        <Button type="submit">Zatwierdź</Button>
+        <Button type="submit" variant="primary">
+          Zatwierdź
+        </Button>
       </div>
     </form>
   );

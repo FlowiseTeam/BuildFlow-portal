@@ -3,10 +3,12 @@ import {
   KEORecord,
   deleteKpoCard,
   getKeoInfo,
+  getKeoRecords,
   getKpoCards,
   getKpoInfo,
   postKeoRecord,
   postKpoCard,
+  deleteKeoCard,
 } from '../routes/bdo';
 import { queryClient } from '@src/App';
 
@@ -37,10 +39,20 @@ export const useKeoInfoQuery = () => useQuery({ queryKey: ['bdo-info/keo'], quer
 
 export const useKeoRecordCreate = () => useMutation({ mutationFn: (record: KEORecord) => postKeoRecord(record) });
 
-export const useKeoCardDelete = () =>
+export const useKpoCardDelete = () =>
   useMutation({
     mutationFn: (id: string | number) => deleteKpoCard(id),
     onSuccess: () => {
       queryClient.refetchQueries({ queryKey: ['kpo-cards'] });
+    },
+  });
+
+export const useKeoRecords = () => useQuery({ queryKey: ['keo'], queryFn: getKeoRecords });
+
+export const useKeoCardDelete = () =>
+  useMutation({
+    mutationFn: (id: string | number) => deleteKeoCard(id),
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['keo'] });
     },
   });

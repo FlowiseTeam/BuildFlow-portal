@@ -1,6 +1,7 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
 import { ControlledSelect } from '@src/components/Input/ControlledSelect';
+import { ControlledSelectV } from '@src/components/Input/ControlledSelectV';
 import { tm } from '@src/lib/tw';
 import { useKpoCardMutation } from '@src/services/api/hooks/bdo';
 import { KpoInfo } from '@src/services/api/routes/bdo';
@@ -32,6 +33,7 @@ interface KPOFields {
   WasteMass: string | number;
   AdditionalInfo?: string;
   IsWasteGenerating: boolean;
+  WasteGeneratedTerytPk?: string;
 }
 
 // interface KPOFields
@@ -48,6 +50,7 @@ interface CreateCard {
   HazardousWasteReclassification: boolean;
   WasteCodeExtended: boolean;
   IsWasteGenerating: boolean;
+  WasteGeneratedTerytPkName?: string;
 }
 
 interface KPOFormProps {
@@ -78,6 +81,9 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
   const { mutate } = useKpoCardMutation();
 
   const onSubmit = handleSubmit((data) => {
+    console.log(data.WasteCode);
+
+    const terytPk = kpoInfo.commons.find((common) => common.name === data.WasteGeneratedTerytPkName)?.commonId;
     const result: CreateCard = {
       AdditionalInfo: data.AdditionalInfo,
       CarrierCompanyId: data.CarrierCompanyId,
@@ -90,6 +96,7 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
       WasteMass: data.WasteMass,
       WasteCodeExtended: true,
       HazardousWasteReclassification: true,
+      ...(terytPk ? { WasteGeneratedTerytPk: String(terytPk) } : null),
     };
     mutate(result);
     navigate('..');
@@ -128,6 +135,7 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
               labelText="Numer rejestrowy"
               name="CarrierCompanyId"
               error={errors.CarrierCompanyId}
+              validationSchema={{ required: true }}
               disabled={true}
             />
           </div>
@@ -144,6 +152,7 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
               onChangeMiddleware={(name) => {
                 const regNum = kpoInfo.receivers.find((receiver) => receiver.name === name)?.registrationNumber;
                 regNum && setValue('ReceiverCompanyId', regNum);
+                setValue('ReceiverEupId', undefined);
               }}
             />
             <Input
@@ -152,16 +161,17 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
               type="text"
               labelText="Numer rejestrowy"
               name="ReceiverCompanyId"
+              validationSchema={{ required: true }}
               disabled={true}
             />
-            <ControlledSelect
+            <ControlledSelectV
               control={control}
               rules={{ required: true }}
               Button={EupIdButton}
               Option={EupIdOption}
               name="ReceiverEupId"
               values={eupIds}
-              labelText="Nazwa lub imię nazwisko"
+              labelText="Numer miejsca prowadzenia działalności"
               disabled={!selectedReceiverName}
             />
           </div>
@@ -238,14 +248,16 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
               rules={{ required: true }}
               values={kpoInfo.commons.map((common) => common.name)}
               labelText="Gmina"
-              name="WasteCode"
+              name="WasteGeneratedTerytPkName"
               disabled={isDisabled}
             />
           )}
         </fieldset>
       </div>
       <div className="flex justify-end">
-        <Button type="submit">Dodaj</Button>
+        <Button type="submit" variant="primary">
+          Dodaj
+        </Button>
       </div>
     </form>
   );

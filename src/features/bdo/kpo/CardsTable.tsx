@@ -3,7 +3,7 @@ import { LoadingSpace } from '@src/components/loadings/Loading';
 import { Table, TableColumn } from '@src/components/table/Table';
 import { useNotifications } from '@src/layouts/notifications/NotificationProvider';
 import { strategy } from '@src/lib/strategy';
-import { useKeoCardDelete, useKpoCardsQuery } from '@src/services/api/hooks/bdo';
+import { useKpoCardDelete, useKpoCardsQuery } from '@src/services/api/hooks/bdo';
 import { Card } from '@src/services/api/routes/bdo';
 import { useMemo, useState } from 'react';
 
@@ -21,7 +21,7 @@ export function KPOCardsTableContainer() {
 }
 
 const columns = [
-  { key: 'wasteMass', title: 'Masa śmieci', type: 'text', headCenter: false },
+  { key: 'wasteMass', title: 'Masa odpadów (t)', type: 'text', headCenter: false },
   { key: 'kpoId', title: 'Kpo ID', type: 'text', headCenter: false },
   { key: 'vehicleRegNum', title: 'Nr pojazdu', type: 'text', headCenter: false },
 ] satisfies TableColumn[];
@@ -29,7 +29,7 @@ const columns = [
 function CardsTable({ cards }: { cards: Card[] }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState<null | string | number>(null);
-  const { mutateAsync } = useKeoCardDelete();
+  const { mutateAsync } = useKpoCardDelete();
   const { notify } = useNotifications();
 
   const openRemoveDialog = (cardId: string | number) => {

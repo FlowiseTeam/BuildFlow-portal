@@ -90,6 +90,7 @@ export interface KeoInfo {
 }
 
 export interface KEORecord {
+  _id: string;
   KeoId: string;
   WasteMassInstallation: number;
   WasteMassExcludingInstallation: number;
@@ -110,3 +111,7 @@ export const getKeoInfo = (): Promise<KeoInfo> => http.get('bdo-info/keo').then(
 export const postKeoRecord = (record: KEORecord) => http.post('keo', record);
 
 export const deleteKpoCard = (id: string | number) => http.delete(`kpo/${id}`);
+
+export const getKeoRecords = (): Promise<KEORecord[]> => http.get('keo').then((data) => data.data.records);
+
+export const deleteKeoCard = (id: string | number) => http.delete(`keo/${id}`);

@@ -5,13 +5,16 @@ import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
 import { KEOForm } from '@src/features/bdo/keo/KEOForm';
 import { useKeoInfoQuery, useKeoRecordCreate } from '@src/services/api/hooks/bdo';
 import { KEORecord } from '@src/services/api/routes/bdo';
+import { useNavigate } from 'react-router-dom';
 
 function KEOAdd() {
   const { data } = useKeoInfoQuery();
   const { mutate } = useKeoRecordCreate();
+  const navigate = useNavigate();
 
   function onSubmit(record: KEORecord) {
     mutate(record);
+    navigate('..');
   }
 
   return (

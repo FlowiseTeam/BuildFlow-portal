@@ -10,10 +10,8 @@ import { ProjectsTable } from '@features/projectsTable/ProjectsTable';
 import { ProjectsGrid } from '@src/features/projects/grid/ProjectsGrid';
 import { useProjectsViewStore } from '@src/features/projects/useProjectsViewStore';
 import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
-import { useNotifications } from '@src/layouts/notifications/NotificationProvider';
 import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
 import { LoadingPageSuspense } from '@src/components/queryBoundaries/LoadingView';
-import { SearchInput } from '@src/components/Input/SearchInput';
 import { queryClient } from '@src/App';
 
 function ProjectViewToggler({ view, toggle }: { view: 'list' | 'grid'; toggle: () => void }) {
@@ -60,8 +58,7 @@ function ProjectsPage() {
         onSuccess={onSuccessfulAdd}
       />
       <div className="mt-8 flex flex-col">
-        <div className="mb-6 flex items-center justify-between">
-          <SearchInput />
+        <div className="mb-6 flex items-center justify-end">
           <span className="flex items-center gap-12">
             <ProjectViewToggler view={view} toggle={toggleView} />
             <Button variant="primary" onClick={() => setIsAddProjectModalOpen(true)}>

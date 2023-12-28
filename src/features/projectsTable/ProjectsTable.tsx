@@ -1,6 +1,7 @@
 import { Table, TableColumn } from '@components/table/Table';
 import { EditProjectModal } from '@features/edit-project/EditProjectModal';
 import { Project } from '@services/api/index';
+import { SearchInput } from '@src/components/Input/SearchInput';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,17 +32,31 @@ export function ProjectsTable({ projects, refetch }: { projects: Project[]; refe
     setActiveProjectId(projectId);
   };
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const tableData = useMemo(
-    () =>
-      projects.map((project) => ({
-        ...project,
-        id: project._id,
-        address: `${project.city}, ${project.street}`,
-        employees: project.employees.length,
-      })),
-    [projects],
-  );
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const tableData = useMemo(() => {
+    const unfiltered = projects.map((project) => ({
+      ...project,
+      id: project._id,
+      address: `${project.city}, ${project.street}`,
+      employees: project.employees.length,
+    }));
+
+    if (!searchQuery) {
+      return unfiltered;
+    }
+
+    return unfiltered.filter(
+      (project) =>
+        project.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        project.city.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        project.street.toLowerCase().includes(searchQuery.toLowerCase().trim()),
+    );
+  }, [projects, searchQuery]);
 
   const handleRowClick = (id: number) => {
     navigate(`/app/projects/${id}`);
@@ -49,6 +64,9 @@ export function ProjectsTable({ projects, refetch }: { projects: Project[]; refe
 
   return (
     <>
+      <div className="mb-4">
+        <SearchInput value={searchQuery} onChange={handleQueryChange} />
+      </div>
       <EditProjectModal onClose={() => setActiveProjectId(null)} activeProject={activeProject} refetch={refetch} />
       <Table
         onRowClick={handleRowClick}

@@ -23,7 +23,7 @@ interface EupId {
 
 interface KPOFields {
   ReceiverCompanyId: string | number;
-  ReceiverEupId: EupId;
+  ReceiverEupId: EupId | null;
   ReceiverCompanyName: string | number;
   CarrierCompanyId: string | number;
   CarrierCompanyName: string | number;
@@ -33,10 +33,8 @@ interface KPOFields {
   WasteMass: string | number;
   AdditionalInfo?: string;
   IsWasteGenerating: boolean;
-  WasteGeneratedTerytPk?: string;
+  WasteGeneratedTerytPkName?: string;
 }
-
-// interface KPOFields
 
 interface CreateCard {
   CarrierCompanyId: string;
@@ -85,7 +83,6 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
 
     const terytPk = kpoInfo.commons.find((common) => common.name === data.WasteGeneratedTerytPkName)?.commonId;
     const result: CreateCard = {
-      AdditionalInfo: data.AdditionalInfo,
       CarrierCompanyId: data.CarrierCompanyId,
       IsWasteGenerating: data.IsWasteGenerating,
       PlannedTransportTime: data.PlannedTransportTime,
@@ -96,6 +93,7 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
       WasteMass: data.WasteMass,
       WasteCodeExtended: true,
       HazardousWasteReclassification: true,
+      AdditionalInfo: data.AdditionalInfo,
       ...(terytPk ? { WasteGeneratedTerytPk: String(terytPk) } : null),
     };
     mutate(result);
@@ -152,7 +150,7 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
               onChangeMiddleware={(name) => {
                 const regNum = kpoInfo.receivers.find((receiver) => receiver.name === name)?.registrationNumber;
                 regNum && setValue('ReceiverCompanyId', regNum);
-                setValue('ReceiverEupId', undefined);
+                setValue('ReceiverEupId', null);
               }}
             />
             <Input

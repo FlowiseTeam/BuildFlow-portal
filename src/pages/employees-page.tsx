@@ -31,8 +31,7 @@ function EmployeesPageWithoutFallback() {
         onSuccess={onSuccessfulAdd}
       />
       <div className="mt-8 flex flex-col">
-        <div className="flex justify-between">
-          <SearchInput />
+        <div className="flex justify-end">
           <Button variant="primary" onClick={() => setIsAddEmployeeModalOpen(true)}>
             Dodaj pracownika
           </Button>

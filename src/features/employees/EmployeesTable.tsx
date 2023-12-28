@@ -1,6 +1,7 @@
 import { Table, TableColumn } from '@components/table/Table';
+import { SearchInput } from '@src/components/Input/SearchInput';
 import { Employee } from '@src/services/api/index';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const columns = [
@@ -23,17 +24,31 @@ export const columns = [
 ] satisfies TableColumn[];
 
 export function EmployeesTable({ employees }: { employees: Employee[] }) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
   const navigate = useNavigate();
 
-  const tableData = useMemo(
-    () =>
-      employees.map((employee) => ({
-        ...employee,
-        id: employee._id,
-        assigned_project: employee.assigned_project?.map((project) => project.project_name),
-      })),
-    [employees],
-  );
+  const tableData = useMemo(() => {
+    const unfiltered = employees.map((employee) => ({
+      ...employee,
+      id: employee._id,
+      assigned_project: employee.assigned_project?.map((project) => project.project_name),
+    }));
+
+    if (!searchQuery) {
+      return unfiltered;
+    }
+
+    return unfiltered.filter(
+      (employee) =>
+        employee.first_name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        employee.last_name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        employee.role.toLowerCase().includes(searchQuery.toLowerCase().trim()),
+    );
+  }, [employees, searchQuery]);
 
   const handleRowClick = (id: number) => {
     navigate(`/app/employees/${id}`);
@@ -41,6 +56,9 @@ export function EmployeesTable({ employees }: { employees: Employee[] }) {
 
   return (
     <>
+      <div className="mb-4">
+        <SearchInput value={searchQuery} onChange={handleQueryChange} />
+      </div>
       <Table
         onRowClick={handleRowClick}
         columns={columns}

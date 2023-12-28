@@ -16,8 +16,7 @@ export function VehiclesPage() {
         onSuccess={toggleIsAddProjectModalOpen}
       />
       <div className="mt-8 flex flex-col">
-        <div className="flex items-end justify-between">
-          <SearchInput />
+        <div className="flex items-end justify-end">
           <Button variant="primary" onClick={toggleIsAddProjectModalOpen}>
             dodaj pojazd
           </Button>

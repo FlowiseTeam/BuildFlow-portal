@@ -11,8 +11,8 @@ type ListboxInputProps =
       defaultValue: string;
       disabled?: boolean;
       placeholder?: string;
-      Option?: JSX.Element;
-      Button?: JSX.Element;
+      Option?: (props: any) => React.ReactElement;
+      Button?: (props: any) => React.ReactElement;
       error;
       rules;
     }
@@ -24,8 +24,8 @@ type ListboxInputProps =
       defaultValue: Object[];
       disabled?: boolean;
       placeholder?: string;
-      Option: JSX.Element;
-      Button: JSX.Element;
+      Option: (props: any) => React.ReactElement;
+      Button: (props: any) => React.ReactElement;
       error;
       rules;
     };

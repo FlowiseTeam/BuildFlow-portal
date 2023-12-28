@@ -12,6 +12,8 @@ interface ControlledSelectProps<TFV extends FieldValues, TContext = any> {
   labelText: string;
   placeholder?: string;
   rules: any;
+  Option?: (props: any) => React.ReactElement;
+  Button?: (props: any) => React.ReactElement;
   onChangeMiddleware?: (value: any) => void;
 }
 

@@ -1,6 +1,7 @@
+import { SearchInput } from '@src/components/Input/SearchInput';
 import { Table, TableColumn } from '@src/components/table/Table';
 import { useVehicles } from '@src/services/api/hooks/vehicles';
-import { useMemo } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const columns = [
@@ -26,28 +27,43 @@ const columns = [
 export function VehiclesTable() {
   const { data, isLoading } = useVehicles();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleRowClick = (id: number) => {
     navigate(`/app/vehicles/${id}`);
   };
 
-  const vehiclesTableData = useMemo(
-    () =>
+  const vehiclesTableData = useMemo(() => {
+    const unfiltered =
       data?.vehicles.map((vehicle) => ({
         ...vehicle,
         id: vehicle._id,
         assigned_project: vehicle.assigned_project?.map((project) => project.project_name),
-      })) || [],
-    [data],
-  );
+      })) || [];
+
+    return unfiltered.filter(
+      (vehicle) =>
+        vehicle.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        vehicle.reg_number.toLowerCase().includes(searchQuery.toLowerCase().trim()),
+    );
+  }, [data, searchQuery]);
 
   return (
-    <Table
-      columns={columns}
-      data={vehiclesTableData}
-      onRowClick={handleRowClick}
-      isFetching={isLoading}
-      editable={false}
-    />
+    <>
+      <div className="mb-4">
+        <SearchInput value={searchQuery} onChange={handleQueryChange} />
+      </div>
+      <Table
+        columns={columns}
+        data={vehiclesTableData}
+        onRowClick={handleRowClick}
+        isFetching={isLoading}
+        editable={false}
+      />
+    </>
   );
 }

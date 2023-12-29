@@ -25,12 +25,15 @@ export const getLatestComments = async (): Promise<Comment[]> =>
 export const getImage = () => async (url: string) => await imagesApi.get(url);
 
 export const createComment = async (projectId: number, commentData: FormData) =>
-  axios({
-    method: 'post',
-    url: `${PROJECTS_API_URL}/projects/${projectId}/comments`,
-    data: commentData,
+  projectsAxiosApi.post(`${PROJECTS_API_URL}/projects/${projectId}/comments`, commentData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
+// axios({
+//   method: 'post',
+//   url: `${PROJECTS_API_URL}/projects/${projectId}/comments`,
+//   data: commentData,
+//   headers: { 'Content-Type': 'multipart/form-data' },
+// });
 
 export const deleteComment = (projectId: number, commentId: number) =>
   projectsAxiosApi.delete(`projects/${projectId}/comments/${commentId}`);

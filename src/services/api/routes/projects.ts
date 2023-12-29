@@ -26,6 +26,7 @@ export interface Project {
   employees: number[];
   updated_at: string;
   _id: number;
+  vehicles: number[];
 }
 
 export type FormProject = Omit<Project, 'created_at' | 'updated_at' | '_id'>;

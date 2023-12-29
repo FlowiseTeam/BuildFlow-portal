@@ -9,6 +9,8 @@ import { queryClient } from '@src/App';
 import { Project, FormProject } from '@src/services/api/index';
 import { useEmployeesQuery } from '@src/services/api/hooks/employees';
 import { ProjectVehiclesTab } from './ProjectVehiclesTab';
+import { AddVehicleToProjectModal } from './AddVehicleToProjectModal';
+import { useVehicles } from '@src/services/api/hooks/vehicles';
 
 export function ProjectResources({
   className,
@@ -21,8 +23,11 @@ export function ProjectResources({
   isEdited: boolean;
   onUpdate: UseMutateAsyncFunction<any, unknown, Partial<FormProject>, unknown>;
 }) {
+  const [tab, setTab] = useState(0);
   const { data, isLoading, isError } = useEmployeesQuery();
+  const { data: vehicles } = useVehicles();
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
+  const [isAddVehicleModalOpen, setIsAddVehicleModalOpen] = useState(false);
 
   const projectEmployees = data?.employees.filter((e) => project.employees.includes(e._id)) || [];
 
@@ -40,9 +45,15 @@ export function ProjectResources({
         allEmployees={data?.employees || []}
         onClose={() => setIsAddEmployeeModalOpen(false)}
       />
+      <AddVehicleToProjectModal
+        show={isAddVehicleModalOpen}
+        project={project}
+        allVehicles={vehicles?.vehicles || []}
+        onClose={() => setIsAddVehicleModalOpen(false)}
+      />
 
       <div className={`${className}`}>
-        <Tab.Group>
+        <Tab.Group onChange={setTab}>
           <Tab.List className="flex  justify-between bg-stone-200/75 p-1 pb-0">
             <div>
               <Tab
@@ -62,7 +73,13 @@ export function ProjectResources({
             </div>
             <div className="mt-[2px]">
               {!isLoading && (
-                <Button onClick={() => setIsAddEmployeeModalOpen(true)} size="xs">
+                <Button
+                  onClick={() => {
+                    tab === 0 && setIsAddEmployeeModalOpen(true);
+                    tab === 1 && setIsAddVehicleModalOpen(true);
+                  }}
+                  size="xs"
+                >
                   Dodaj
                 </Button>
               )}

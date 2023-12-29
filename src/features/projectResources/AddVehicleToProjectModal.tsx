@@ -30,7 +30,7 @@ export function AddVehicleToProjectModal({
       return updateProject(updatedProject);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['vehicles'] });
+      queryClient.invalidateQueries({ queryKey: ['VEHICLES'] });
     },
   });
 
@@ -64,7 +64,7 @@ export function AddVehicleToProjectModal({
   };
 
   return (
-    <Modal className="max-w-sm" onClose={onClose} show={show} title="Dodaj pracowników">
+    <Modal className="max-w-sm" onClose={onClose} show={show} title="Dodaj pojazdy">
       <Combobox value={selectedVehicles} onChange={setSelectedVehicles} multiple>
         <div>
           {isPending && (
@@ -97,7 +97,7 @@ export function AddVehicleToProjectModal({
         </div>
         <div className="relative mb-16 mt-6 rounded-md border-2">
           <Combobox.Input
-            placeholder="Wyszukaj pracownika"
+            placeholder="Wyszukaj pojazd"
             className="w-full rounded-md bg-neutral-100 p-1 text-sm shadow"
             onChange={(event) => setQuery(event.target.value)}
           />

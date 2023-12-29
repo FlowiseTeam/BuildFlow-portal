@@ -25,7 +25,7 @@ export const vehiclesAxiosApi = axios.create({ baseURL: VEHICLES_API_URL });
 
 export const bdoAxiosApi = axios.create({ baseURL: BDO_API_URL });
 
-const apis = [axiosApi, imagesApi, projectsAxiosApi, vehiclesAxiosApi];
+const apis = [axiosApi, imagesApi, projectsAxiosApi, vehiclesAxiosApi, bdoAxiosApi];
 
 apis.forEach((api) => {
   api.interceptors.request.use(

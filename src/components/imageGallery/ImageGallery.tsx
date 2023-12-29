@@ -60,7 +60,7 @@ export function ImageGallery({
             onClick={() => setSelectedIndex(index)}
             className={`h-full w-24 shrink-0 ${index === selectedIndex ? 'border-4 border-yellow-500' : ''}`}
           >
-            <img className="h-full w-full" src={import.meta.env.VITE_PROJECTS_URL + image.url} />
+            <img className="h-full w-full" src={import.meta.env.VITE_PROJECTS_URL.replace('/api', '') + image.url} />
           </div>
         ))}
       </div>

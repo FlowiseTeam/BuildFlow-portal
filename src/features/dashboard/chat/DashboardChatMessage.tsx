@@ -41,7 +41,7 @@ export function DashboardChatMessage({
               )}
               <img
                 onClick={() => openImageGallery(message.images, index)}
-                src={'http://localhost:3000' + url}
+                src={import.meta.env.VITE_PROJECTS_URL + url}
                 loading="lazy"
                 alt=""
                 className="h-12 w-full object-cover hover:cursor-pointer"

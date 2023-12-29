@@ -5,11 +5,11 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { authenticated } = useAuth();
 
   if (authenticated === undefined) {
-    // return null;
+    return null;
   }
 
   if (!authenticated) {
-    // return <Navigate to="/login" relative="path" />;
+    return <Navigate to="/login" relative="path" />;
   }
 
   return <>{children}</>;

@@ -50,7 +50,7 @@ export function ImageGallery({
       <div className="z-10 max-h-[80%] bg-pink-300 object-cover">
         <img
           className="max-h-full max-w-full object-cover"
-          src={'http://localhost:3000' + images[selectedIndex || 0].url}
+          src={import.meta.env.VITE_PROJECTS_URL + images[selectedIndex || 0].url}
         />
       </div>
       <div className="z-10 flex h-[10%] w-screen justify-center overflow-x-auto">
@@ -60,7 +60,7 @@ export function ImageGallery({
             onClick={() => setSelectedIndex(index)}
             className={`h-full w-24 shrink-0 ${index === selectedIndex ? 'border-4 border-yellow-500' : ''}`}
           >
-            <img className="h-full w-full" src={'http://localhost:3000' + image.url} />
+            <img className="h-full w-full" src={import.meta.env.VITE_PROJECTS_URL + image.url} />
           </div>
         ))}
       </div>

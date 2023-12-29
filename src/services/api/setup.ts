@@ -17,7 +17,7 @@ export const BDO_API_URL = import.meta.env.VITE_BDO_URL;
 
 export const axiosApi = axios.create({ baseURL: API_URL });
 
-export const imagesApi = axios.create({ baseURL: 'http://localhost:3000' });
+export const imagesApi = axios.create({ baseURL: import.meta.env.VITE_PROJECTS_URL });
 
 export const projectsAxiosApi = axios.create({ baseURL: PROJECTS_API_URL });
 

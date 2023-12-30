@@ -1,4 +1,4 @@
-export { API_URL, PROJECTS_API_URL, axiosApi, imagesApi, projectsAxiosApi } from './setup';
+export { API_URL, PROJECTS_API_URL, axiosApi, projectsAxiosApi } from './setup';
 export { createComment, getImage, getLatestComments, getProjectComments } from './routes/comments';
 export type { Comment, CommentsQuery } from './routes/comments';
 export { getCompany } from './routes/company';

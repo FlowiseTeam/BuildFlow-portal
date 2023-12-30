@@ -34,7 +34,7 @@ export function ProjectResources({
   const handleDeleteEmployee = async (employeeId: number) => {
     const updatedEmployees = project.employees.filter((id) => employeeId !== id);
     queryClient.setQueryData(['project', project._id], { ...project, employees: updatedEmployees });
-    await onUpdate({ ...project, employees: updatedEmployees });
+    onUpdate({ ...project, employees: updatedEmployees });
   };
 
   return (

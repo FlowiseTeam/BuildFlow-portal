@@ -55,7 +55,7 @@ export function VehicleForm({
       name: data.name,
       status: data.status,
       reg_number: data.reg_number,
-      rev_date: null,
+      rev_date: data.rev_date,
       mileage: data.mileage,
       capacity: null,
     };
@@ -125,10 +125,10 @@ export function VehicleForm({
           validationSchema={{ required: true }}
           id="rev_date"
           type="date"
-          defaultValue={vehicle?.mileage}
+          defaultValue={vehicle?.rev_date}
           labelText="Data przeglądu"
           name="rev_date"
-          error={errors.mileage}
+          error={errors.rev_date}
           disabled={!isEdited}
         />
       </div>

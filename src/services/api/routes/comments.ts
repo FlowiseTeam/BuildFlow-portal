@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { PROJECTS_API_URL, imagesApi, projectsAxiosApi } from '..';
+import { PROJECTS_API_URL, projectsAxiosApi } from '..';
 
 export interface Comment {
   created_at: string;
@@ -22,18 +21,12 @@ export const getProjectComments = async (projectId: number): Promise<CommentsQue
 export const getLatestComments = async (): Promise<Comment[]> =>
   (await projectsAxiosApi.get('/projects/comments/latest')).data;
 
-export const getImage = () => async (url: string) => await imagesApi.get(url);
+export const getImage = () => async (url: string) => await projectsAxiosApi.get(url);
 
 export const createComment = async (projectId: number, commentData: FormData) =>
   projectsAxiosApi.post(`${PROJECTS_API_URL}/projects/${projectId}/comments`, commentData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
-// axios({
-//   method: 'post',
-//   url: `${PROJECTS_API_URL}/projects/${projectId}/comments`,
-//   data: commentData,
-//   headers: { 'Content-Type': 'multipart/form-data' },
-// });
 
 export const deleteComment = (projectId: number, commentId: number) =>
   projectsAxiosApi.delete(`projects/${projectId}/comments/${commentId}`);

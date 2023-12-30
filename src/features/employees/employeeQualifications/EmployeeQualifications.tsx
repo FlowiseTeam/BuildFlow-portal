@@ -17,7 +17,7 @@ export function EmployeeQualifications({ employee, isEdited }: { employee: Emplo
     const updatedEmployee = { ...employee, qualifications: [...qualfs, qualification] };
 
     mutateAsync(updatedEmployee).then(() => {
-      queryClient.setQueryData(['employee', employee._id], updatedEmployee);
+      // queryClient.setQueryData(['employee', employee._id], updatedEmployee);
       // queryClient.refetchQueries()
     });
     // queryClient.setQueryData(['employee', employee._id], updatedEmployee);

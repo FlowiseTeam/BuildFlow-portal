@@ -30,6 +30,7 @@ export function AddEmployeeToProjectModal({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['employees'] });
+      queryClient.invalidateQueries({ queryKey: ['PROJECT', project._id] });
     },
   });
 

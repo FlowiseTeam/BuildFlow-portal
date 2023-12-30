@@ -8,8 +8,6 @@ import { Employee, updateEmployee, Project } from '@src/services/api/index';
 export function EmployeeProjectsList({ employee, isEdited }: { employee: Employee; isEdited: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  console.warn(employee);
-
   const handleAddProjects = async (projects: Project[]) => {
     setIsOpen(false);
     const addedProjects = projects.map((project) => ({

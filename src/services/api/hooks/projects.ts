@@ -63,7 +63,11 @@ export function useProjectSuspenseQuery(id: number) {
 }
 
 export function useProjectMutation(id: number) {
-  return useMutation({ mutationKey: [PROJECT, id], mutationFn: (project: Project) => updateProject(project) });
+  return useMutation({
+    mutationKey: [PROJECT, id],
+    mutationFn: (project: Project) => updateProject(project),
+    onSuccess: () => queryClient.refetchQueries({ queryKey: [PROJECT, id] }),
+  });
 }
 
 export function useProjectCreate() {
@@ -75,7 +79,7 @@ export function useProjectDeleteMutation(id: number) {
     mutationKey: [PROJECT, id],
     mutationFn: () => deleteProject(id),
     onSuccess: () => {
-      queryClient.resetQueries;
+      queryClient.resetQueries({ queryKey: [PROJECT, id] });
     },
   });
 }

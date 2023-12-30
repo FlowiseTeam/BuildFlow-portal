@@ -9,12 +9,13 @@ export function EditEmployee({ employee, isEdited }: { employee: Employee; isEdi
 
   async function onUpdate(formData: EmployeeFormInputs) {
     const updatedEmployee = { ...employee, ...formData } as Employee;
-    try {
-      mutate(updatedEmployee);
-      queryClient.setQueryData(['employee', employee._id], updatedEmployee);
-    } catch (err) {
-      console.error(err);
-    }
+    mutate(updatedEmployee);
+    // try {
+    //   mutate(updatedEmployee);
+    //   queryClient.setQueryData(['employee', employee._id], updatedEmployee);
+    // } catch (err) {
+    //   console.error(err);
+    // }
   }
 
   return <EmployeeForm employee={employee} handleFormSubmit={onUpdate} disabled={!isEdited} />;

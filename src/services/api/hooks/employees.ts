@@ -50,7 +50,13 @@ export function useSuspenseEmployeeQuery(id: number) {
 }
 
 export function useEmployeeMutation(id: number) {
-  return useMutation({ mutationKey: [EMPLOYEE, id], mutationFn: (employee: Employee) => updateEmployee(employee) });
+  return useMutation({
+    mutationKey: [EMPLOYEE, id],
+    mutationFn: (employee: Employee) => updateEmployee(employee),
+    onSuccess: (res) => {
+      queryClient.setQueryData([EMPLOYEE, id], res);
+    },
+  });
 }
 
 export function useEmployeeDeleteMutation(id: number) {

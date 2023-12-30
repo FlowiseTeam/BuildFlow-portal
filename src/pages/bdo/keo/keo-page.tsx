@@ -34,9 +34,14 @@ function KEOView() {
           </p>
           <p>W tym</p>
           <p>
-            <strong>W wyniku świadczenia usług i/lub działalności w zakresie obiektów liniowych:</strong>{' '}
+            <strong>W wyniku świadczenia usług i/lub działalności w zakresie obiektów liniowych:</strong>
             {totalMassExcluding}t
           </p>
+        </div>
+        <div className="mb-4">
+          <Button variant="primary" onClick={() => navigate('add')}>
+            Dodaj nowy wpis do karty
+          </Button>
         </div>
         {strategy(data, isLoading, {
           loading: <LoadingSpace />,
@@ -46,9 +51,6 @@ function KEOView() {
             </div>
           ),
         })}
-        <Button variant="primary" onClick={() => navigate('add')}>
-          Dodaj nowy wpis do karty
-        </Button>
       </div>
     </Page>
   );

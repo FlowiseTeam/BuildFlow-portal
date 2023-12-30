@@ -42,6 +42,8 @@ export function ProjectChatForm({ projectId }: { projectId: number }) {
     setValue('files', dt.files);
   };
 
+  const isBlank = formState.errors.message;
+
   return (
     <div className=" rounded-xl border-[1px] border-gray-300 p-1">
       {loading && <p>Wysyłanie...</p>}
@@ -49,12 +51,13 @@ export function ProjectChatForm({ projectId }: { projectId: number }) {
         [...watch('files')].map((file) => (
           <ProjectChatSelectedImage key={file.name} fileName={file.name} deleteFile={() => handleDeleteFile(file)} />
         ))}
+      {isBlank && <p className="text-xs text-red-600">Wiadomość nie może być pusta</p>}
       <form onSubmit={handleSubmit(onSubmit)} className="flex w-full justify-between">
-        <input {...register('message')} className="max-h-[8rem] w-48 overflow-y-auto" />
+        <input {...register('message', { required: true })} className="max-h-[8rem] w-48 overflow-y-auto" />
         <div className="h-6 whitespace-nowrap">
           <Button
             type="submit"
-            disabled={!formState.isValid || !formState.isDirty}
+            disabled={!formState.isDirty}
             size="custom"
             variant="light"
             className="rounded-md p-[1px]"

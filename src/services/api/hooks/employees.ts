@@ -1,6 +1,7 @@
 import { useQuery, useSuspenseQuery, useMutation } from '@tanstack/react-query';
-import { Employee, deleteEmployee, getEmployee, getEmployees, updateEmployee } from '..';
+import { Employee, createEmployee, deleteEmployee, getEmployee, getEmployees, updateEmployee } from '..';
 import { queryClient } from '@src/App';
+import { EmployeeFormInputs } from '@src/features/employees/employeeForm/EmployeeForm';
 
 const EMPLOYEES = 'employees';
 const EMPLOYEE = 'employee';
@@ -39,6 +40,15 @@ export function useEmployeeQuery(id: number) {
   return useQuery({
     queryKey: [EMPLOYEES],
     queryFn: () => getEmployee(id),
+  });
+}
+
+export function useCreateEmployee() {
+  return useMutation({
+    mutationFn: (employee: EmployeeFormInputs) => createEmployee(employee),
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: [EMPLOYEES] });
+    },
   });
 }
 

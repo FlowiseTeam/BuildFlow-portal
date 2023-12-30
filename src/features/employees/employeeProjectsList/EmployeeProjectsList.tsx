@@ -31,13 +31,15 @@ export function EmployeeProjectsList({ employee, isEdited }: { employee: Employe
     queryClient.setQueryData(['employee', employee._id], updatedEmployee);
   };
 
+  const xd = employee.assigned_project || [];
+
   return (
     <>
       <AddToProjectModal
         onAdd={handleAddProjects}
         show={isOpen}
         onClose={() => setIsOpen(false)}
-        assignedProjects={employee.assigned_project}
+        assignedProjects={employee.assigned_project || []}
       />
       <div>
         <header className="flex items-center justify-between border-b-2 px-4 py-2 font-semibold">
@@ -47,7 +49,7 @@ export function EmployeeProjectsList({ employee, isEdited }: { employee: Employe
           </Button>
         </header>
         <ul className="my-2 px-4 [&>*:not(:first-of-type)]:border-t-2">
-          {employee.assigned_project.map((project, i) => (
+          {xd.map((project, i) => (
             <li className="flex items-center justify-between py-1" key={project.project_id}>
               <span>{project.project_name}</span>
               {isEdited && (
@@ -57,7 +59,7 @@ export function EmployeeProjectsList({ employee, isEdited }: { employee: Employe
               )}
             </li>
           ))}
-          {!employee.assigned_project && <li className="text-gray-500">Brak uprawnień.</li>}
+          {!xd && <li className="text-gray-500">Brak uprawnień.</li>}
         </ul>
       </div>
     </>

@@ -1,19 +1,18 @@
 import { DetailCard } from '@src/components/detailCard/DetailCard';
 import { ImageGallery } from '@src/components/imageGallery/ImageGallery';
 import { useImageGallery } from '@src/components/imageGallery/useImageGallery';
-import { useLatestProjectComments } from '@src/services/api/hooks/projects';
+import { useLatestProjectComments, useProjectsQuery } from '@src/services/api/hooks/projects';
 import { DashboardChatMessage } from './DashboardChatMessage';
 import { DashboardChatMessageFallback } from './DashboardChatMessageFallback';
-import { queryClient } from '@src/App';
 
 export function DashboardComments() {
   const { close, currentIndex, images, isOpen, open, setCurrentIndex } = useImageGallery();
+  const { data: projects } = useProjectsQuery();
   const { data: comments, isError, failureCount } = useLatestProjectComments(); //TODO: add missing projectName
-  // TODO: use ensureQueryData?
 
   const mappedComments = comments?.map((comment) => ({
     ...comment,
-    projectName: queryClient.getQueryData(['project', comment.project_id])?.name,
+    projectName: projects?.projects?.find((proj) => proj._id === comment.project_id)?.name,
   }));
 
   return (

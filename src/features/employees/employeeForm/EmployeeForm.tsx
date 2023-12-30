@@ -1,6 +1,7 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
 import { ListboxInput } from '@src/components/listboxInput/ListboxInput';
+import { LoadingIcon } from '@src/components/loadings/Loading';
 import { Employee } from '@src/services/api/index';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -14,11 +15,13 @@ export function EmployeeForm({
   handleFormSubmit,
   employee,
   disabled = false,
+  isLoading,
 }: {
   onClose?: () => void;
   handleFormSubmit: (data: EmployeeFormInputs) => Promise<void>;
   employee?: Employee;
   disabled?: boolean;
+  isLoading?: boolean;
 }) {
   const {
     register,
@@ -93,7 +96,8 @@ export function EmployeeForm({
             Aktualizuj
           </Button>
         ) : (
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" className="flex items-center">
+            {isLoading && <LoadingIcon className="h-4" />}
             Dodaj
           </Button>
         )}

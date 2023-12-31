@@ -79,8 +79,6 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
   const { mutate } = useKpoCardMutation();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data.WasteCode);
-
     const terytPk = kpoInfo.commons.find((common) => common.name === data.WasteGeneratedTerytPkName)?.commonId;
     const result: CreateCard = {
       CarrierCompanyId: data.CarrierCompanyId,

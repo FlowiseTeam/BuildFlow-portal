@@ -63,8 +63,8 @@ export function useEmployeeMutation(id: number) {
   return useMutation({
     mutationKey: [EMPLOYEE, id],
     mutationFn: (employee: Employee) => updateEmployee(employee),
-    onSuccess: (res) => {
-      queryClient.setQueryData([EMPLOYEE, id], res);
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: [EMPLOYEE, id] });
     },
   });
 }

@@ -73,10 +73,8 @@ export function useVehicleMutation(id: number) {
 
 export function useVehicleDetach() {
   return useMutation({
-    // mutationKey: [VEHICLE, ],
     mutationFn: (id: number) => deleteVehicle(id),
-    onSuccess: (res) => {
-      console.log('ekgadwawd', res);
+    onSuccess: (res, xd) => {
       queryClient.refetchQueries({ queryKey: [VEHICLE, res.data._id] });
     },
   });

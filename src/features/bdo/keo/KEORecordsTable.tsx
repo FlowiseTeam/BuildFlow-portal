@@ -46,8 +46,6 @@ export function KEORecordsTable({ records }: { records: KEORecord[] }) {
     setIsDeleteModalOpen(false);
   };
 
-  console.log('ahem, ', records);
-
   const tableData = useMemo(
     () =>
       records.map((record) => ({

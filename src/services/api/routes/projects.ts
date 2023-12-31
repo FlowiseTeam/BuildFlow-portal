@@ -42,3 +42,13 @@ export const updateProject = async (project: Project) =>
 export const createProject = async (project: FormProject) => await projectsAxiosApi.post('/projects', project);
 
 export const deleteProject = async (projectId: number) => await projectsAxiosApi.delete(`/projects/${projectId}`);
+
+export const removeEmployeeFromProject = (employeeId: number, projectId: number) =>
+  projectsAxiosApi.delete(`projects/employee_assignments`, {
+    params: { employee_id: employeeId, project_id: projectId },
+  });
+
+export const removeVehicleFromProject = (vehicleId: number, projectId: number) =>
+  projectsAxiosApi.delete(`projects/vehicle_assignments`, {
+    params: { vehicle_id: vehicleId, project_id: projectId },
+  });

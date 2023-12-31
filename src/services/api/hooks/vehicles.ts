@@ -71,10 +71,14 @@ export function useVehicleMutation(id: number) {
   });
 }
 
-export function useVehicleDetach(id: number) {
+export function useVehicleDetach() {
   return useMutation({
-    mutationKey: [VEHICLE, id],
-    mutationFn: () => deleteVehicle(id),
+    // mutationKey: [VEHICLE, ],
+    mutationFn: (id: number) => deleteVehicle(id),
+    onSuccess: (res) => {
+      console.log('ekgadwawd', res);
+      queryClient.refetchQueries({ queryKey: [VEHICLE, res.data._id] });
+    },
   });
 }
 

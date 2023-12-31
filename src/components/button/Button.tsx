@@ -5,7 +5,8 @@ export const variants = {
     'text-neutral-700 hover:bg-neutral-300 hover:text-neutral-800 disabled:cursor-not-allowed disabled:bg-transparent',
   primary:
     'bg-primary-light !disabled:hover:bg-primary text-white disabled:cursor-not-allowed disabled:bg-primary-light/80 ',
-  neutral: 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300 hover:text-neutral-800',
+  neutral:
+    'bg-neutral-200 text-neutral-700 hover:enabled:bg-neutral-300 hover:enabled:text-neutral-800 disabled:cursor-not-allowed',
   danger: 'bg-red-500 hover:bg-red-700 text-white',
   success: 'bg-green-500 hover:bg-green-700 text-white',
   warning: 'bg-yellow-500 hover:bg-yellow-600 text-white',

@@ -27,7 +27,7 @@ function ProjectPage() {
   const { data: project } = useProjectSuspenseQuery(Number(id));
 
   const { mutateAsync: deleteVehicle } = useProjectDeleteMutation(+id);
-  const { mutateAsync: onUpdate } = useProjectMutation(+id);
+  const { mutateAsync: onUpdate, isPending } = useProjectMutation(+id);
 
   const onDelete = () => {
     deleteVehicle();
@@ -55,7 +55,7 @@ function ProjectPage() {
           <ProjectChat projectId={Number(id)} />
         </DetailCard>
         <DetailCard className="min-h-[14rem] overflow-hidden  sm:col-span-2 xl:col-span-2">
-          <ProjectResources project={project} isEdited={isEdited} onUpdate={onUpdate} />
+          <ProjectResources project={project} isEdited={isEdited} onUpdate={onUpdate} isDeleting={isPending} />
         </DetailCard>
         <DetailCard className="overflow-hidden sm:col-span-2 md:col-span-1">
           <FallbackMap />

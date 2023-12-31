@@ -11,17 +11,20 @@ import { useEmployeesQuery } from '@src/services/api/hooks/employees';
 import { ProjectVehiclesTab } from './ProjectVehiclesTab';
 import { AddVehicleToProjectModal } from './AddVehicleToProjectModal';
 import { useVehicles } from '@src/services/api/hooks/vehicles';
+import { tm } from '@src/lib/tw';
 
 export function ProjectResources({
   className,
   project,
   isEdited,
   onUpdate,
+  isDeleting,
 }: {
   className?: string;
   project: Project;
   isEdited: boolean;
   onUpdate: UseMutateAsyncFunction<any, unknown, Partial<FormProject>, unknown>;
+  isDeleting: boolean;
 }) {
   const [tab, setTab] = useState(0);
   const { data, isLoading, isError } = useEmployeesQuery();
@@ -98,11 +101,17 @@ export function ProjectResources({
                     <span className="basis-1/4">{employee.role}</span>
                     {isEdited && (
                       <Button
-                        className="ml-4 inline p-1"
+                        className="text-red ml-4 inline p-1"
                         size="custom"
                         onClick={() => handleDeleteEmployee(employee._id)}
+                        disabled={isDeleting}
                       >
-                        <TrashIcon className=" h-4 w-4 cursor-pointer text-neutral-500" />
+                        <TrashIcon
+                          className={tm(
+                            'h-4 w-4 cursor-pointer text-neutral-500',
+                            isDeleting && 'bg-neutral-200 text-gray-400',
+                          )}
+                        />
                       </Button>
                     )}
                   </div>

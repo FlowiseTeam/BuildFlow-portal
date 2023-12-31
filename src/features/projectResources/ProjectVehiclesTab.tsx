@@ -1,12 +1,13 @@
-import { TrashIcon } from '@heroicons/react/20/solid';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { Button } from '@src/components/button/Button';
 import { Project } from '@src/services/api';
 import { ProjectResourcesCellsFallback } from './ProjectResourcesCellsFallback';
-import { useVehicleDetach, useVehicleMutation, useVehicles } from '@src/services/api/hooks/vehicles';
+import { useVehicleDetach, useVehicles } from '@src/services/api/hooks/vehicles';
+import { tm } from '@src/lib/tw';
 
 export function ProjectVehiclesTab({ project, isEdited }: { project: Project; isEdited: boolean }) {
   const { data: vehicles, isLoading, isError } = useVehicles();
-  // const { mutate } = useVehicleMutation();
+  const { mutate, isPending } = useVehicleDetach();
 
   const projectVehicles =
     vehicles?.vehicles.filter((vehicle) => vehicle.assigned_project?.some((proj) => proj.project_id === project._id)) ||
@@ -23,23 +24,23 @@ export function ProjectVehiclesTab({ project, isEdited }: { project: Project; is
             <p>{vehicle.name}</p>
             <div>
               {isEdited && (
-                // <Button className="ml-4 inline p-1" size="custom" onClick={() => handleDeleteEmployee(employee._id)}>
-                //   <TrashIcon className=" h-4 w-4 cursor-pointer text-neutral-500" />
-                // </Button>
-                <RemoveVehicle id={vehicle._id} />
+                <Button
+                  className="ml-4 inline p-1"
+                  size="custom"
+                  onClick={() => mutate(vehicle._id)}
+                  disabled={isPending}
+                >
+                  <TrashIcon
+                    className={tm(
+                      ' h-4 w-4 cursor-pointer text-neutral-500',
+                      isPending && 'bg-neutral-200 text-gray-400',
+                    )}
+                  />
+                </Button>
               )}
             </div>
           </div>
         ))}
     </>
-  );
-}
-
-function RemoveVehicle({ id }: { id: number }) {
-  const { mutate } = useVehicleDetach(id);
-  return (
-    <Button className="ml-4 inline p-1" size="custom" onClick={() => mutate(id)}>
-      <TrashIcon className=" h-4 w-4 cursor-pointer text-neutral-500" />
-    </Button>
   );
 }

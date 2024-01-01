@@ -72,7 +72,7 @@ export function AddVehicleToProjectModal({
               <LoadingIcon />
             </p>
           )}
-          <p className="text-sm font-semibold">Wcześniej przypisani:</p>
+          <p className="text-sm font-semibold">Wcześniej przypisane:</p>
           <div className="min-h-[3rem]">
             {vehiclesByName
               .filter((vehicle) => vehicle.wasSelected)
@@ -82,7 +82,7 @@ export function AddVehicleToProjectModal({
                 </span>
               ))}
           </div>
-          <p className="text-sm font-semibold">Zaznaczeni:</p>
+          <p className="text-sm font-semibold">Zaznaczone:</p>
           <div className="flex min-h-[1rem] flex-wrap items-start">
             {selectedVehicles.map((vehicle, i) => (
               <span

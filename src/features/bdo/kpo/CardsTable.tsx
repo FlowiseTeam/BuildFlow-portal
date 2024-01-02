@@ -8,14 +8,18 @@ import { Card } from '@src/services/api/routes/bdo';
 import { useMemo, useState } from 'react';
 
 export function KPOCardsTableContainer() {
-  const { data, isLoading } = useKpoCardsQuery();
+  const { data, isLoading, isError } = useKpoCardsQuery();
 
   return (
     <div>
-      {strategy(data, isLoading, {
-        loading: <LoadingSpace />,
-        exists: (cards) => <CardsTable cards={cards} />,
-      })}
+      {strategy(
+        { data, isLoading, isError },
+        {
+          loading: <LoadingSpace />,
+          exists: (cards) => <CardsTable cards={cards} />,
+          error: <p className="text-center text-red-600">Wystąpił błąd.</p>,
+        },
+      )}
     </div>
   );
 }

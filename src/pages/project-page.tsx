@@ -49,7 +49,15 @@ function ProjectPage() {
     >
       <div className="mb-16 mt-8 grid min-h-0 grid-cols-1 grid-rows-[700px,400px,400px,400px] gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 xl:grid-rows-[400px,400px]">
         <DetailCard className="p-2 md:col-span-2 xl:col-span-3">
-          <ProjectForm project={project} disabled={!isEdited} handleFormSubmit={onUpdate} />
+          <ProjectForm
+            project={project}
+            disabled={!isEdited}
+            handleFormSubmit={(data) => {
+              onUpdate(data);
+              setIsEdited(false);
+            }}
+            isPending={isPending}
+          />
         </DetailCard>
         <DetailCard className="md:row-span-1 xl:col-start-4 xl:row-span-2 xl:row-start-1">
           <ProjectChat projectId={Number(id)} />

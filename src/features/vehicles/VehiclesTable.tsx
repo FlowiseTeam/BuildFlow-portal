@@ -1,7 +1,7 @@
 import { SearchInput } from '@src/components/Input/SearchInput';
 import { Table, TableColumn } from '@src/components/table/Table';
 import { useVehicles } from '@src/services/api/hooks/vehicles';
-import { ChangeEvent, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const columns = [
@@ -25,7 +25,7 @@ const columns = [
 ] satisfies TableColumn[];
 
 export function VehiclesTable() {
-  const { data, isLoading } = useVehicles();
+  const { data, isLoading, isError } = useVehicles();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -64,6 +64,7 @@ export function VehiclesTable() {
         isFetching={isLoading}
         editable={false}
       />
+      {isError && <p className="mt-2 text-center text-gray-600">Wystąpił błąd.</p>}
     </>
   );
 }

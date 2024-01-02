@@ -1,6 +1,6 @@
 import { Page } from '@layouts/Page';
 import { Button } from '@src/components/button/Button';
-import { LoadingSpace } from '@src/components/loadings/Loading';
+import { LoadingIconInline, LoadingSpace } from '@src/components/loadings/Loading';
 import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
 import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
 import { KEORecordsTable } from '@src/features/bdo/keo/KEORecordsTable';
@@ -30,12 +30,13 @@ function KEOView() {
       <div className="mt-16">
         <div className="my-12">
           <p className="mb-4">
-            <strong>Łączna masa wytworzonych odpadów:</strong> {totalMass}t
+            <strong>Łączna masa wytworzonych odpadów:</strong>
+            {totalMass === null ? <LoadingIconInline /> : totalMass + 't'}
           </p>
           <p>W tym</p>
           <p>
             <strong>W wyniku świadczenia usług i/lub działalności w zakresie obiektów liniowych:</strong>
-            {totalMassExcluding}t
+            {totalMassExcluding === null ? <LoadingIconInline /> : totalMassExcluding + 't'}
           </p>
         </div>
         <div className="mb-4">
@@ -43,14 +44,17 @@ function KEOView() {
             Dodaj nowy wpis do karty
           </Button>
         </div>
-        {strategy(data, isLoading, {
-          loading: <LoadingSpace />,
-          exists: (records) => (
-            <div className="mb-8">
-              <KEORecordsTable records={records} />
-            </div>
-          ),
-        })}
+        {strategy(
+          { data, isLoading },
+          {
+            loading: <LoadingSpace />,
+            exists: (records) => (
+              <div className="mb-8">
+                <KEORecordsTable records={records} />
+              </div>
+            ),
+          },
+        )}
       </div>
     </Page>
   );

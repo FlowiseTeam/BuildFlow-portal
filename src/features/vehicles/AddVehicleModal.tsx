@@ -13,7 +13,7 @@ export function AddVehicleModal({
   onClose: () => void;
   onSuccess: () => void;
 }) {
-  const { mutateAsync } = useVehicleCreate();
+  const { mutateAsync, isPending, isError } = useVehicleCreate();
 
   const handleAdd = async (vehicleForm: FormVehicle) => {
     await mutateAsync(vehicleForm);
@@ -23,7 +23,13 @@ export function AddVehicleModal({
 
   return (
     <Modal show={show} onClose={onClose} title="Dodaj Pojazd">
-      <VehicleForm handleFormSubmit={handleAdd} onClose={onClose} isAddModal />
+      <VehicleForm
+        handleFormSubmit={handleAdd}
+        onClose={onClose}
+        isAddModal
+        isPending={isPending}
+        isSubmitError={isError}
+      />
     </Modal>
   );
 }

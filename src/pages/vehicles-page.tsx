@@ -1,4 +1,3 @@
-import { SearchInput } from '@src/components/Input/SearchInput';
 import { Button } from '@src/components/button/Button';
 import { AddVehicleModal } from '@src/features/vehicles/AddVehicleModal';
 import { VehiclesTable } from '@src/features/vehicles/VehiclesTable';

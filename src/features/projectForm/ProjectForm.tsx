@@ -1,6 +1,7 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
 import { StatusInput } from '@components/statusInput/StatusInput';
+import { LoadingIcon } from '@src/components/loadings/Loading';
 import { FormProject, Project, projectStatuses } from '@src/services/api/index';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -20,11 +21,13 @@ export function ProjectForm({
   handleFormSubmit,
   project,
   disabled = false,
+  isPending,
 }: {
   onClose?: () => void;
   handleFormSubmit: (project: Project) => Promise<void>;
   project?: Project;
   disabled?: boolean;
+  isPending?: boolean;
 }) {
   const {
     register,
@@ -156,6 +159,7 @@ export function ProjectForm({
         />
       </div>
       <div className="flex justify-end gap-3">
+        {isPending && <LoadingIcon />}
         {onClose && <Button onClick={onClose}>Powrót</Button>}
         {project && (
           <Button disabled={!isDirty} type="submit" variant="primary">

@@ -49,7 +49,7 @@ describe('Dashboard page', () => {
   it('shows company name with morning greeting', () => {
     cy.clock(new Date(2023, 1, 1, 10, 0, 0).getTime());
 
-    cy.contains('Bud-pol').should('be.visible');
+    cy.contains('Daf-mal').should('be.visible');
     cy.contains('Dzień dobry.').should('be.visible');
   });
 

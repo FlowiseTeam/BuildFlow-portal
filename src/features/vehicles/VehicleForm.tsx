@@ -29,12 +29,14 @@ export function VehicleForm({
   handleFormSubmit,
   isAddModal = false,
   isPending = false,
+  isSubmitError,
 }: {
   vehicle?: FormVehicle;
   onClose?: () => void;
   handleFormSubmit: any;
   isAddModal?: boolean;
   isPending?: boolean;
+  isSubmitError?: boolean;
 }) {
   const [isEdited, toggleIsEdited] = useToggle(isAddModal);
   const {
@@ -132,6 +134,7 @@ export function VehicleForm({
           disabled={!isEdited}
         />
       </div>
+      <div>{isSubmitError && <p className="text-right text-red-600">Wystąpił błąd. Spróbuj ponownie.</p>}</div>
       <div className="flex justify-end gap-3">
         {vehicle && !isEdited && !isPending && <Button onClick={toggleIsEdited}>Edytuj</Button>}
         {vehicle && isEdited && !isPending && (

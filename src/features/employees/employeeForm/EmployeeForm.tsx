@@ -1,14 +1,14 @@
 import { Input } from '@components/Input/Input';
 import { Button } from '@components/button/Button';
-import { ListboxInput } from '@src/components/listboxInput/ListboxInput';
+import { ListboxInputControlled } from '@src/components/listboxInput/ListboxInputControlled';
 import { LoadingIcon } from '@src/components/loadings/Loading';
 import { Employee } from '@src/services/api/index';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 export type EmployeeFormInputs = Omit<Employee, '_id' | 'updated_at' | 'created_at' | 'qualifications'>;
 
 const Allstatuses = ['Przypisany', 'Nieprzypisany', 'Urlop'] as const;
-const newEmployeeStatuses = ['Urlop', 'Nieprzypisany'] as const;
 
 export function EmployeeForm({
   onClose,
@@ -24,6 +24,7 @@ export function EmployeeForm({
   isLoading?: boolean;
 }) {
   const {
+    setValue,
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
@@ -35,7 +36,23 @@ export function EmployeeForm({
     await handleFormSubmit(data);
   });
 
-  const statuses = employee ? Allstatuses : newEmployeeStatuses;
+  let statuses: (typeof Allstatuses)[number][];
+
+  if (employee) {
+    if (employee.assigned_project.length) {
+      statuses = ['Przypisany', 'Urlop'];
+    } else {
+      statuses = ['Nieprzypisany', 'Urlop'];
+    }
+  } else {
+    statuses = ['Nieprzypisany', 'Urlop'];
+  }
+
+  useEffect(() => {
+    if (employee?.status) {
+      setValue('status', employee?.status);
+    }
+  }, [employee]);
 
   return (
     <form onSubmit={onSubmit} className="p-4">
@@ -77,14 +94,15 @@ export function EmployeeForm({
           control={control}
           defaultValue={statuses[0]}
           name="status"
-          render={({ field: { onChange } }) => (
-            <ListboxInput
+          render={({ field: { onChange, value } }) => (
+            <ListboxInputControlled
               labelText="Status"
               onChange={onChange}
               disabled={disabled}
               id="status"
               values={statuses}
               defaultValue={employee?.status || statuses[0]}
+              value={value}
             />
           )}
         />

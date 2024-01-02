@@ -19,12 +19,16 @@ export function ProjectResources({
   isEdited,
   onUpdate,
   isDeleting,
+  mutateVehicle,
+  isPendingVehicle,
 }: {
   className?: string;
   project: Project;
   isEdited: boolean;
   onUpdate: UseMutateAsyncFunction<any, unknown, Partial<FormProject>, unknown>;
   isDeleting: boolean;
+  mutateVehicle: any;
+  isPendingVehicle: any;
 }) {
   const [tab, setTab] = useState(0);
   const { data, isLoading, isError } = useEmployeesQuery();
@@ -38,6 +42,10 @@ export function ProjectResources({
     const updatedEmployees = project.employees.filter((id) => employeeId !== id);
     queryClient.setQueryData(['project', project._id], { ...project, employees: updatedEmployees });
     onUpdate({ ...project, employees: updatedEmployees });
+  };
+
+  const handleDeleteVehicle = (projectId, vehicleId) => {
+    mutateVehicle(projectId, vehicleId);
   };
 
   return (
@@ -119,7 +127,12 @@ export function ProjectResources({
               ))}
             </Tab.Panel>
             <Tab.Panel className="my-4 grid max-h-[20rem] auto-rows-auto overflow-y-auto [&>*:not(:first-of-type)]:border-t-2">
-              <ProjectVehiclesTab project={project} isEdited={isEdited} />
+              <ProjectVehiclesTab
+                projectId={project._id}
+                isEdited={isEdited}
+                isPending={isPendingVehicle}
+                handleDeleteVehicle={handleDeleteVehicle}
+              />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

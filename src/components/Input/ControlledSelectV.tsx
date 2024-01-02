@@ -1,5 +1,4 @@
 import { Control, Controller, FieldValues } from 'react-hook-form';
-import { ListboxInput } from '../listboxInput/ListboxInput';
 import { noop } from 'lodash';
 import { ListboxInputControlled } from '../listboxInput/ListboxInputControlled';
 

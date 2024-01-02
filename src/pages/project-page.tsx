@@ -16,6 +16,7 @@ import {
   useProjectSuspenseQuery,
 } from '@src/services/api/hooks/projects';
 import { useNavigate } from 'react-router-dom';
+import { useVehicleDetach } from '@src/services/api/hooks/vehicles';
 
 function ProjectPage() {
   const id = useIdParam();
@@ -28,6 +29,7 @@ function ProjectPage() {
 
   const { mutateAsync: deleteVehicle } = useProjectDeleteMutation(+id);
   const { mutateAsync: onUpdate, isPending } = useProjectMutation(+id);
+  const { mutate: mutateVehicle, isPending: isPendingVehicle } = useVehicleDetach(+id);
 
   const onDelete = () => {
     deleteVehicle();
@@ -63,7 +65,14 @@ function ProjectPage() {
           <ProjectChat projectId={Number(id)} />
         </DetailCard>
         <DetailCard className="min-h-[14rem] overflow-hidden  sm:col-span-2 xl:col-span-2">
-          <ProjectResources project={project} isEdited={isEdited} onUpdate={onUpdate} isDeleting={isPending} />
+          <ProjectResources
+            project={project}
+            isEdited={isEdited}
+            onUpdate={onUpdate}
+            isDeleting={isPending}
+            mutateVehicle={mutateVehicle}
+            isPendingVehicle={isPendingVehicle}
+          />
         </DetailCard>
         <DetailCard className="overflow-hidden sm:col-span-2 md:col-span-1">
           <FallbackMap />

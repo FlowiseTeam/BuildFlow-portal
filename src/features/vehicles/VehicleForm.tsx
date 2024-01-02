@@ -1,9 +1,10 @@
 import { Input } from '@src/components/Input/Input';
 import { Button } from '@src/components/button/Button';
 import { LoadingIcon } from '@src/components/loadings/Loading';
-import { StatusInput } from '@src/components/statusInput/StatusInput';
+import { StatusInputUncontrolled } from '@src/components/statusInput/StatusInputUncontrolled';
 import { useToggle } from '@src/hooks/useToggle';
 import { FormVehicle } from '@src/services/api/routes/vehicles';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 interface AddVehicleFields {
@@ -44,6 +45,7 @@ export function VehicleForm({
     handleSubmit,
     formState: { errors, isDirty, isValid },
     control,
+    setValue,
     reset,
   } = useForm<AddVehicleFields>({
     defaultValues: {
@@ -66,6 +68,24 @@ export function VehicleForm({
     toggleIsEdited();
     await handleFormSubmit(updatedVehicle);
   });
+
+  useEffect(() => {
+    if (vehicle?.status) {
+      setValue('status', vehicle.status);
+    }
+  }, [vehicle]);
+
+  let statuses: (typeof vehicleStatuses)[number][];
+
+  if (vehicle) {
+    if (vehicle.assigned_project.length) {
+      statuses = ['W użyciu', 'W serwisie'];
+    } else {
+      statuses = ['Wolny', 'W serwisie'];
+    }
+  } else {
+    statuses = ['Wolny', 'W serwisie'];
+  }
 
   return (
     <form onSubmit={onSubmit}>
@@ -107,17 +127,18 @@ export function VehicleForm({
         />
         <Controller
           control={control}
-          defaultValue={vehicle?.status || vehicleStatuses[0]}
+          defaultValue={vehicle?.status || statuses[0]}
           rules={{ required: true }}
           name="status"
-          render={({ field: { onChange } }) => (
-            <StatusInput
+          render={({ field: { onChange, value } }) => (
+            <StatusInputUncontrolled
               id="status"
               disabled={!isEdited}
               onChange={onChange}
-              values={vehicleStatuses}
-              defaultValue={vehicle?.status || vehicleStatuses[0]}
+              values={statuses}
+              defaultValue={vehicle?.status || statuses[0]}
               colors={vehicleStatusesColors}
+              value={value}
               isRequired
             />
           )}

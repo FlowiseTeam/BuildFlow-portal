@@ -10,6 +10,7 @@ import {
 } from '../routes/vehicles';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryClient } from '@src/App';
+import { removeVehicleFromProject } from '../routes/projects';
 
 export const VEHICLE = 'VEHICLE';
 export const VEHICLES = 'VEHICLES';
@@ -71,11 +72,12 @@ export function useVehicleMutation(id: number) {
   });
 }
 
-export function useVehicleDetach() {
+export function useVehicleDetach(projectId: number) {
   return useMutation({
-    mutationFn: (id: number) => deleteVehicle(id),
-    onSuccess: (res, xd) => {
-      queryClient.refetchQueries({ queryKey: [VEHICLE, res.data._id] });
+    mutationFn: (vehicleId: number) => removeVehicleFromProject(vehicleId, projectId),
+    onSuccess: (res) => {
+      queryClient.refetchQueries({ queryKey: ['PROJECT', projectId] });
+      queryClient.refetchQueries({ queryKey: ['VEHICLES'] });
     },
   });
 }
@@ -103,8 +105,8 @@ export function usePutVehicle() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (updatedVehicle: Vehicle) => updateVehicle(updatedVehicle),
-    onSuccess(_, vehicle) {
-      queryClient.setQueryData([VEHICLE, vehicle._id], vehicle);
+    onSuccess(res) {
+      queryClient.setQueryData([VEHICLE, res.vehicle._id], res.vehicle);
     },
   });
 }

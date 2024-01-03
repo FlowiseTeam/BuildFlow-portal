@@ -17,9 +17,9 @@ const columns = [
     sortable: true,
     headCenter: false,
     options: [
-      { value: 'W boju', className: 'bg-yellow-300 hover:bg-yellow-400' },
+      { value: 'W użyciu', className: 'bg-yellow-300 hover:bg-yellow-400' },
       { value: 'W serwisie', className: 'bg-red-400 hover:bg-red-500' },
-      { value: 'Na firmie', className: 'bg-green-400 hover:bg-green-500' },
+      { value: 'Wolny', className: 'bg-green-400 hover:bg-green-500' },
     ],
   },
 ] satisfies TableColumn[];

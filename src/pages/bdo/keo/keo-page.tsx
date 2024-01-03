@@ -5,12 +5,13 @@ import { ErrorBoundary } from '@src/components/queryBoundaries/ErrorBoundary';
 import { PageFallback } from '@src/components/queryBoundaries/PageFallback';
 import { KEORecordsTable } from '@src/features/bdo/keo/KEORecordsTable';
 import { strategy } from '@src/lib/strategy';
-import { useKeoRecords } from '@src/services/api/hooks/bdo';
+import { useKeoInfoQuery, useKeoRecords } from '@src/services/api/hooks/bdo';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function KEOView() {
   const { data, isLoading } = useKeoRecords();
+  const { data: keoInfo, isLoading: isKeoInfoLoading } = useKeoInfoQuery();
   const navigate = useNavigate();
 
   const [totalMass, setTotalMass] = useState<null | number>(null);
@@ -45,12 +46,12 @@ function KEOView() {
           </Button>
         </div>
         {strategy(
-          { data, isLoading },
+          { data, isLoading: isLoading || isKeoInfoLoading },
           {
             loading: <LoadingSpace />,
             exists: (records) => (
               <div className="mb-8">
-                <KEORecordsTable records={records} />
+                <KEORecordsTable records={records} keoInfo={keoInfo} />
               </div>
             ),
           },

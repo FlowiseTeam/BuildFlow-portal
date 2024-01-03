@@ -62,7 +62,7 @@ function ProjectsPage() {
           <span className="flex items-center gap-12">
             <ProjectViewToggler view={view} toggle={toggleView} />
             <Button variant="primary" onClick={() => setIsAddProjectModalOpen(true)}>
-              dodaj projekt
+              Dodaj projekt
             </Button>
           </span>
         </div>

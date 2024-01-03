@@ -1,5 +1,5 @@
 import { DetailCard } from '@src/components/detailCard/DetailCard';
-import { CalendarEvents } from '../calendar/calenderEvents/CalendarEvents';
+import { CalendarEvents } from '../calendar/CalendarEvents';
 import { DashboardSummary } from './summary/DashboardSummary';
 import { DashboardComments } from './chat/DashboardComments';
 

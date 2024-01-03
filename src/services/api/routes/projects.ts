@@ -1,3 +1,4 @@
+import { CalendarEventFields } from '@src/features/calendar/form/CalendarForm';
 import { projectsAxiosApi } from '..';
 
 export interface ProjectsQuery {
@@ -52,3 +53,25 @@ export const removeVehicleFromProject = (vehicleId: number, projectId: number) =
   projectsAxiosApi.delete(`projects/vehicle_assignments`, {
     params: { vehicle_id: vehicleId, project_id: projectId },
   });
+
+export type ISODate = string;
+
+export type CalendarEventType = {
+  id: string;
+  summary: string;
+  description: string;
+  start: ISODate;
+  end: ISODate;
+  location: string;
+};
+
+export const getCalendarEvents = (): Promise<CalendarEventType[]> =>
+  projectsAxiosApi.get('calendar/events').then((data) => data.data);
+
+// export const getCalendarEvent = () => projectsAxiosApi.get('calendar/events').then((data) => data);
+
+export const createCalendarEvent = (event: CalendarEventFields) => projectsAxiosApi.post('calendar/events', event);
+
+export const updateCalendarEvent = (data: unknown) => projectsAxiosApi.put(`calendar/events/${data.id}`, data);
+
+export const deleteCalendarEvent = (id: number) => projectsAxiosApi.delete(`calendar/events/${id}`);

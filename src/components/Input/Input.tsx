@@ -33,6 +33,7 @@ export interface InputProps<T extends FieldValues = FieldValues> extends React.I
   className?: string;
   labelText?: string;
   registerProps?: any[];
+  type?: React.InputHTMLAttributes<HTMLInputElement>['type'] | 'textarea';
 }
 
 export function Input<T extends FieldValues = FieldValues>({
@@ -59,19 +60,34 @@ export function Input<T extends FieldValues = FieldValues>({
       >
         {labelText}
       </label>
-      <input
-        className={tm(
-          'h-9 rounded-lg border-2 p-1 pl-2',
-          disabled && ' text-gray-600',
-          error && 'focus:outline-red-500',
-        )}
-        type={type}
-        id={id}
-        aria-invalid={!!error}
-        disabled={disabled}
-        {...register(name, validationSchema, ...registerProps)}
-        {...rest}
-      />
+      {type !== 'textarea' ? (
+        <input
+          className={tm(
+            'h-9 rounded-lg border-2 p-1 pl-2',
+            disabled && ' text-gray-600',
+            error && 'focus:outline-red-500',
+          )}
+          type={type}
+          id={id}
+          aria-invalid={!!error}
+          disabled={disabled}
+          {...register(name, validationSchema, ...registerProps)}
+          {...rest}
+        />
+      ) : (
+        <textarea
+          className={tm(
+            'min-h-[36px] rounded-lg border-2 p-1 pl-2',
+            disabled && ' text-gray-600',
+            error && 'focus:outline-red-500',
+          )}
+          id={id}
+          aria-invalid={!!error}
+          disabled={disabled}
+          {...register(name, validationSchema, ...registerProps)}
+          {...rest}
+        />
+      )}
       <div className="h-5">
         {error && validationSchema && (
           <p className="text-xs text-red-600">{errorMessage(error.type, validationSchema)}</p>

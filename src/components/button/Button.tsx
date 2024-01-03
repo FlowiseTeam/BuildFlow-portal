@@ -1,4 +1,5 @@
 import { tm } from '@src/lib/tw';
+import { LoadingIcon, LoadingIconInline } from '../loadings/Loading';
 
 export const variants = {
   light:
@@ -24,6 +25,7 @@ export const sizes = {
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: keyof typeof variants;
   size?: keyof typeof sizes;
+  isPending?: boolean;
 }
 
 export function Button({
@@ -32,10 +34,12 @@ export function Button({
   size = 'sm',
   className,
   type = 'button',
+  isPending,
   ...rest
 }: ButtonProps) {
   return (
     <button type={type} className={tm('rounded-full', variants[variant], sizes[size], className)} {...rest}>
+      {isPending && <LoadingIconInline className="h-5" />}
       {children}
     </button>
   );

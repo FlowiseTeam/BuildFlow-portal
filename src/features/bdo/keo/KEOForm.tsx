@@ -36,7 +36,7 @@ export function KEOForm({ handleFormSubmit, keoInfo }: KEOFormProps) {
       ManufactureDate: data.ManufactureDate,
       WasteFromServices: data.WasteFromServices,
       WasteMassExcludingInstallation: data.WasteMassExcludingInstallation,
-      WasteMassInstallation: data.WasteMassExcludingInstallation,
+      WasteMassInstallation: data.WasteMassInstallation,
       ...(data.CommuneName && {
         CommuneId: String(keoInfo.commons.find((commune) => commune.name === data.CommuneName)?.commonId!),
       }),

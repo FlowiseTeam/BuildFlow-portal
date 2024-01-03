@@ -80,11 +80,14 @@ export function KPOForm({ kpoInfo, disabled = false }: KPOFormProps) {
 
   const onSubmit = handleSubmit((data) => {
     const terytPk = kpoInfo.commons.find((common) => common.name === data.WasteGeneratedTerytPkName)?.commonId;
+    const CarrierCompanyId = kpoInfo.carriers.find((carrier) => carrier.name === data.CarrierCompanyName)?.companyId;
+    const ReceiverCompanyId = kpoInfo.receivers.find((receiver) => receiver.name === data.ReceiverCompanyName)?.companyId;
+
     const result: CreateCard = {
-      CarrierCompanyId: data.CarrierCompanyId,
+      CarrierCompanyId: CarrierCompanyId,
       IsWasteGenerating: data.IsWasteGenerating,
       PlannedTransportTime: data.PlannedTransportTime,
-      ReceiverCompanyId: data.ReceiverCompanyId,
+      ReceiverCompanyId: ReceiverCompanyId,
       ReceiverEupId: data.ReceiverEupId.code,
       VehicleRegNumber: data.VehicleRegNumber,
       WasteCodeId: data.WasteCode.WasteCodeId,

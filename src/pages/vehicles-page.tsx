@@ -17,7 +17,7 @@ export function VehiclesPage() {
       <div className="mt-8 flex flex-col">
         <div className="flex items-end justify-end">
           <Button variant="primary" onClick={toggleIsAddProjectModalOpen}>
-            dodaj pojazd
+            Dodaj pojazd
           </Button>
         </div>
         <div className="mb-24 mt-8 w-0 min-w-full">

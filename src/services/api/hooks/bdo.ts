@@ -37,7 +37,13 @@ export const useKpoCardsQuery = () => {
 
 export const useKeoInfoQuery = () => useQuery({ queryKey: ['bdo-info/keo'], queryFn: getKeoInfo });
 
-export const useKeoRecordCreate = () => useMutation({ mutationFn: (record: KEORecord) => postKeoRecord(record) });
+export const useKeoRecordCreate = () =>
+  useMutation({
+    mutationFn: (record: KEORecord) => postKeoRecord(record),
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['keo'] });
+    },
+  });
 
 export const useKpoCardDelete = () =>
   useMutation({

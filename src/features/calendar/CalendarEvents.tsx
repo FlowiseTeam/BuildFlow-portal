@@ -9,6 +9,14 @@ import { CalendarEventModal } from './eventModal/CalendarEventModal';
 import { CalendarEvent } from './event/CalendarEvent';
 import { useToggle } from '@src/hooks/useToggle';
 
+function sortEventsByDate(events: CalendarEventType[]) {
+  return events.reduce<{ [key: string]: CalendarEventType[] }>((acc, cur) => {
+    const startDay = cur.start.substring(0, 10);
+    acc[startDay] ? acc[startDay].push(cur) : (acc[startDay] = [cur]);
+    return acc;
+  }, {});
+}
+
 export function CalendarEventsHeader() {
   return (
     <div className="mb-6 flex items-center justify-between">
@@ -18,11 +26,14 @@ export function CalendarEventsHeader() {
   );
 }
 
+const formatter = new Intl.DateTimeFormat('pl', { day: 'numeric', month: 'long' });
+
 function CalendarEventsList({ events }: { events: CalendarEventType[] }) {
   if (!events.length) {
     return <p className="text-center">Brak wydarzeń.</p>;
   }
   const [selectedEvent, setSelectedEvent] = useState<null | CalendarEventType>(null);
+  const eventsByDate = sortEventsByDate(events);
 
   const handleEventClick = (event: CalendarEventType) => setSelectedEvent(event);
 
@@ -31,9 +42,16 @@ function CalendarEventsList({ events }: { events: CalendarEventType[] }) {
   return (
     <>
       <CalendarEventModal event={selectedEvent} onClose={handleCloseModal} isOpen={!!selectedEvent} />
-      <ul className="flex flex-col gap-1 font-sans">
-        {events.map((event) => (
-          <CalendarEvent event={event} key={event.id} handleEventClick={handleEventClick} />
+      <ul className="flex flex-col gap-1 font-sans [&>*:not(:first-of-type)]:border-t-[1px]">
+        {Object.entries(eventsByDate).map(([date, events]) => (
+          <li className="mt-2 border-primary-light pt-2">
+            <p className="font-abhaya text-2xl font-semibold text-primary ">{formatter.format(new Date(date))}</p>
+            <ul>
+              {events.map((event) => (
+                <CalendarEvent event={event} key={event.id} handleEventClick={handleEventClick} />
+              ))}
+            </ul>
+          </li>
         ))}
       </ul>
     </>

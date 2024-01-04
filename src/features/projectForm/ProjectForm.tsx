@@ -16,6 +16,12 @@ interface AddProjectInputs {
   client: string;
 }
 
+const projectStatusesColors: Record<(typeof projectStatuses)[number], string> = {
+  'W trakcie': 'border-yellow-300 hover:border-yellow-400',
+  Zawieszony: 'border-red-400 hover:border-red-500',
+  Zakończony: 'border-green-400 hover:border-green-500',
+};
+
 export function ProjectForm({
   onClose,
   handleFormSubmit,
@@ -143,6 +149,7 @@ export function ProjectForm({
               onChange={onChange}
               values={projectStatuses}
               defaultValue={projectStatuses[0]}
+              colors={projectStatusesColors}
             />
           )}
         ></Controller>

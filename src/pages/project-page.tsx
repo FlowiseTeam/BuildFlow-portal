@@ -75,7 +75,7 @@ function ProjectPage() {
           />
         </DetailCard>
         <DetailCard className="overflow-hidden sm:col-span-2 md:col-span-1">
-          <FallbackMap />
+          <FallbackMap city={project.city} street={project.street} />
         </DetailCard>
       </div>
     </Page>

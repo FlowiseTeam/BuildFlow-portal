@@ -32,7 +32,7 @@ export function ProjectGridItem({
           {project.status}
         </Button>
         <div className="h-80">
-          <FallbackMap />
+          <FallbackMap city={project.city} street={project.street} />
         </div>
       </div>
       <Footer onClick={() => navigate(String(project._id))}>
@@ -46,8 +46,7 @@ export function ProjectGridItem({
         </FooterItem>
         <FooterItem className="ml-6 text-center">
           <TruckIcon className="mx-auto h-6 w-full" />
-          {/* TODO: add vehicles */}
-          <p>{0}</p>
+          <p>{project.vehicles.length}</p>
         </FooterItem>
         <FooterItem className="ml-6">
           <CalendarDaysIcon className="mx-auto h-6 w-full" />

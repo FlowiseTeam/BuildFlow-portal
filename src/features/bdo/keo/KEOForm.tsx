@@ -78,7 +78,7 @@ export function KEOForm({ handleFormSubmit, keoInfo }: KEOFormProps) {
               validationSchema={{ required: true }}
               id="WasteMassInstallation"
               type="number"
-              labelText="W związku z eksploatacją instalacji"
+              labelText="W związku z eksploatacją instalacji (t)"
               name="WasteMassInstallation"
               error={errors.WasteMassInstallation}
             />
@@ -87,7 +87,7 @@ export function KEOForm({ handleFormSubmit, keoInfo }: KEOFormProps) {
               validationSchema={{ required: true }}
               id="WasteMassExcludingInstallation"
               type="number"
-              labelText="Poza instalacją"
+              labelText="Poza instalacją (t)"
               name="WasteMassExcludingInstallation"
               error={errors.WasteMassExcludingInstallation}
             />

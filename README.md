@@ -13,6 +13,8 @@ To install project, you can follow these steps:
 
 ## Storybook
 
+Storybook is a frontend workshop environment tool for UI/UX. It allows you to render individual components with different props.
+
 ![Storybook](./assets/storybook.png)
 
 To run storybook, you can follow these steps:

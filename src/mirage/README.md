@@ -6,14 +6,16 @@ Mirage.js server that is used to mock API calls during development. It is **not 
 
 The Mirage.js server is initialized in the api.ts file. The server is only initialized when the environment mode is set to development.
 
-## How to use it?
-
 mockMirageServer.ts is the entry point for the Mirage.js server.
 
 - models are used to define the database schema,
 - factories are more complex way to generate data,
 - seeds are simple way to generate data,
 - routes are used to define the API endpoints,
+
+# Why do I want to use it?
+
+Mirage.js is a powerful library for creating a mock server with relational data models in JavaScript applications, enabling developers to simulate API endpoints and complex database relationships, which is essential for accurately developing and testing frontend functionalities in the absence of a real backend.
 
 ## Folder structure
 

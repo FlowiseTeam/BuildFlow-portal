@@ -7,13 +7,13 @@ interface CalendarEventModalProps {
   onClose: () => void;
   isOpen: boolean;
   onSubmit: (event?: CalendarEventFields | CalendarEventType) => void;
-  pendingCreation?: boolean;
+  pending?: boolean;
 }
 
-export function CalendarEventModal({ event, onClose, isOpen, onSubmit, pendingCreation }: CalendarEventModalProps) {
+export function CalendarEventModal({ event, onClose, isOpen, onSubmit, pending }: CalendarEventModalProps) {
   return (
     <Modal onClose={onClose} show={isOpen}>
-      <CalendarForm event={event} onSubmit={onSubmit} onClose={onClose} pendingCreation={pendingCreation} />
+      <CalendarForm event={event} onSubmit={onSubmit} onClose={onClose} pending={pending} />
     </Modal>
   );
 }

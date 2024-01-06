@@ -10,12 +10,12 @@ export function CalendarForm({
   event,
   onSubmit,
   onClose,
-  pendingCreation,
+  pending,
 }: {
   event?: CalendarEventType;
   onSubmit: (event: CalendarEventType) => void;
   onClose: () => void;
-  pendingCreation?: boolean;
+  pending?: boolean;
 }) {
   const { handleSubmit, register } = useForm<CalendarEventFields>({
     defaultValues: event,
@@ -69,7 +69,7 @@ export function CalendarForm({
         )}
         <div className="flex gap-2">
           <Button onClick={onClose}>Anuluj</Button>
-          <Button type="submit" variant="primary" isPending={pendingCreation}>
+          <Button type="submit" variant="primary" isPending={pending}>
             {event ? 'Aktualizuj' : 'Dodaj'}
           </Button>
         </div>

@@ -1,5 +1,11 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createCalendarEvent, deleteCalendarEvent, getCalendarEvents } from '../routes/projects';
+import {
+  CalendarEventType,
+  createCalendarEvent,
+  deleteCalendarEvent,
+  getCalendarEvents,
+  updateCalendarEvent,
+} from '../routes/projects';
 import { queryClient } from '@src/App';
 import { CalendarEventFields } from '@src/features/calendar/form/CalendarForm';
 
@@ -12,13 +18,19 @@ export function useGetCalendarEvents() {
     queryFn: async () => {
       const events = await getCalendarEvents();
       events.forEach((event) => queryClient.setQueryData([EVENT, event.id], event));
-
       return events;
     },
   });
 }
 
-export function useUpdateCalendarEvent() {}
+export function useUpdateCalendarEvent() {
+  return useMutation({
+    mutationFn: (event: CalendarEventType) => updateCalendarEvent(event),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [EVENTS] });
+    },
+  });
+}
 
 export function useDeleleteCalendarEvent(id: number) {
   return useMutation({

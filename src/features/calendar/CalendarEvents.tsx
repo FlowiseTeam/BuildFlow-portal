@@ -2,7 +2,7 @@ import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { Button } from '@src/components/button/Button';
 import { LoadingSpace } from '@src/components/loadings/Loading';
 import { strategy } from '@src/lib/strategy';
-import { useCreateCalendarEvent, useGetCalendarEvents } from '@src/services/api/hooks/calendar';
+import { useCreateCalendarEvent, useGetCalendarEvents, useUpdateCalendarEvent } from '@src/services/api/hooks/calendar';
 import { CalendarEventType } from '@src/services/api/routes/projects';
 import { useState } from 'react';
 import { CalendarEventModal } from './eventModal/CalendarEventModal';
@@ -32,6 +32,7 @@ function CalendarEventsList({ events }: { events: CalendarEventType[] }) {
   if (!events.length) {
     return <p className="text-center">Brak wydarzeń.</p>;
   }
+  const { mutateAsync, isPending } = useUpdateCalendarEvent();
   const [selectedEvent, setSelectedEvent] = useState<null | CalendarEventType>(null);
   const eventsByDate = sortEventsByDate(events);
 
@@ -41,10 +42,19 @@ function CalendarEventsList({ events }: { events: CalendarEventType[] }) {
 
   return (
     <>
-      <CalendarEventModal event={selectedEvent} onClose={handleCloseModal} isOpen={!!selectedEvent} />
+      <CalendarEventModal
+        event={selectedEvent}
+        onClose={handleCloseModal}
+        onSubmit={async (e) => {
+          await mutateAsync(e);
+          handleCloseModal();
+        }}
+        isOpen={!!selectedEvent}
+        pending={isPending}
+      />
       <ul className="flex flex-col gap-1 font-sans [&>*:not(:first-of-type)]:border-t-[1px]">
         {Object.entries(eventsByDate).map(([date, events]) => (
-          <li className="mt-2 border-primary-light pt-2">
+          <li className="mt-2 border-primary-light pt-2" key={date}>
             <p className="font-abhaya text-2xl font-semibold text-primary ">{formatter.format(new Date(date))}</p>
             <ul>
               {events.map((event) => (
@@ -72,7 +82,7 @@ export function CalendarEvents() {
           await mutateAsync(e);
           toggle();
         }}
-        pendingCreation={isPending}
+        pending={isPending}
       />
       <CalendarEventsHeader />
       {strategy(

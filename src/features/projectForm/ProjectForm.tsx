@@ -140,7 +140,7 @@ export function ProjectForm({
         />
         <Controller
           control={control}
-          defaultValue={projectStatuses[0]}
+          defaultValue={project ? project.status : projectStatuses[0]}
           name="status"
           render={({ field: { onChange } }) => (
             <StatusInput
@@ -148,7 +148,7 @@ export function ProjectForm({
               disabled={disabled}
               onChange={onChange}
               values={projectStatuses}
-              defaultValue={projectStatuses[0]}
+              defaultValue={project ? project.status : projectStatuses[0]}
               colors={projectStatusesColors}
             />
           )}

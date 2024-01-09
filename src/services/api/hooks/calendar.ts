@@ -25,7 +25,18 @@ export function useGetCalendarEvents() {
 
 export function useUpdateCalendarEvent() {
   return useMutation({
-    mutationFn: (event: CalendarEventType) => updateCalendarEvent(event),
+    mutationFn: (event: CalendarEventType) => {
+      const e = { ...event };
+      if (!event.start.endsWith(':00')) {
+        e.start = event.start + ':00';
+      }
+
+      if (!event.end.endsWith(':00')) {
+        e.end = event.end + ':00';
+      }
+
+      return updateCalendarEvent(e);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [EVENTS] });
     },
@@ -44,6 +55,7 @@ export function useDeleleteCalendarEvent(id: number) {
 export function useCreateCalendarEvent() {
   return useMutation({
     mutationFn: (event: CalendarEventFields) => {
+      console.log('pre', event);
       return createCalendarEvent({ ...event, start: event.start + ':00', end: event.end + ':00' });
     },
     onSuccess: (res) => {

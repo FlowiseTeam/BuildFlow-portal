@@ -20,7 +20,7 @@ function PageEmployee() {
 
   const onDelete = () => {
     deleteEmployee();
-    navigate('/app/projects');
+    navigate('/app/employes');
   };
 
   const [isEdited, setIsEdited] = useState(false);

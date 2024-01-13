@@ -27,13 +27,13 @@ function ProjectPage() {
 
   const { data: project } = useProjectSuspenseQuery(Number(id));
 
-  const { mutateAsync: deleteVehicle } = useProjectDeleteMutation(+id);
+  const { mutateAsync: deletePropject } = useProjectDeleteMutation(+id);
   const { mutateAsync: onUpdate, isPending } = useProjectMutation(+id);
   const { mutate: mutateVehicle, isPending: isPendingVehicle } = useVehicleDetach(+id);
 
   const onDelete = () => {
-    deleteVehicle();
-    navigate('/app/vehicles');
+    deletePropject();
+    navigate('/app/projects');
   };
 
   return (

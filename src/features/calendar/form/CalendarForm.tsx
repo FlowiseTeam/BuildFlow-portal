@@ -17,12 +17,17 @@ export function CalendarForm({
   onClose: () => void;
   pending?: boolean;
 }) {
-  const { handleSubmit, register } = useForm<CalendarEventFields>({
+  const { handleSubmit, register, watch } = useForm<CalendarEventFields>({
     defaultValues: event,
   });
   const { mutateAsync: mutateDeletion, isPending: isPendingDeletion } = useDeleleteCalendarEvent(event?.id);
 
   const submit = handleSubmit(onSubmit);
+
+  const startDateNum = new Date(watch('start'))?.getDate();
+  const endDateNum = new Date(watch('end'))?.getDate();
+
+  const isDateError = startDateNum > endDateNum;
 
   return (
     <form onSubmit={submit}>
@@ -42,6 +47,7 @@ export function CalendarForm({
           labelText="Koniec"
           validationSchema={{ required: true }}
         />
+        {isDateError && <p className="mt-0 text-red-600">Nieprawidłowy zakres dat</p>}
       </div>
       <Input
         register={register}
@@ -69,7 +75,7 @@ export function CalendarForm({
         )}
         <div className="flex gap-2">
           <Button onClick={onClose}>Anuluj</Button>
-          <Button type="submit" variant="primary" isPending={pending}>
+          <Button type="submit" variant="primary" isPending={pending} disabled={isDateError}>
             {event ? 'Aktualizuj' : 'Dodaj'}
           </Button>
         </div>

@@ -25,6 +25,7 @@ export function EmployeeForm({
 }) {
   const {
     setValue,
+    reset,
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
@@ -35,6 +36,10 @@ export function EmployeeForm({
     if (!isValid) return;
     await handleFormSubmit(data);
   });
+
+  useEffect(() => {
+    reset(employee);
+  }, [employee]);
 
   let statuses: (typeof Allstatuses)[number][];
 
